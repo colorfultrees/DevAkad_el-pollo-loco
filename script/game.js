@@ -1,3 +1,5 @@
+// const CANVAS_WIDTH = 900;
+// const CANVAS_HEIGHT = 600;
 let canvas;
 let world;
 
@@ -8,19 +10,21 @@ async function init() {
     createCharacter();
     createEnemies(); 
 
-    setTimeout(() => {renderWorld()}, 100);
+    renderWorld();
     
 }
 
 
 function createCharacter() {
-    world.character = new Character(0, 0, './img/2_character_pepe/1_idle/idle/I-1.png');
+    world.character = new Character(0, 0);
+    world.character.positionY = world.canvas.height - world.character.height;
 }
 
 
 function createEnemies() {
     for (let e = 1; e <= 3; e++) {
-        world.enemies.push(new Chicken(100 + (120 * e), 300, './img/3_enemies_chicken/chicken_normal/1_walk/1_w.png'));
+        world.enemies.push(new Chicken(100 + (120 * e), 300));
+        world.enemies[e - 1].positionY = world.canvas.height - world.enemies[e - 1].height;
     }
 }
 

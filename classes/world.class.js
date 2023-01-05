@@ -1,16 +1,30 @@
 class World {
     character;
     enemies = [];
+    canvas;
     ctx;
 
     constructor(canvas) {
+        this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
     }
 
     draw() {
-        this.ctx.drawImage(this.character.img, this.character.positionX, this.character.positionY, this.character.width, this.character.height);
-        for (let e = 0; e < this.enemies.length; e++) {
-            this.ctx.drawImage(this.enemies[e].img, this.enemies[e].positionX, this.enemies[e].positionY, this.enemies[e].width, this.enemies[e].height);
-        }
+        // Draw the character
+        this.ctx.drawImage(this.character.img,
+                           this.character.positionX,
+                           this.character.positionY,
+                           this.character.width,
+                           this.character.height);
+
+        // Draw the enemies
+        this.enemies.forEach(enemy => this.ctx.drawImage(enemy.img,
+                                                         enemy.positionX,
+                                                         enemy.positionY,
+                                                         enemy.width,
+                                                         enemy.height));
+
+        let self = this;
+        requestAnimationFrame(() => self.draw());
     }
 }
