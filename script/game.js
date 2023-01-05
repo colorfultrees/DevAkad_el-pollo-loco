@@ -10,7 +10,7 @@ async function init() {
 
     world = new World(canvas);
     
-    createClouds();
+    createBackground();
     createCharacter();
     createEnemies(); 
 
@@ -19,8 +19,8 @@ async function init() {
 }
 
 
-function createClouds() {
-    world.clouds = new Cloud(0, 0);
+function createBackground() {
+    world.background.clouds.push(new Cloud(0, 0));
 }
 
 

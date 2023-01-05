@@ -9,8 +9,4 @@ class Cloud extends MoveableObject {
         super(positionX, positionY);
         this.img.src = this.imgUrls[Math.round(Math.random())];
     }
-
-    float() {
-
-    }
 }
