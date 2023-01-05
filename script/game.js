@@ -10,11 +10,17 @@ async function init() {
 
     world = new World(canvas);
     
+    createClouds();
     createCharacter();
     createEnemies(); 
 
     renderWorld();
     
+}
+
+
+function createClouds() {
+    world.clouds = new Cloud(0, 0, './img/5_background/layers/4_clouds/1.png');
 }
 
 

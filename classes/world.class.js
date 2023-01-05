@@ -1,4 +1,5 @@
 class World {
+    clouds;
     character;
     enemies = [];
     canvas;
@@ -10,6 +11,13 @@ class World {
     }
 
     draw() {
+        // Draw the clouds
+        this.ctx.drawImage(this.clouds.img,
+                           this.clouds.positionX,
+                           this.clouds.positionY,
+                           this.clouds.width,
+                           this.clouds.height);
+
         // Draw the character
         this.ctx.drawImage(this.character.img,
                            this.character.positionX,
