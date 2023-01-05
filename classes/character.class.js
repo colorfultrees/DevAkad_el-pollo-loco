@@ -1,5 +1,5 @@
 class Character extends MoveableObject {
-    aspectRatio = 0.5083; //width/height
+    aspectRatio = 0.5083; // width/height
     width = 244;
     height = this.width / this.aspectRatio;
     img = new Image();
