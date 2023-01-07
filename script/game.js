@@ -19,6 +19,11 @@ async function init() {
     createEnemies(); 
 
     renderWorld();
+
+    // Start the timer for more clouds
+    setInterval(() => {
+        createClouds(canvas.width + 50);
+    }, 180000);
 }
 
 
@@ -27,38 +32,39 @@ async function init() {
  */
 function createBackground() {
     createSky();
-    createClouds();
-    createLandscape();
-    
+    createClouds(0);
+    createLandscape();    
+}
 
-    /**
-     * Creates the sky
-     */
-    function createSky() {
-        world.background.air = new Background(0, 0, './img/5_background/layers/air.png');
+
+/**
+ * Creates the sky
+ */
+function createSky() {
+    world.background.air = new Background(0, 0, './img/5_background/layers/air.png');
+}
+
+
+/**
+ * Creates the clouds
+ * @param {Number} startPos The position of the first cloud formation
+ */
+function createClouds(startPos) {
+    for (let c = 0; c < 5; c++) {
+        const posX = calcRandomNumber(-100, 300) + (500 * c) + startPos;
+        const posY = calcRandomNumber(0, 50);
+        world.background.clouds.push(new Cloud(posX, posY));
     }
+}
 
 
-    /**
-     * Creates the clouds
-     */
-    function createClouds() {
-        for (let c = 0; c < 5; c++) {
-            const posX = calcRandomNumber(-100, 300) + (500 * c);
-            const posY = calcRandomNumber(0, 30);
-            world.background.clouds.push(new Cloud(posX, posY));
-        }
-    }
-
-
-    /**
-     * Creates the landscape
-     */
-    function createLandscape() {
-        world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/3_third_layer/full.png'));
-        world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/2_second_layer/full.png'));
-        world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/1_first_layer/full.png'));
-    }
+/**
+ * Creates the landscape
+ */
+function createLandscape() {
+    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/3_third_layer/full.png'));
+    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/2_second_layer/full.png'));
+    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/1_first_layer/full.png'));
 }
 
 
