@@ -11,29 +11,30 @@ class World {
     }
 
     draw() {
-        // Draw the air
-        this.ctx.drawImage(
-            this.background.air.img, this.background.air.positionX, this.background.air.positionY,
-            this.background.air.width, this.background.air.height);
+        // Draw the sky
+        this.drawSingleObjectToCanvas(this.background.air)
 
         // Draw the clouds
-        this.background.clouds.forEach(cloud => this.ctx.drawImage(
-            cloud.img, cloud.positionX, cloud.positionY, cloud.width, cloud.height));
+        this.drawMultipleObjectsToCanvas(this.background.clouds);
 
         // Draw the landscape
-        this.background.landscapeLayer.forEach(landscape => this.ctx.drawImage(
-            landscape.img, landscape.positionX, landscape.positionY, landscape.width, landscape.height));
+        this.drawMultipleObjectsToCanvas(this.background.landscapeLayer);
         
         // Draw the character
-        this.ctx.drawImage(
-            this.character.img, this.character.positionX, this.character.positionY,
-            this.character.width, this.character.height);
+        this.drawSingleObjectToCanvas(this.character);
 
         // Draw the enemies
-        this.enemies.forEach(enemy => this.ctx.drawImage(
-            enemy.img, enemy.positionX, enemy.positionY, enemy.width, enemy.height));
+        this.drawMultipleObjectsToCanvas(this.enemies);
 
         let self = this;
         requestAnimationFrame(() => self.draw());
+    }
+
+    drawSingleObjectToCanvas(obj) {
+        this.ctx.drawImage(obj.img, obj.positionX, obj.positionY, obj.width, obj.height);
+    }
+
+    drawMultipleObjectsToCanvas(array) {
+        array.forEach(object => this.drawSingleObjectToCanvas(object));
     }
 }
