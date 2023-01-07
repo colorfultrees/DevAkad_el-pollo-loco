@@ -8,7 +8,7 @@ class Cloud extends MoveableObject {
 
     constructor(positionX, positionY) {
         super(positionX, positionY).loadImage(this.imgUrls[Math.round(Math.random())]);
-        this.speed = calcRandomNumber(50, 90);
+        this.speed = calcRandomNumber(35, 90);
         setInterval(() => {
             this.move(-1, this.distance);
         }, this.speed);

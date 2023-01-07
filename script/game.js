@@ -43,9 +43,10 @@ function createBackground() {
      * Creates the clouds
      */
     function createClouds() {
-        for (let c = 0; c < 3; c++) {
-            const posX = calcRandomNumber(-100, 300) + (100 * c);
-            world.background.clouds.push(new Cloud(posX, 0));
+        for (let c = 0; c < 5; c++) {
+            const posX = calcRandomNumber(-100, 300) + (500 * c);
+            const posY = calcRandomNumber(0, 30);
+            world.background.clouds.push(new Cloud(posX, posY));
         }
     }
 
@@ -55,8 +56,8 @@ function createBackground() {
      */
     function createLandscape() {
         world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/3_third_layer/full.png'));
-    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/2_second_layer/full.png'));
-    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/1_first_layer/full.png'));
+        world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/2_second_layer/full.png'));
+        world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/1_first_layer/full.png'));
     }
 }
 
