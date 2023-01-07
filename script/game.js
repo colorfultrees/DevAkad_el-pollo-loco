@@ -20,7 +20,11 @@ async function init() {
 
 
 function createBackground() {
+    world.background.air = new Background(0, 0, './img/5_background/layers/air.png')
     world.background.clouds.push(new Cloud(0, 0));
+    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/3_third_layer/full.png'));
+    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/2_second_layer/full.png'));
+    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/1_first_layer/full.png'));
 }
 
 
