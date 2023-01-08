@@ -4,6 +4,7 @@ class World {
     enemies = [];
     canvas;
     ctx;
+    requAnimId = -1;
 
     constructor(canvas) {
         this.canvas = canvas;
@@ -27,11 +28,17 @@ class World {
         this.drawMultipleObjectsToCanvas(this.enemies);
 
         let self = this;
-        requestAnimationFrame(() => self.draw());
+        this.requAnimId = requestAnimationFrame(() => self.draw());
     }
 
     drawSingleObjectToCanvas(obj) {
-        this.ctx.drawImage(obj.img, obj.positionX, obj.positionY, obj.width, obj.height);
+        try {
+            this.ctx.drawImage(obj.img, obj.positionX, obj.positionY, obj.width, obj.height);
+        } catch {
+            console.log(obj, obj.img);
+            cancelAnimationFrame(this.requAnimId);
+        }
+        
     }
 
     drawMultipleObjectsToCanvas(array) {

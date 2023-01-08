@@ -57,15 +57,16 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-56.png',
         './img/2_character_pepe/5_dead/D-57.png'
     ];
-    aspectRatio = 0.5083; // width/height
-    width = 244;
-    height = this.width / this.aspectRatio;
     imageCacheWait = {};
     imageCacheSnooze = {};
     imageCacheWalk = {};
     imageCacheJump = {};
     imageCacheHurt = {};
     imageCacheDie = {};
+    aspectRatio = 0.5083; // width/height
+    width = 244;
+    height = this.width / this.aspectRatio;
+    currentImage = 0;
 
     constructor(positionX, positionY) {
         super(positionX, positionY).loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
@@ -75,6 +76,20 @@ class Character extends MoveableObject {
         this.loadImageCache(this.IMAGES_JUMP, this.imageCacheJump);
         this.loadImageCache(this.IMAGES_HURT, this.imageCacheHurt);
         this.loadImageCache(this.IMAGES_DIE, this.imageCacheDie);
+        
+        this.walk();
+    }
+
+    walk() {
+        this.currentImage = 0;
+        setInterval(() => {
+            this.currentImage = this.currentImage % this.IMAGES_WALK.length
+            this.img = this.imageCacheWalk[this.IMAGES_WALK[this.currentImage]];
+
+            // console.log(this.imageCacheWalk[this.IMAGES_WALK[this.currentImage]]);
+
+            this.currentImage++;
+        }, 130);
     }
 
     jump() {

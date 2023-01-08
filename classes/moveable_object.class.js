@@ -24,7 +24,8 @@ class MoveableObject {
      */
     loadImageCache(urlList, imageCache) {
         urlList.forEach(url => {
-            imageCache[url] = (new Image().src = url);
+            imageCache[url] = new Image();
+            imageCache[url].src = url;
         })
     }
 
