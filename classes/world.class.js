@@ -32,13 +32,7 @@ class World {
     }
 
     drawSingleObjectToCanvas(obj) {
-        try {
-            this.ctx.drawImage(obj.img, obj.positionX, obj.positionY, obj.width, obj.height);
-        } catch {
-            console.log(obj, obj.img);
-            cancelAnimationFrame(this.requAnimId);
-        }
-        
+        this.ctx.drawImage(obj.img, obj.positionX, obj.positionY, obj.width, obj.height);
     }
 
     drawMultipleObjectsToCanvas(array) {

@@ -16,7 +16,10 @@ async function init() {
     
     createBackground();
     createCharacter();
-    createEnemies(); 
+    createEnemies(Chicken, 3);
+    createEnemies(Chick, 2);
+    // createChickens();
+    // createChicks();
 
     renderWorld();
 
@@ -77,15 +80,40 @@ function createCharacter() {
 }
 
 
-/**
- * Creates the enemies
- */
-function createEnemies() {
-    for (let e = 1; e <= 3; e++) {
-        world.enemies.push(new Chicken(calcRandomNumber(150, world.canvas.width - 50), 300));
-        world.enemies[e - 1].positionY = world.canvas.height - world.enemies[e - 1].height;
+function createEnemies(EnemyClass, count) {
+    for (let e = 1; e <= count; e++) {
+        const obj = new EnemyClass(0, 0);
+        obj.positionX = calcRandomNumber(230, canvas.width - 50);
+        obj.positionY = canvas.height - obj.height;
+        world.enemies.push(obj);
     }
 }
+
+
+/**
+ * Creates the chickens
+ */
+// function createChickens() {
+//     for (let e = 1; e <= 3; e++) {
+//         const chicken = new Chicken(0, 0);
+//         chicken.positionX = calcRandomNumber(150, canvas.width - 50);
+//         chicken.positionY = canvas.height - chicken.height;
+//         world.enemies.push(chicken);
+//     }
+// }
+
+
+/**
+ * Create the chicks
+ */
+// function createChicks() {
+//     for (let e = 1; e <= 2; e++) {
+//         const chick = new Chick(0, 0);
+//         chick.positionX = calcRandomNumber(150, canvas.width - 50);
+//         chick.positionY = canvas.height - chick.height;
+//         world.enemies.push(chick);
+//     }
+// }
 
 
 /**
