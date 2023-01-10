@@ -7,8 +7,8 @@ class MoveableObject {
     width = 0;
     height = 0;
     currentImage = 0;
-    speed; // The speed in ms at which the cloud moves
-    intervalId = 0;
+    horizMoveInterval; // The moving interval in ms
+    horizMoveIntervalId = 0;
 
     constructor(positionX, positionY) {
         this.positionX = positionX;
@@ -42,8 +42,8 @@ class MoveableObject {
      * @param {Number} fast The fastest speed value in ms
      * @param {Number} slow The slowest speed value in ms
      */
-    setSpeed(fast, slow) {
-        this.speed = calcRandomNumber(fast, slow);
+    setHorizMoveIntval(fast, slow) {
+        this.horizMoveInterval = calcRandomNumber(fast, slow);
     }
 
 
@@ -52,10 +52,10 @@ class MoveableObject {
      * @param {Number} direction The moving direction of the object: -1 = to left, 1 = to right
      */
     initHorizontalMovement(objCategory, direction) {
-        this.intervalId = setInterval(() => {
+        this.horizMoveIntervalId = setInterval(() => {
                 this.move(direction, this.distance);
                 this.manageHorizMoveIntervals(objCategory);
-            }, this.speed);
+            }, this.horizMoveInterval);
     }
 
 
@@ -86,10 +86,10 @@ class MoveableObject {
         const posRight = this.positionX + this.width;
         if (posRight < 0) {
             const objId = objCategory.findIndex(c => c === this);
-            clearInterval(this.intervalId);
+            clearInterval(this.horizMoveIntervalId);
             objCategory.splice(objId, 1);
 
-            console.log(`objInterval(${this.intervalId}) cleared, ${Object.keys(this)}, objCategory[${objId}] removed.`);
+            console.log(`objInterval(${this.horizMoveIntervalId}) cleared, ${this.constructor.name}, objCategory[${objId}] removed.`);
         }
     }
 }

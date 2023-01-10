@@ -2,6 +2,7 @@ const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 600;
 let canvas;
 let world;
+let keyboardListener;
 
 
 /**
@@ -12,12 +13,18 @@ async function init() {
     canvas.setAttribute('width', CANVAS_WIDTH + 'px');
     canvas.setAttribute('height', CANVAS_HEIGHT + 'px');
 
+    keyboardListener = new Keyboard();
+    console.log('keyboardListener initiated.');
+    // document.addEventListener('keydown', keyboardListener.handleKeyDown);
+    // document.addEventListener('keyup', keyboardListener.handleKeyUp);
+    // console.log('eventListeners created.');
+
     world = new World(canvas);
     
     createBackground();
     createCharacter();
-    createEnemies(Chicken, 3);
-    createEnemies(Chick, 2);
+    createEnemies(Chicken, 5);
+    createEnemies(Chick, 3);
     // createChickens();
     // createChicks();
 
@@ -83,8 +90,8 @@ function createCharacter() {
 function createEnemies(EnemyClass, count) {
     for (let e = 1; e <= count; e++) {
         const obj = new EnemyClass(0, 0);
-        obj.positionX = calcRandomNumber(230, canvas.width - 50);
-        obj.positionY = canvas.height - obj.height;
+        obj.positionX = calcRandomNumber(230, canvas.width + 100);
+        obj.positionY = canvas.height - obj.height - 15;
         world.enemies.push(obj);
     }
 }

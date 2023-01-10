@@ -19,7 +19,7 @@ class Chicken extends MoveableObject {
         this.loadImageCache(this.IMAGES_WALK);
         this.loadImageCache(this.IMAGES_DIE);
 
-        this.setSpeed(100, 300);
+        this.setHorizMoveIntval(100, 300);
         this.initHorizontalMovement(world.enemies, -1);
 
         this.walk(calcRandomNumber(90, 130));
