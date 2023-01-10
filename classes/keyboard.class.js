@@ -133,10 +133,12 @@ class Keyboard {
             switch (event.code) {
                 case this.KEYS.LEFT.code:
                     this.KEYS.LEFT.status = false;
+                    world.character.stopWalking();
                     console.log(`I stopped moving left. (${JSON.stringify(this.KEYS)})`);
                     break;
                 case this.KEYS.RIGHT.code:
                     this.KEYS.RIGHT.status = false;
+                    world.character.stopWalking();
                     console.log(`I stopped moving right. (${JSON.stringify(this.KEYS)})`);
                     break;
                 case this.KEYS.UP.code:

@@ -57,8 +57,9 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-56.png',
         './img/2_character_pepe/5_dead/D-57.png'
     ];
+    keyboardListener;
 
-    constructor(positionX, positionY) {
+    constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
 
         this.aspectRatio = 0.5083;
@@ -71,8 +72,32 @@ class Character extends MoveableObject {
         this.loadImageCache(this.IMAGES_JUMP);
         this.loadImageCache(this.IMAGES_HURT);
         this.loadImageCache(this.IMAGES_DIE);
+
+        this.keyboardListener = keyboardListener;
         
         this.walk(130);
+    }
+
+
+    stopWalking() {
+        this.img = this.imageCache[this.IMAGES_WAIT[0]];
+    }
+
+
+    /**
+     * Animates the walking sequence of the object
+     * @param {Number} frequency The frequency of the animated images
+     */
+    walk(frequency) {
+        setInterval(() => {
+            if ((this.keyboardListener.KEYS.RIGHT.status == true ||
+                this.keyboardListener.KEYS.LEFT.status == true) &&
+                this.keyboardListener.KEYS.UP.status == false) {
+                this.currentImage = this.currentImage % this.IMAGES_WALK.length
+                this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
+                this.currentImage++;
+            }
+        }, frequency);
     }
 
     jump() {

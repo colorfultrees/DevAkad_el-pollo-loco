@@ -82,7 +82,7 @@ function createLandscape() {
  * Creates the main character
  */
 function createCharacter() {
-    world.character = new Character(0, 0);
+    world.character = new Character(0, 0, keyboardListener);
     world.character.positionY = world.canvas.height - world.character.height;
 }
 
