@@ -53,7 +53,7 @@ class MoveableObject {
      */
     initHorizontalMovement(objCategory, direction) {
         this.horizMoveIntervalId = setInterval(() => {
-                this.move(direction, this.distance);
+                this.move(direction, this.movingDistance);
                 this.manageHorizMoveIntervals(objCategory);
             }, this.horizMoveInterval);
     }
@@ -75,10 +75,10 @@ class MoveableObject {
     /**
      * Moves the object with the given speed to the given direction
      * @param {Number} direction The moving direction of the object: -1 = to left, 1 = to right
-     * @param {Number} distance The distance that the object should move
+     * @param {Number} movingDistance The distance that the object should move
      */
-    move(direction, distance) {
-        this.positionX = this.positionX + (distance * direction);
+    move(direction, movingDistance) {
+        this.positionX = this.positionX + (movingDistance * direction);
     }
 
 

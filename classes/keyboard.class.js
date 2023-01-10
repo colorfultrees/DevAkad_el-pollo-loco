@@ -104,6 +104,7 @@ class Keyboard {
                 case this.KEYS.LEFT.code:
                     this.KEYS.LEFT.status = true;
                     this.KEYS.RIGHT.status = false;
+                    world.character.move(-1, )
                     console.log(`I'm moving left. (${JSON.stringify(this.KEYS)})`);
                     break;
                 case this.KEYS.RIGHT.code:

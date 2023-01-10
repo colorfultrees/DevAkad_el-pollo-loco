@@ -58,6 +58,7 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-57.png'
     ];
     keyboardListener;
+    movingDistance = 2.5;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');

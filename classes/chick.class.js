@@ -7,7 +7,7 @@ class Chick extends MoveableObject {
     IMAGES_DIE = [
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ]
-    distance = 1.9;
+    movingDistance = 1.9;
 
     constructor(positionX, positionY) {
         super(positionX, positionY).loadImage('./img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
