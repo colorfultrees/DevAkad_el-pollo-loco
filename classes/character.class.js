@@ -59,6 +59,7 @@ class Character extends MoveableObject {
     ];
     keyboardListener;
     movingDistance = 5;
+    offsetPosX = 0;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
@@ -66,6 +67,7 @@ class Character extends MoveableObject {
         this.aspectRatio = 0.5083;
         this.width = 244;
         this.height = this.width / this.aspectRatio;
+        this.offsetPosX = positionX;
 
         this.loadImageCache(this.IMAGES_WAIT);
         this.loadImageCache(this.IMAGES_SNOOZE);
@@ -89,10 +91,12 @@ class Character extends MoveableObject {
             if (this.keyboardListener.KEYS.RIGHT.status) {
                 this.isImageMirrored = false;
                 this.move(1);
+                world.setCameraPos(-this.positionX + this.offsetPosX);
             }
             else if (this.keyboardListener.KEYS.LEFT.status) {
                 this.isImageMirrored = true;
                 this.move(-1);
+                world.setCameraPos(-this.positionX + this.offsetPosX);
             }
         }, 55);
     }

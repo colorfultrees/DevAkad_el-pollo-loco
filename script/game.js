@@ -23,8 +23,8 @@ async function init() {
     
     createBackground();
     createCharacter();
-    createEnemies(Chicken, 5, 230, canvas.width + 100);
-    createEnemies(Chick, 3, 230, canvas.width + 100);
+    createEnemies(Chicken, 3, 350, canvas.width + 200);
+    createEnemies(Chick, 2, 350, canvas.width + 200);
     // createChickens();
     // createChicks();
 
@@ -92,8 +92,10 @@ function createLandscape() {
  * Creates the main character
  */
 function createCharacter() {
-    world.character = new Character(0, 0, keyboardListener);
+    const startPosX = 100;
+    world.character = new Character(startPosX, 0, keyboardListener);
     world.character.positionY = world.canvas.height - world.character.height;
+    // world.setCameraPos(-startPosX);
 }
 
 
