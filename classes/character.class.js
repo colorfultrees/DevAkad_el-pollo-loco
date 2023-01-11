@@ -91,18 +91,20 @@ class Character extends MoveableObject {
      */
     walk(frequency) {
         setInterval(() => {
-            if ((this.keyboardListener.KEYS.RIGHT.status == true ||
-                this.keyboardListener.KEYS.LEFT.status == true) &&
-                this.keyboardListener.KEYS.UP.status == false) {
+            if (this.keyboardListener.KEYS.RIGHT.status ||
+                this.keyboardListener.KEYS.LEFT.status) {
                     if (this.keyboardListener.KEYS.RIGHT.status) {
                         this.move(1);
                     }
                     else if (this.keyboardListener.KEYS.LEFT.status) {
                         this.move(-1);
                     }
-                this.currentImage = this.currentImage % this.IMAGES_WALK.length
-                this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
-                this.currentImage++;
+                    
+                    if (!this.keyboardListener.KEYS.UP.status) {
+                        this.currentImage = this.currentImage % this.IMAGES_WALK.length
+                        this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
+                        this.currentImage++;
+                    }
             }
         }, frequency);
     }

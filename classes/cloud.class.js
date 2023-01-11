@@ -7,7 +7,7 @@ class Cloud extends MoveableObject {
         this.aspectRatio = 1.7778;
         this.setDimensions();
         this.setHorizMoveIntval(35, 90);
-        this.initHorizontalMovement(world.background.clouds ,-1);
+        this.initHorizontalMovement(world.background.clouds, -1);
     }
 
     

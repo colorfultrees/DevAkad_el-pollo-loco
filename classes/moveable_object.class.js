@@ -9,6 +9,7 @@ class MoveableObject {
     currentImage = 0;
     horizMoveInterval; // The moving interval in ms
     horizMoveIntervalId = 0;
+    walkIntervalId = 0;
 
     constructor(positionX, positionY) {
         this.positionX = positionX;
@@ -54,7 +55,7 @@ class MoveableObject {
     initHorizontalMovement(objCategory, direction) {
         this.horizMoveIntervalId = setInterval(() => {
                 this.move(direction);
-                this.manageHorizMoveIntervals(objCategory);
+                this.manageMovementIntervals(objCategory);
             }, this.horizMoveInterval);
     }
 
@@ -64,7 +65,7 @@ class MoveableObject {
      * @param {Number} frequency The frequency of the animated images
      */
     walk(frequency) {
-        setInterval(() => {
+        this.walkIntervalId = setInterval(() => {
             this.currentImage = this.currentImage % this.IMAGES_WALK.length
             this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
             this.currentImage++;
@@ -81,14 +82,15 @@ class MoveableObject {
     }
 
 
-    manageHorizMoveIntervals(objCategory) {
+    manageMovementIntervals(objCategory) {
         const posRight = this.positionX + this.width;
         if (posRight < 0) {
             const objId = objCategory.findIndex(c => c === this);
             clearInterval(this.horizMoveIntervalId);
+            clearInterval(this.walkIntervalId);
             objCategory.splice(objId, 1);
 
-            console.log(`objInterval(${this.horizMoveIntervalId}) cleared, ${this.constructor.name}, objCategory[${objId}] removed.`);
+            console.log(`Object: ${this.constructor.name} | Intervals cleared: hor - ${this.horizMoveIntervalId} / walk - ${this.walkIntervalId} | objCategory[${objId}] removed.`);
         }
     }
 }
