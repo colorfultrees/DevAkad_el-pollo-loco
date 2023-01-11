@@ -58,7 +58,7 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-57.png'
     ];
     keyboardListener;
-    movingDistance = 7;
+    movingDistance = 5;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
@@ -76,12 +76,25 @@ class Character extends MoveableObject {
 
         this.keyboardListener = keyboardListener;
         
-        this.walk(130);
+        this.setHorizMoveIntval();
+        this.walk();
     }
 
 
-    stopWalking() {
-        this.img = this.imageCache[this.IMAGES_WAIT[0]];
+    /**
+     * Sets the interval for the horizontal movement
+     */
+    setHorizMoveIntval() {
+        setInterval(() => {
+            if (this.keyboardListener.KEYS.RIGHT.status) {
+                this.isImageMirrored = false;
+                this.move(1);
+            }
+            else if (this.keyboardListener.KEYS.LEFT.status) {
+                this.isImageMirrored = true;
+                this.move(-1);
+            }
+        }, 55);
     }
 
 
@@ -89,24 +102,24 @@ class Character extends MoveableObject {
      * Animates the walking sequence of the object
      * @param {Number} frequency The frequency of the animated images
      */
-    walk(frequency) {
+    walk() {
         setInterval(() => {
-            if (this.keyboardListener.KEYS.RIGHT.status ||
-                this.keyboardListener.KEYS.LEFT.status) {
-                    if (this.keyboardListener.KEYS.RIGHT.status) {
-                        this.move(1);
-                    }
-                    else if (this.keyboardListener.KEYS.LEFT.status) {
-                        this.move(-1);
-                    }
-                    
-                    if (!this.keyboardListener.KEYS.UP.status) {
-                        this.currentImage = this.currentImage % this.IMAGES_WALK.length
-                        this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
-                        this.currentImage++;
-                    }
+            if ((this.keyboardListener.KEYS.RIGHT.status ||
+                this.keyboardListener.KEYS.LEFT.status) &&
+                !this.keyboardListener.KEYS.UP.status) {
+                    this.currentImage = this.currentImage % this.IMAGES_WALK.length
+                    this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
+                    this.currentImage++;
             }
-        }, frequency);
+        }, 115);
+    }
+
+
+    /**
+     * Stops the walking animation
+     */
+    stopWalking() {
+        this.img = this.imageCache[this.IMAGES_WAIT[0]];
     }
 
     jump() {

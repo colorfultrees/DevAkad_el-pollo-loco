@@ -10,6 +10,7 @@ class MoveableObject {
     horizMoveInterval; // The moving interval in ms
     horizMoveIntervalId = 0;
     walkIntervalId = 0;
+    isImageMirrored = false;
 
     constructor(positionX, positionY) {
         this.positionX = positionX;

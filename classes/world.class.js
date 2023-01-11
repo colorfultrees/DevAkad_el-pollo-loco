@@ -32,7 +32,19 @@ class World {
     }
 
     drawSingleObjectToCanvas(obj) {
+        // Mirror the object if it moves opposite its standard direction
+        if (obj.isImageMirrored) {
+            this.ctx.save();
+            this.ctx.translate(obj.width, 0);
+            this.ctx.scale(-1, 1);
+            obj.positionX = obj.positionX * -1;
+        }
         this.ctx.drawImage(obj.img, obj.positionX, obj.positionY, obj.width, obj.height);
+        // If the image was drawn mirrored, restore the context
+        if (obj.isImageMirrored) {
+            obj.positionX = obj.positionX * -1;
+            this. ctx.restore();
+        }
     }
 
     drawMultipleObjectsToCanvas(array) {
