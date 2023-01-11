@@ -7,8 +7,7 @@ class Chicken extends MoveableObject {
     IMAGES_DIE = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ]
-    animInterval = calcRandomNumber(90, 130);
-    movingDistance = 6 - (this.animInterval / 30);
+    movingDistance = 3;
 
     constructor(positionX, positionY) {
         super(positionX, positionY).loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
@@ -23,6 +22,6 @@ class Chicken extends MoveableObject {
         this.setHorizMoveIntval(100, 300);
         this.initHorizontalMovement(world.enemies, -1);
 
-        this.walk();
+        this.walk(calcRandomNumber(100, 170));
     }
 }

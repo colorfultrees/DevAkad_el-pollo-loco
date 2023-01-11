@@ -7,7 +7,7 @@ class Chick extends MoveableObject {
     IMAGES_DIE = [
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ]
-    movingDistance = 1.9;
+    movingDistance = 2.5;
 
     constructor(positionX, positionY) {
         super(positionX, positionY).loadImage('./img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
@@ -22,6 +22,6 @@ class Chick extends MoveableObject {
         this.setHorizMoveIntval(100, 300);
         this.initHorizontalMovement(world.enemies, -1);
 
-        this.walk(calcRandomNumber(70, 110));
+        this.walk(calcRandomNumber(90, 150));
     }
 }

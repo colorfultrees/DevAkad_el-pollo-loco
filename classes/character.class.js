@@ -58,7 +58,7 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-57.png'
     ];
     keyboardListener;
-    movingDistance = 2.5;
+    movingDistance = 7;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
@@ -94,6 +94,12 @@ class Character extends MoveableObject {
             if ((this.keyboardListener.KEYS.RIGHT.status == true ||
                 this.keyboardListener.KEYS.LEFT.status == true) &&
                 this.keyboardListener.KEYS.UP.status == false) {
+                    if (this.keyboardListener.KEYS.RIGHT.status) {
+                        this.move(1);
+                    }
+                    else if (this.keyboardListener.KEYS.LEFT.status) {
+                        this.move(-1);
+                    }
                 this.currentImage = this.currentImage % this.IMAGES_WALK.length
                 this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
                 this.currentImage++;

@@ -38,9 +38,9 @@ class MoveableObject {
 
 
     /**
-     * Sets the speed of the opject in terms of ms of an interval
-     * @param {Number} fast The fastest speed value in ms
-     * @param {Number} slow The slowest speed value in ms
+     * Sets the interval for the horizontal movement of the object
+     * @param {Number} fast The shortest interval
+     * @param {Number} slow The longest interval
      */
     setHorizMoveIntval(fast, slow) {
         this.horizMoveInterval = calcRandomNumber(fast, slow);
@@ -53,7 +53,7 @@ class MoveableObject {
      */
     initHorizontalMovement(objCategory, direction) {
         this.horizMoveIntervalId = setInterval(() => {
-                this.move(direction, this.movingDistance);
+                this.move(direction);
                 this.manageHorizMoveIntervals(objCategory);
             }, this.horizMoveInterval);
     }
@@ -73,12 +73,11 @@ class MoveableObject {
 
 
     /**
-     * Moves the object with the given speed to the given direction
+     * Moves the object with the given interval to the given direction
      * @param {Number} direction The moving direction of the object: -1 = to left, 1 = to right
-     * @param {Number} movingDistance The distance that the object should move
      */
-    move(direction, movingDistance) {
-        this.positionX = this.positionX + (movingDistance * direction);
+    move(direction) {
+        this.positionX = this.positionX + (this.movingDistance * direction);
     }
 
 
