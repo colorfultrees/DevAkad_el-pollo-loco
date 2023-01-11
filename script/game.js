@@ -23,8 +23,8 @@ async function init() {
     
     createBackground();
     createCharacter();
-    createEnemies(Chicken, 3, 350, canvas.width + 200);
-    createEnemies(Chick, 2, 350, canvas.width + 200);
+    createEnemies(Chicken, 7, 350, world.background.landscapeLayer[0].width - 400);
+    createEnemies(Chick, 4, 350, world.background.landscapeLayer[0].width - 400);
     // createChickens();
     // createChicks();
 
@@ -32,17 +32,17 @@ async function init() {
 
     // Start the timer for more clouds
     setInterval(() => {
-        createClouds(canvas.width + 50);
+        createClouds(canvas.width + world.character.positionX);
     }, 180000);
 
     // Set the timer for more chickens
     setInterval(() => {
-        createEnemies(Chicken, 2, canvas.width + 20, canvas.width + 300);
+        createEnemies(Chicken, 2, world.background.landscapeLayer[0].width, world.background.landscapeLayer[0].width + 300);
     }, 25000);
 
     // Set the timer for more chicks
     setInterval(() => {
-        createEnemies(Chick, 1, canvas.width + 20, canvas.width + 300);
+        createEnemies(Chick, 1, world.background.landscapeLayer[0].width, world.background.landscapeLayer[0].width + 300);
     }, 45000);
 }
 

@@ -58,7 +58,7 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-57.png'
     ];
     keyboardListener;
-    movingDistance = 5;
+    movingDistance = 5; // The distance the character moves per step
     offsetPosX = 0;
 
     constructor(positionX, positionY, keyboardListener) {
@@ -88,15 +88,25 @@ class Character extends MoveableObject {
      */
     setHorizMoveIntval() {
         setInterval(() => {
-            if (this.keyboardListener.KEYS.RIGHT.status) {
+            const maxCameraPosX = world.background.landscapeLayer[0].width - canvas.width + (2 * this.offsetPosX);
+            const maxPosX = world.background.landscapeLayer[0].width - this.offsetPosX - this.width;
+            if (this.keyboardListener.KEYS.RIGHT.status && this.positionX < maxPosX) {
                 this.isImageMirrored = false;
                 this.move(1);
-                world.setCameraPos(-this.positionX + this.offsetPosX);
+                if (this.positionX <= maxCameraPosX) {
+                    world.setCameraPos(-this.positionX + this.offsetPosX);
+                    world.moveBackground(1);
+                }
             }
             else if (this.keyboardListener.KEYS.LEFT.status) {
                 this.isImageMirrored = true;
-                this.move(-1);
-                world.setCameraPos(-this.positionX + this.offsetPosX);
+                if (this.positionX > this.offsetPosX) {
+                    this.move(-1);
+                    if (this.positionX <= maxCameraPosX) {
+                        world.setCameraPos(-this.positionX + this.offsetPosX);
+                        world.moveBackground(-1);
+                    }
+                }
             }
         }, 55);
     }

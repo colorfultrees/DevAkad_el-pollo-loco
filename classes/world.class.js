@@ -11,6 +11,7 @@ class World {
         this.ctx = canvas.getContext('2d');
     }
 
+
     draw() {
         // Move the context relative to the character's position
         this.ctx.translate(this.cameraPos, 0);
@@ -69,5 +70,13 @@ class World {
 
     setCameraPos(pos) {
         this.cameraPos = pos;
+    }
+
+
+    moveBackground(direction) {
+        const parallaxLandscapeLayer2 = Math.round(this.character.movingDistance / 7) * direction;
+        const parallaxLandscapeLayer3 = Math.round(this.character.movingDistance * 2 / 7) * direction;
+        this.background.landscapeLayer[1].positionX += parallaxLandscapeLayer2;
+        this.background.landscapeLayer[2].positionX += parallaxLandscapeLayer3;
     }
 }
