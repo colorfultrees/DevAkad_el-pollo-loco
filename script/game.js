@@ -61,7 +61,7 @@ function createBackground() {
  * Creates the sky
  */
 function createSky() {
-    world.background.air = new Background(0, 0, './img/5_background/layers/air.png');
+    world.background.sky = new Background(0, 0, './img/5_background/layers/air.png');
 }
 
 

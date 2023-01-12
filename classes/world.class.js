@@ -1,5 +1,5 @@
 class World {
-    background = {air: {}, clouds: [], landscapeLayer: []};
+    background = {sky: {}, clouds: [], landscapeLayer: []};
     character;
     enemies = [];
     canvas;
@@ -17,7 +17,7 @@ class World {
         this.ctx.translate(this.cameraPos, 0);
 
         // Draw the sky
-        this.drawSingleObjectToCanvas(this.background.air)
+        this.drawSingleObjectToCanvas(this.background.sky)
 
         // Draw the clouds
         this.drawMultipleObjectsToCanvas(this.background.clouds);
@@ -74,9 +74,7 @@ class World {
 
 
     moveBackground(direction) {
-        const parallaxLandscapeLayer2 = Math.round(this.character.movingDistance / 7) * direction;
-        const parallaxLandscapeLayer3 = Math.round(this.character.movingDistance * 2 / 7) * direction;
-        this.background.landscapeLayer[1].positionX += parallaxLandscapeLayer2;
-        this.background.landscapeLayer[2].positionX += parallaxLandscapeLayer3;
+        this.background.landscapeLayer[0].positionX += this.character.parallaxLandscapeLayer2 * direction;
+        this.background.landscapeLayer[1].positionX += this.character.parallaxLandscapeLayer3 * direction;
     }
 }

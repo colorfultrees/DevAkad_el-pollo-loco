@@ -60,6 +60,8 @@ class Character extends MoveableObject {
     keyboardListener;
     movingDistance = 5; // The distance the character moves per step
     offsetPosX = 0;
+    parallaxLandscapeLayer2 = 0.7;
+    parallaxLandscapeLayer3 = 1.4;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
@@ -88,7 +90,7 @@ class Character extends MoveableObject {
      */
     setHorizMoveIntval() {
         setInterval(() => {
-            const maxCameraPosX = world.background.landscapeLayer[0].width - canvas.width + (2 * this.offsetPosX);
+            const maxCameraPosX = world.background.landscapeLayer[0].width - canvas.width + this.offsetPosX;
             const maxPosX = world.background.landscapeLayer[0].width - this.offsetPosX - this.width;
             if (this.keyboardListener.KEYS.RIGHT.status && this.positionX < maxPosX) {
                 this.isImageMirrored = false;
