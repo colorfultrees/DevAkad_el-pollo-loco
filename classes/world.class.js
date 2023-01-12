@@ -1,7 +1,6 @@
 class World {
-    background = {sky: {}, clouds: [], landscapeLayer: []};
     character;
-    enemies = [];
+    level;
     canvas;
     ctx;
     cameraPos = 0;
@@ -12,24 +11,40 @@ class World {
     }
 
 
+    /**
+     * Creates the main character
+     */
+    createCharacter() {
+        const startPosX = 100;
+        this.character = new Character(startPosX, 0, keyboardListener);
+        this.character.positionY = canvas.height - this.character.height;
+        // world.setCameraPos(-startPosX);
+    }
+
+
+    setLevel(level) {
+        this.level = level;
+    }
+
+
     draw() {
         // Move the context relative to the character's position
         this.ctx.translate(this.cameraPos, 0);
 
         // Draw the sky
-        this.drawSingleObjectToCanvas(this.background.sky)
+        this.drawSingleObjectToCanvas(this.level.background.sky)
 
         // Draw the clouds
-        this.drawMultipleObjectsToCanvas(this.background.clouds);
+        this.drawMultipleObjectsToCanvas(this.level.background.clouds);
 
         // Draw the landscape
-        this.drawMultipleObjectsToCanvas(this.background.landscapeLayer);
+        this.drawMultipleObjectsToCanvas(this.level.background.landscapeLayer);
         
         // Draw the character
         this.drawSingleObjectToCanvas(this.character);
 
         // Draw the enemies
-        this.drawMultipleObjectsToCanvas(this.enemies);
+        this.drawMultipleObjectsToCanvas(this.level.enemies);
 
         // Reset the context's position
         this.ctx.translate(-this.cameraPos, 0);
@@ -74,7 +89,7 @@ class World {
 
 
     moveBackground(direction) {
-        this.background.landscapeLayer[0].positionX += this.character.parallaxLandscapeLayer2 * direction;
-        this.background.landscapeLayer[1].positionX += this.character.parallaxLandscapeLayer3 * direction;
+        this.level.background.landscapeLayer[0].positionX += this.character.parallaxLandscapeLayer2 * direction;
+        this.level.background.landscapeLayer[1].positionX += this.character.parallaxLandscapeLayer3 * direction;
     }
 }

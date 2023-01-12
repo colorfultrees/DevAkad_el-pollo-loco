@@ -90,8 +90,8 @@ class Character extends MoveableObject {
      */
     setHorizMoveIntval() {
         setInterval(() => {
-            const maxCameraPosX = world.background.landscapeLayer[0].width - canvas.width + this.offsetPosX;
-            const maxPosX = world.background.landscapeLayer[0].width - this.offsetPosX - this.width;
+            const maxCameraPosX = world.level.background.landscapeLayer[0].width - canvas.width + this.offsetPosX;
+            const maxPosX = world.level.background.landscapeLayer[0].width - this.offsetPosX - this.width;
             if (this.keyboardListener.KEYS.RIGHT.status && this.positionX < maxPosX) {
                 this.isImageMirrored = false;
                 this.move(1);

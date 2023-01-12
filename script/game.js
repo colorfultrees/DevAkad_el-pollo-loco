@@ -8,7 +8,7 @@ let keyboardListener;
 /**
  * Initiates the game
  */
-async function init() {
+function init() {
     canvas = document.querySelector('canvas');
     canvas.setAttribute('width', CANVAS_WIDTH + 'px');
     canvas.setAttribute('height', CANVAS_HEIGHT + 'px');
@@ -20,92 +20,14 @@ async function init() {
     // console.log('eventListeners created.');
 
     world = new World(canvas);
-    
-    createBackground();
-    createCharacter();
-    createEnemies(Chicken, 7, 350, world.background.landscapeLayer[0].width - 400);
-    createEnemies(Chick, 4, 350, world.background.landscapeLayer[0].width - 400);
-    // createChickens();
-    // createChicks();
+    createLevel1();
+    world.setLevel(level1);
+    world.createCharacter();
 
     renderWorld();
 
-    // Start the timer for more clouds
-    setInterval(() => {
-        createClouds(canvas.width + world.character.positionX);
-    }, 180000);
-
-    // Set the timer for more chickens
-    setInterval(() => {
-        createEnemies(Chicken, 2, world.background.landscapeLayer[0].width, world.background.landscapeLayer[0].width + 300);
-    }, 25000);
-
-    // Set the timer for more chicks
-    setInterval(() => {
-        createEnemies(Chick, 1, world.background.landscapeLayer[0].width, world.background.landscapeLayer[0].width + 300);
-    }, 45000);
-}
-
-
-/**
- * Creates the background
- */
-function createBackground() {
-    createSky();
-    createClouds(0);
-    createLandscape();    
-}
-
-
-/**
- * Creates the sky
- */
-function createSky() {
-    world.background.sky = new Background(0, 0, './img/5_background/layers/air.png');
-}
-
-
-/**
- * Creates the clouds
- * @param {Number} startPos The position of the first cloud formation
- */
-function createClouds(startPos) {
-    for (let c = 0; c < 5; c++) {
-        const posX = calcRandomNumber(-100, 300) + (500 * c) + startPos;
-        const posY = calcRandomNumber(0, 50);
-        world.background.clouds.push(new Cloud(posX, posY));
-    }
-}
-
-
-/**
- * Creates the landscape
- */
-function createLandscape() {
-    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/3_third_layer/full.png'));
-    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/2_second_layer/full.png'));
-    world.background.landscapeLayer.push(new Background(0, 0, './img/5_background/layers/1_first_layer/full.png'));
-}
-
-
-/**
- * Creates the main character
- */
-function createCharacter() {
-    const startPosX = 100;
-    world.character = new Character(startPosX, 0, keyboardListener);
-    world.character.positionY = world.canvas.height - world.character.height;
-    // world.setCameraPos(-startPosX);
-}
-
-
-function createEnemies(EnemyClass, count, startPos, endPos) {
-    for (let e = 1; e <= count; e++) {
-        const obj = new EnemyClass(0, 0);
-        obj.positionX = calcRandomNumber(startPos, endPos);
-        obj.positionY = canvas.height - obj.height - 15;
-        world.enemies.push(obj);
-    }
+    initHorizontalMovementIntvals_Level1();
+    initCreationIntervals_Level1();
 }
 
 
