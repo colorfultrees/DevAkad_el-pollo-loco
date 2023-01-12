@@ -26,7 +26,7 @@ function init() {
 
     renderWorld();
 
-    initHorizontalMovementIntvals_Level1();
+    // initHorizontalMovementIntvals_Level1();
     initCreationIntervals_Level1();
 }
 

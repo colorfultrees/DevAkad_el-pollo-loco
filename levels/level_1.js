@@ -14,14 +14,14 @@ function createLevel1() {
 }
 
 
-function initHorizontalMovementIntvals_Level1() {
-    level1.background.clouds.forEach(cloud => {
-        cloud.initHorizontalMovement(level1.background.clouds, -1);
-    });
-    level1.enemies.forEach(enemy => {
-        enemy.initHorizontalMovement(level1.enemies, -1);
-    });
-}
+// function initHorizontalMovementIntvals_Level1() {
+//     level1.background.clouds.forEach(cloud => {
+//         cloud.initHorizontalMovement(level1.background.clouds, -1);
+//     });
+//     level1.enemies.forEach(enemy => {
+//         enemy.initHorizontalMovement(level1.enemies, -1);
+//     });
+// }
 
 
 function initCreationIntervals_Level1() {

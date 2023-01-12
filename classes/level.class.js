@@ -21,7 +21,7 @@ class Level {
             obj.positionX = calcRandomNumber(-100, 300) + (500 * c) + startPos;
             obj.positionY = calcRandomNumber(0, 50);
             this.background.clouds.push(obj);
-            // obj.initHorizontalMovement(this.background.clouds, -1);
+            obj.initHorizontalMovement(this.background.clouds, -1);
         }
     }
 
@@ -49,7 +49,7 @@ class Level {
             obj.positionX = calcRandomNumber(startPos, endPos);
             obj.positionY = canvas.height - obj.height - 15;
             this.enemies.push(obj);
-            // obj.initHorizontalMovement(this.enemies, -1);
+            obj.initHorizontalMovement(this.enemies, -1);
         }
     }
 
