@@ -93,24 +93,43 @@ class Character extends MoveableObject {
             const maxCameraPosX = world.level.background.landscapeLayer[0].width - canvas.width + this.offsetPosX;
             const maxPosX = world.level.background.landscapeLayer[0].width - this.offsetPosX - this.width;
             if (this.keyboardListener.KEYS.RIGHT.status && this.positionX < maxPosX) {
-                this.isImageMirrored = false;
-                this.move(1);
-                if (this.positionX <= maxCameraPosX) {
-                    world.setCameraPos(-this.positionX + this.offsetPosX);
-                    world.moveBackground(1);
-                }
+                this.controlRightMovement(maxCameraPosX, maxPosX);
             }
             else if (this.keyboardListener.KEYS.LEFT.status) {
-                this.isImageMirrored = true;
-                if (this.positionX > this.offsetPosX) {
-                    this.move(-1);
-                    if (this.positionX <= maxCameraPosX) {
-                        world.setCameraPos(-this.positionX + this.offsetPosX);
-                        world.moveBackground(-1);
-                    }
-                }
+                this.controlLeftMovement(maxCameraPosX);
             }
         }, 55);
+    }
+    
+    
+    /**
+     * Controls the movement to the right
+     * @param {Number} maxCameraPosX The farthest right camera position
+     * @param {Number} maxPosX The farthest right character position
+     */
+    controlRightMovement(maxCameraPosX, maxPosX) {
+        this.isImageMirrored = false;
+        this.move(1);
+        if (this.positionX <= maxCameraPosX) {
+            world.setCameraPos(-this.positionX + this.offsetPosX);
+            world.moveBackground(1);
+        }
+    }
+    
+    
+    /**
+     * Controls the movement to the left
+     * @param {Number} maxCameraPosX The farthest right camera position
+     */
+    controlLeftMovement(maxCameraPosX) {
+        this.isImageMirrored = true;
+        if (this.positionX > this.offsetPosX) {
+            this.move(-1);
+            if (this.positionX <= maxCameraPosX) {
+                world.setCameraPos(-this.positionX + this.offsetPosX);
+                world.moveBackground(-1);
+            }
+        }
     }
 
 
