@@ -57,8 +57,13 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-56.png',
         './img/2_character_pepe/5_dead/D-57.png'
     ];
+    AUDIO = {
+        walking: new Audio('./audio/walk-on-sand.wav'),
+        jump: new Audio('./audio/jump.wav'),
+        hurt: new Audio('./audio/got_hurt.mp3')
+    };
     keyboardListener;
-    movingDistance = 5; // The distance the character moves per step
+    movingDistance = 5;
     offsetPosX = 0;
     parallaxLandscapeLayer2 = 0.7;
     parallaxLandscapeLayer3 = 1.4;
@@ -94,9 +99,14 @@ class Character extends MoveableObject {
             const maxPosX = world.level.background.landscapeLayer[0].width - this.offsetPosX - this.width;
             if (this.keyboardListener.KEYS.RIGHT.status && this.positionX < maxPosX) {
                 this.controlRightMovement(maxCameraPosX, maxPosX);
+                this.playSound(this.AUDIO.walking);
             }
             else if (this.keyboardListener.KEYS.LEFT.status) {
                 this.controlLeftMovement(maxCameraPosX);
+                this.playSound(this.AUDIO.walking);
+            }
+            else {
+                this.stopSound(this.AUDIO.walking);
             }
         }, 55);
     }

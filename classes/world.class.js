@@ -1,4 +1,8 @@
 class World {
+    AUDIO = {
+        background_music: new Audio('./audio/background-music_1.wav'),
+        rooster: new Audio('./audio/rooster.wav')
+    }
     character;
     level;
     canvas;
@@ -24,6 +28,20 @@ class World {
 
     setLevel(level) {
         this.level = level;
+    }
+
+
+    initBackgroundSound() {
+        // Start the background music
+        this.AUDIO.background_music.loop = true;
+        this.AUDIO.background_music.play();
+
+        // Start the loop for the rooster crow
+        setInterval(() => {
+            setTimeout(() => {
+                this.AUDIO.rooster.play();
+            }, calcRandomNumber(0, 15000));
+        }, 20000);
     }
 
 
