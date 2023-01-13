@@ -1,38 +1,61 @@
 class Level {
-    background = {sky: {}, clouds: [], landscapeLayer: []};
+    background = {sky: [], clouds: [], landscapeLayer: []};
     enemies = [];
+    sceneParts = 0; // Number of aligned landscape parts
+    parallaxLandscapeLayer = [];
+
+
+    constructor(sceneParts, parallaxLandscapeLayer) {
+        this.sceneParts = sceneParts;
+        this.parallaxLandscapeLayer = parallaxLandscapeLayer;
+    }
 
 
     /**
      * Creates the sky
      */
     createSky(imageUrl) {
-        this.background.sky = new Background(0, 0, imageUrl);
+        let x = 0;
+        for (let i = 0; i < this.sceneParts; i++) {
+            this.background.sky.push(new Background(x, 0, imageUrl));
+            x += this.background.sky[0].width - 1;
+        }
     }
 
 
+    
+    
+    /**
+     * Creates the landscape
+     * @param {String} layer1 The image URL of layer 1
+     * @param {String} layer2 The image URL of layer 2
+     * @param {String} layer3 The image URL of layer 3
+     */
+    createLandscape(layer1, layer2, layer3) {
+        const layer = [layer3, layer2, layer1];
+        let x;
+        for (let l = 0; l < layer.length; l++) {
+            x = 0;
+            for (let i = 0; i < this.sceneParts; i++) {
+                this.background.landscapeLayer.push(new Background(x, 0, layer[l]));
+                x += this.background.landscapeLayer[0].width - 1;
+            }
+        }
+    }
+
+    
     /**
      * Creates the clouds
      * @param {Number} startPos The position of the first cloud formation
      */
-    createClouds(startPos) {
-        for (let c = 0; c < 5; c++) {
+    createClouds(startPos, count) {
+        for (let c = 0; c < count; c++) {
             const obj = new Cloud(0, 0);
             obj.positionX = calcRandomNumber(-100, 300) + (500 * c) + startPos;
             obj.positionY = calcRandomNumber(0, 50);
             this.background.clouds.push(obj);
             obj.initHorizontalMovement(this.background.clouds, -1);
         }
-    }
-
-
-    /**
-     * Creates the landscape
-     */
-    createLandscape(layer1, layer2, layer3) {
-        this.background.landscapeLayer.push(new Background(0, 0, layer3));
-        this.background.landscapeLayer.push(new Background(0, 0, layer2));
-        this.background.landscapeLayer.push(new Background(0, 0, layer1));
     }
 
 
@@ -61,7 +84,7 @@ class Level {
      */
     setIntervalClouds(startPos, time) {
         setInterval(() => {
-            this.createClouds(startPos);
+            this.createClouds(startPos, 5);
         }, time);
         
     }

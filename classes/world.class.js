@@ -50,7 +50,7 @@ class World {
         this.ctx.translate(this.cameraPos, 0);
 
         // Draw the sky
-        this.drawSingleObjectToCanvas(this.level.background.sky)
+        this.drawMultipleObjectsToCanvas(this.level.background.sky);
 
         // Draw the clouds
         this.drawMultipleObjectsToCanvas(this.level.background.clouds);
@@ -107,7 +107,9 @@ class World {
 
 
     moveBackground(direction) {
-        this.level.background.landscapeLayer[0].positionX += this.character.parallaxLandscapeLayer2 * direction;
-        this.level.background.landscapeLayer[1].positionX += this.character.parallaxLandscapeLayer3 * direction;
+        for (let l = 0; l < 2; l++) {
+            this.level.background.landscapeLayer[l * 2].positionX += this.level.parallaxLandscapeLayer[l] * direction;
+            this.level.background.landscapeLayer[(l * 2) + 1].positionX += this.level.parallaxLandscapeLayer[l] * direction;
+        }
     }
 }
