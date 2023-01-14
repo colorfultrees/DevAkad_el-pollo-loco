@@ -13,10 +13,12 @@ class MoveableObject {
     walkIntervalId = 0;
     isImageMirrored = false;
 
+
     constructor(positionX, positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
     }
+
 
     /**
      * Loads an image from the given URL
@@ -93,6 +95,10 @@ class MoveableObject {
     }
 
 
+    /**
+     * Clears movement intervals of object that passed the left scene border and deletes the respective object from the array
+     * @param {Array} objCategory Array of the respective objects
+     */
     manageMovementIntervals(objCategory) {
         const posRight = this.positionX + this.width;
         if (posRight < 0) {
