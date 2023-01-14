@@ -11,6 +11,7 @@ function createLevel1() {
     level1.createClouds(0, 10);
     level1.createEnemies(Chicken, 9, 350, level1.background.landscapeLayer[0].width * level1.sceneParts);
     level1.createEnemies(Chick, 5, 350, level1.background.landscapeLayer[0].width * level1.sceneParts);
+    level1.createEndboss();
 }
 
 

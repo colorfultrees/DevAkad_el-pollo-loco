@@ -1,6 +1,7 @@
 class Level {
     background = {sky: [], clouds: [], landscapeLayer: []};
     enemies = [];
+    endboss = undefined;
     sceneParts = 0; // Number of aligned landscape parts
     parallaxLandscapeLayer = [];
 
@@ -74,6 +75,16 @@ class Level {
             this.enemies.push(obj);
             obj.initHorizontalMovement(this.enemies, -1);
         }
+    }
+
+
+    /**
+     * Creates the endboss
+     */
+    createEndboss() {
+        this.endboss = new Endboss(0, 0);
+        this.endboss.positionX = level1.background.landscapeLayer[0].width * level1.sceneParts - this.endboss.width - 100;
+        this.endboss.positionY = canvas.height - this.endboss.height;
     }
 
 

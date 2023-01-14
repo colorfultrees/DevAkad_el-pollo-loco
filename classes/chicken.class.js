@@ -7,14 +7,14 @@ class Chicken extends MoveableObject {
     IMAGES_DIE = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ]
-    movingDistance = 3;
 
     constructor(positionX, positionY) {
-        super(positionX, positionY).loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
+        super(positionX, positionY); //.loadImage(this.IMAGES_WALK[0]);
 
         this.aspectRatio = 1.0206;
         this.width = 124;
         this.height = this.width / this.aspectRatio;
+        this.movingDistance = 3;
 
         this.loadImageCache(this.IMAGES_WALK);
         this.loadImageCache(this.IMAGES_DIE);

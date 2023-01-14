@@ -7,6 +7,7 @@ class MoveableObject {
     width = 0;
     height = 0;
     currentImage = 0;
+    movingDistance = 0; // The distance which the object moves at each step
     horizMoveInterval; // The moving interval in ms
     horizMoveIntervalId = 0;
     walkIntervalId = 0;

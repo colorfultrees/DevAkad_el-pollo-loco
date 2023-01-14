@@ -60,6 +60,9 @@ class World {
         // Draw the character
         this.drawSingleObjectToCanvas(this.character);
 
+        // Draw the endboss
+        this.drawSingleObjectToCanvas(this.level.endboss);
+
         // Draw the enemies
         this.drawMultipleObjectsToCanvas(this.level.enemies);
 

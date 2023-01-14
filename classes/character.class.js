@@ -63,16 +63,16 @@ class Character extends MoveableObject {
         hurt: new Audio('./audio/got_hurt.mp3')
     };
     keyboardListener;
-    movingDistance = 5;
     offsetPosX = 0;
 
     constructor(positionX, positionY, keyboardListener) {
-        super(positionX, positionY).loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
+        super(positionX, positionY).loadImage(this.IMAGES_WAIT[0]);
 
         this.aspectRatio = 0.5083;
         this.width = 244;
         this.height = this.width / this.aspectRatio;
         this.offsetPosX = positionX;
+        this.movingDistance = 5;
 
         this.loadImageCache(this.IMAGES_WAIT);
         this.loadImageCache(this.IMAGES_SNOOZE);
