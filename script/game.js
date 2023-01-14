@@ -26,7 +26,7 @@ function init() {
 
     renderWorld();
 
-    // world.initBackgroundSound();  ###### ACTIVATE LATER ###########
+    // world.initBackgroundSound(); // ###### ACTIVATE LATER ###########
 
     // initHorizontalMovementIntvals_Level1();
     initCreationIntervals_Level1();

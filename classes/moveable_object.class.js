@@ -94,23 +94,4 @@ class MoveableObject {
             console.log(`Object: ${this.constructor.name} | Intervals cleared: hor - ${this.horizMoveIntervalId} / walk - ${this.walkIntervalId} | objCategory[${objId}] removed.`);
         }
     }
-
-
-    /**
-     * Starts playing a sound
-     * @param {Object} sound The Audio object to be played
-     */
-    playSound(sound) {
-        sound.play();
-    }
-
-
-    /**
-     * Stops playing a sound and resets it to its start
-     * @param {Object} sound The Audio object to be played
-     */
-    stopSound(sound) {
-        sound.pause();
-        sound.currentTime = 0;
-    }
 }

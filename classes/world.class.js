@@ -33,13 +33,12 @@ class World {
 
     initBackgroundSound() {
         // Start the background music
-        this.AUDIO.background_music.loop = true;
-        this.AUDIO.background_music.play();
+        this.playSound(this.AUDIO.background_music, true)
 
         // Start the loop for the rooster crow
         setInterval(() => {
             setTimeout(() => {
-                this.AUDIO.rooster.play();
+                this.playSound(this.AUDIO.rooster, false);
             }, calcRandomNumber(0, 15000));
         }, 20000);
     }
@@ -108,8 +107,30 @@ class World {
 
     moveBackground(direction) {
         for (let l = 0; l < 2; l++) {
-            this.level.background.landscapeLayer[l * 2].positionX += this.level.parallaxLandscapeLayer[l] * direction;
-            this.level.background.landscapeLayer[(l * 2) + 1].positionX += this.level.parallaxLandscapeLayer[l] * direction;
+            for (let i = 0; i < world.level.sceneParts; i++) {
+                this.level.background.landscapeLayer[(l * 2) + i].positionX += this.level.parallaxLandscapeLayer[l] * direction;
+            }            
         }
+    }
+
+
+    /**
+     * Starts playing a sound
+     * @param {Object} sound The Audio object to be played
+     * @param {Boolean} isLooping Flag to set the sound playing in a loop
+     */
+    playSound(sound, isLooping) {
+        sound.loop = isLooping;
+        sound.play();
+    }
+
+
+    /**
+     * Stops playing a sound and resets it to its start
+     * @param {Object} sound The Audio object to be played
+     */
+    stopSound(sound) {
+        sound.pause();
+        sound.currentTime = 0;
     }
 }
