@@ -41,6 +41,17 @@ class MoveableObject {
 
 
     /**
+     * Changes the image in an animation
+     * @param {Array} images The URLs of the animation sequence
+     */
+    playAnimation(images) {
+        this.currentImage = this.currentImage % images.length
+        this.img = this.imageCache[images[this.currentImage]];
+        this.currentImage++;
+    }
+
+
+    /**
      * Sets the interval for the horizontal movement of the object
      * @param {Number} fast The shortest interval
      * @param {Number} slow The longest interval
@@ -66,11 +77,9 @@ class MoveableObject {
      * Animates the walking sequence of the object
      * @param {Number} frequency The frequency of the animated images
      */
-    walk(frequency) {
+    walk(frequency, images) {
         this.walkIntervalId = setInterval(() => {
-            this.currentImage = this.currentImage % this.IMAGES_WALK.length
-            this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
-            this.currentImage++;
+            this.playAnimation(images);
         }, frequency);
     }
 

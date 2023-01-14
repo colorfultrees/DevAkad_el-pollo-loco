@@ -22,6 +22,6 @@ class Chick extends MoveableObject {
         this.setHorizMoveIntval(100, 300);
         // this.initHorizontalMovement(world.enemies, -1);
 
-        this.walk(calcRandomNumber(90, 150));
+        this.walk(calcRandomNumber(90, 150), this.IMAGES_WALK);
     }
 }

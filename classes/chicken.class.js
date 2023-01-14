@@ -22,6 +22,6 @@ class Chicken extends MoveableObject {
         this.setHorizMoveIntval(100, 300);
         // this.initHorizontalMovement(world.enemies, -1);
 
-        this.walk(calcRandomNumber(100, 170));
+        this.walk(calcRandomNumber(100, 170), this.IMAGES_WALK);
     }
 }

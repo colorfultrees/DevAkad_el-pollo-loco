@@ -152,9 +152,7 @@ class Character extends MoveableObject {
             if ((this.keyboardListener.KEYS.RIGHT.status ||
                 this.keyboardListener.KEYS.LEFT.status) &&
                 !this.keyboardListener.KEYS.UP.status) {
-                    this.currentImage = this.currentImage % this.IMAGES_WALK.length
-                    this.img = this.imageCache[this.IMAGES_WALK[this.currentImage]];
-                    this.currentImage++;
+                    this.playAnimation(this.IMAGES_WALK);
             }
         }, 115);
     }
