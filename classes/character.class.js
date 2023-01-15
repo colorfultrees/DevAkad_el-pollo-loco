@@ -87,13 +87,10 @@ class Character extends MoveableObject {
 
         this.keyboardListener = keyboardListener;
 
-        // TEST ????????
-        this.applyGravity();
-        // TEST ????????
-        
         this.setHorizMoveIntval();
         this.walk();
         this.jump();
+        this.applyGravity();
     }
 
 
@@ -187,7 +184,16 @@ class Character extends MoveableObject {
             if (this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) {
                 this.speedY = 50;
                 this.applyGravity();
+                this.currentImage = 0;
+                let interval = setInterval(() => {
+                    this.playAnimation(this.IMAGES_JUMP);
+                    if (!this.isAboveGround()) {
+                        this.currentImage = 0;
+                        this.loadImage(this.IMAGES_WAIT[0]);
+                        clearInterval(interval);
+                    }
+                }, 90);
             }
-        }, 80);
+        }, 50);
     }
 }

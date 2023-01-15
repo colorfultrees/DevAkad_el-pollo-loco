@@ -71,6 +71,7 @@ class MoveableObject {
             if (!this.isAboveGround()) {
                 clearInterval(interval);
                 this.positionY = this.groundPosition;
+                this.speedY = 0;
             }
         }, 1000 / 25);
     }
