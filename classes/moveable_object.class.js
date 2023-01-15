@@ -56,11 +56,19 @@ class MoveableObject {
     }
 
 
+    isAboveGround() {
+        return this.positionY - this.speedY < this.groundPosition;
+    }
+
+
     applyGravity() {
+        let step = 0; // TEST
         let interval = setInterval(() => {
             this.positionY -= this.speedY;
             this.speedY -= this.acceleration;
-            if (this.positionY - this.speedY >= this.groundPosition) {
+            step++; // TEST
+            console.log(`Jumping step ${step}`); // TEST
+            if (!this.isAboveGround()) {
                 clearInterval(interval);
                 this.positionY = this.groundPosition;
             }

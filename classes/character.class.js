@@ -67,7 +67,6 @@ class Character extends MoveableObject {
     };
     keyboardListener;
     offsetPosX = 0;
-    isJumping = false;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage(this.IMAGES_WAIT[0]);
@@ -94,6 +93,7 @@ class Character extends MoveableObject {
         
         this.setHorizMoveIntval();
         this.walk();
+        this.jump();
     }
 
 
@@ -153,14 +153,14 @@ class Character extends MoveableObject {
 
 
     /**
-     * Animates the walking sequence of the object
+     * Animates the walking sequence
      * @param {Number} frequency The frequency of the animated images
      */
     walk() {
         setInterval(() => {
             if ((this.keyboardListener.KEYS.RIGHT.status ||
                 this.keyboardListener.KEYS.LEFT.status) &&
-                !this.keyboardListener.KEYS.JUMP.status) {
+                !this.isAboveGround()) {
                     this.playAnimation(this.IMAGES_WALK);
                     world.playSound(this.AUDIO.walking, 1, false);
             }
@@ -178,7 +178,16 @@ class Character extends MoveableObject {
         this.img = this.imageCache[this.IMAGES_WAIT[0]];
     }
 
+
+    /**
+     * Animates the jumping sequence
+     */
     jump() {
-        
+        setInterval(() => {
+            if (this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) {
+                this.speedY = 50;
+                this.applyGravity();
+            }
+        }, 80);
     }
 }
