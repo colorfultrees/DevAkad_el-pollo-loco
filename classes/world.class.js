@@ -23,9 +23,16 @@ class World {
         this.character = new Character(startPosX, 0, keyboardListener);
         
         // ++++++++++ TEST
-        this.character.positionY = -150;
-        this.character.groundPosition = canvas.height - this.character.height;
-        // this.character.positionY = canvas.height - this.character.height;
+        // this.character.positionY = -150;
+        // this.character.groundPosition = canvas.height - this.character.height;
+        this.character.positionY = canvas.height - this.character.height;
+        this.character.groundPosition = this.character.positionY;
+        this.character.applyGravity();
+        // this.currentImage = 4;
+        setTimeout(() => {
+            this.character.playInitAnim = false;
+            this.character.loadImage(this.character.IMAGES_WAIT[0]);
+        }, 100);
         // ++++++++++ TEST
 
         // world.setCameraPos(-startPosX);

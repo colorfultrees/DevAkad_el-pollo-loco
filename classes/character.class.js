@@ -67,6 +67,7 @@ class Character extends MoveableObject {
     };
     keyboardListener;
     offsetPosX = 0;
+    playInitAnim = true;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage(this.IMAGES_WAIT[0]);
@@ -90,7 +91,6 @@ class Character extends MoveableObject {
         this.setHorizMoveIntval();
         this.walk();
         this.jump();
-        this.applyGravity();
     }
 
 
@@ -181,7 +181,7 @@ class Character extends MoveableObject {
      */
     jump() {
         setInterval(() => {
-            if (this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) {
+            if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) || this.playInitAnim) {
                 this.speedY = 50;
                 this.applyGravity();
                 this.currentImage = 0;
