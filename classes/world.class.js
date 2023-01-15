@@ -86,9 +86,11 @@ class World {
         requestAnimationFrame(() => self.draw());
     }
 
+
     drawSingleObjectToCanvas(obj) {
         this.mirrorImage(obj);
         this.ctx.drawImage(obj.img, obj.positionX, obj.positionY, obj.width, obj.height);
+        this.drawRect(obj);
         this.resetMirroring(obj);
     }
 
@@ -151,4 +153,13 @@ class World {
         sound.pause();
         sound.currentTime = 0;
     }
+
+
+    // ++++++++ TEST ++++++++++++++
+    drawRect(obj) {
+        this.ctx.beginPath();
+        this.ctx.rect(obj.positionX, obj.positionY, obj.width, obj.height);
+        this.ctx.stroke();
+    }
+    // ++++++++ TEST ++++++++++++++
 }
