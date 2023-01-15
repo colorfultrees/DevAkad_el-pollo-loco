@@ -12,6 +12,9 @@ class MoveableObject {
     horizMoveIntervalId = 0;
     walkIntervalId = 0;
     isImageMirrored = false;
+    speedY = -1; // Vertical speed - rising: (+), falling: (-)
+    acceleration = 5;
+    groundPosition = 0;
 
 
     constructor(positionX, positionY) {
@@ -50,6 +53,18 @@ class MoveableObject {
         this.currentImage = this.currentImage % images.length
         this.img = this.imageCache[images[this.currentImage]];
         this.currentImage++;
+    }
+
+
+    applyGravity() {
+        let interval = setInterval(() => {
+            this.positionY -= this.speedY;
+            this.speedY -= this.acceleration;
+            if (this.positionY - this.speedY >= this.groundPosition) {
+                clearInterval(interval);
+                this.positionY = this.groundPosition;
+            }
+        }, 1000 / 25);
     }
 
 

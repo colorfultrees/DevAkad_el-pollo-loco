@@ -10,14 +10,14 @@ class Keyboard {
                 code: 'ArrowRight',
                 status: false
             },
-        UP:
-            {
-                code: 'ArrowUp',
-                status: false
-            },
-        SPACE:
+        JUMP:
             {
                 code: 'Space',
+                status: false
+            },
+        THROW:
+            {
+                code: 'KeyD',
                 status: false
             }
     };
@@ -104,23 +104,23 @@ class Keyboard {
                 case this.KEYS.LEFT.code:
                     this.KEYS.LEFT.status = true;
                     this.KEYS.RIGHT.status = false;
-                    console.log(`I'm moving left. (${JSON.stringify(this.KEYS)})`);
+                    // console.log(`I'm moving left. (${JSON.stringify(this.KEYS)})`);
                     break;
                 case this.KEYS.RIGHT.code:
                     this.KEYS.LEFT.status = false;
                     this.KEYS.RIGHT.status = true;
-                    console.log(`I'm moving right. (${JSON.stringify(this.KEYS)})`);
+                    // console.log(`I'm moving right. (${JSON.stringify(this.KEYS)})`);
                     break;
-                case this.KEYS.UP.code:
-                    this.KEYS.UP.status = true;
-                    console.log(`I'm jumping. (${JSON.stringify(this.KEYS)})`);
+                case this.KEYS.JUMP.code:
+                    this.KEYS.JUMP.status = true;
+                    // console.log(`I'm jumping. (${JSON.stringify(this.KEYS)})`);
                     break;
-                case this.KEYS.SPACE.code:
-                    this.KEYS.SPACE.status = true;
-                    console.log(`I throw a bottle. (${JSON.stringify(this.KEYS)})`);
+                case this.KEYS.THROW.code:
+                    this.KEYS.THROW.status = true;
+                    // console.log(`I throw a bottle. (${JSON.stringify(this.KEYS)})`);
                     break;
                 default:
-                    console.log("The switch statement in handleKeyDown() didn't work.");
+                    // console.log("The switch statement in handleKeyDown() didn't work.");
             }
         });
     }
@@ -128,29 +128,29 @@ class Keyboard {
 
     handleKeyUp() {
         document.addEventListener('keyup', (event) => {
-            console.log(`KeyCode in handleKeyUp(): ${event.code}, ${typeof(event.code)}`);
+            // console.log(`KeyCode in handleKeyUp(): ${event.code}, ${typeof(event.code)}`);
 
             switch (event.code) {
                 case this.KEYS.LEFT.code:
                     this.KEYS.LEFT.status = false;
                     world.character.stopWalking();
-                    console.log(`I stopped moving left. (${JSON.stringify(this.KEYS)})`);
+                    // console.log(`I stopped moving left. (${JSON.stringify(this.KEYS)})`);
                     break;
                 case this.KEYS.RIGHT.code:
                     this.KEYS.RIGHT.status = false;
                     world.character.stopWalking();
-                    console.log(`I stopped moving right. (${JSON.stringify(this.KEYS)})`);
+                    // console.log(`I stopped moving right. (${JSON.stringify(this.KEYS)})`);
                     break;
-                case this.KEYS.UP.code:
-                    this.KEYS.UP.status = false;
-                    console.log(`I stopped jumping. (${JSON.stringify(this.KEYS)})`);
+                case this.KEYS.JUMP.code:
+                    this.KEYS.JUMP.status = false;
+                    // console.log(`I stopped jumping. (${JSON.stringify(this.KEYS)})`);
                     break;
-                case this.KEYS.SPACE.code:
-                    this.KEYS.SPACE.status = false;
-                    console.log(`I stopped throwing. (${JSON.stringify(this.KEYS)})`);
+                case this.KEYS.THROW.code:
+                    this.KEYS.THROW.status = false;
+                    // console.log(`I stopped throwing. (${JSON.stringify(this.KEYS)})`);
                     break;
                 default:
-                    console.log("The switch statement in handleKeyUp() didn't work.");
+                    // console.log("The switch statement in handleKeyUp() didn't work.");
             }
         });
     }

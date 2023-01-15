@@ -21,7 +21,13 @@ class World {
     createCharacter() {
         const startPosX = 100;
         this.character = new Character(startPosX, 0, keyboardListener);
-        this.character.positionY = canvas.height - this.character.height;
+        
+        // ++++++++++ TEST
+        this.character.positionY = -150;
+        this.character.groundPosition = canvas.height - this.character.height;
+        // this.character.positionY = canvas.height - this.character.height;
+        // ++++++++++ TEST
+
         // world.setCameraPos(-startPosX);
     }
 

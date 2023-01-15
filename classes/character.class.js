@@ -58,12 +58,16 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-57.png'
     ];
     AUDIO = {
-        walking: new Audio('./audio/walk-on-sand.wav'),
-        jump: new Audio('./audio/jump.wav'),
-        hurt: new Audio('./audio/got_hurt.mp3')
+        walking:        new Audio('./audio/walk-on-sand.wav'),
+        jump:           new Audio('./audio/jump_1.wav'),
+        hurt:           new Audio('./audio/got-hurt_1.mp3'),
+        bonusHp:        new Audio('./audio/get-bonus-hp.mp3'),
+        collectCoin:    new Audio('./audio/collect-coin.mp3'),
+        collectBottle:  new Audio('./audio/collect-bottle.mp3')
     };
     keyboardListener;
     offsetPosX = 0;
+    isJumping = false;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage(this.IMAGES_WAIT[0]);
@@ -72,6 +76,7 @@ class Character extends MoveableObject {
         this.width = 244;
         this.height = this.width / this.aspectRatio;
         this.offsetPosX = positionX;
+        // this.groundPosition = positionY;
         this.movingDistance = 5;
 
         this.loadImageCache(this.IMAGES_WAIT);
@@ -82,6 +87,10 @@ class Character extends MoveableObject {
         this.loadImageCache(this.IMAGES_DIE);
 
         this.keyboardListener = keyboardListener;
+
+        // TEST ????????
+        this.applyGravity();
+        // TEST ????????
         
         this.setHorizMoveIntval();
         this.walk();
@@ -97,15 +106,15 @@ class Character extends MoveableObject {
             const maxPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - this.offsetPosX - this.width;
             if (this.keyboardListener.KEYS.RIGHT.status) {
                 this.controlRightMovement(maxCameraPosX, maxPosX);
-                world.playSound(this.AUDIO.walking, 1, false);
+                // if (!this.isJumping) world.playSound(this.AUDIO.walking, 1, false);
             }
             else if (this.keyboardListener.KEYS.LEFT.status) {
                 this.controlLeftMovement(maxCameraPosX);
-                world.playSound(this.AUDIO.walking, 1, false);
+                // if (!this.isJumping) world.playSound(this.AUDIO.walking, 1, false);
             }
-            else {
-                world.stopSound(this.AUDIO.walking);
-            }
+            // else {
+            //     world.stopSound(this.AUDIO.walking);
+            // }
         }, 55);
     }
     
@@ -151,8 +160,12 @@ class Character extends MoveableObject {
         setInterval(() => {
             if ((this.keyboardListener.KEYS.RIGHT.status ||
                 this.keyboardListener.KEYS.LEFT.status) &&
-                !this.keyboardListener.KEYS.UP.status) {
+                !this.keyboardListener.KEYS.JUMP.status) {
                     this.playAnimation(this.IMAGES_WALK);
+                    world.playSound(this.AUDIO.walking, 1, false);
+            }
+            else {
+                world.stopSound(this.AUDIO.walking);
             }
         }, 115);
     }
@@ -166,6 +179,6 @@ class Character extends MoveableObject {
     }
 
     jump() {
-
+        
     }
 }
