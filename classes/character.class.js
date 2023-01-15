@@ -97,11 +97,11 @@ class Character extends MoveableObject {
             const maxPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - this.offsetPosX - this.width;
             if (this.keyboardListener.KEYS.RIGHT.status) {
                 this.controlRightMovement(maxCameraPosX, maxPosX);
-                world.playSound(this.AUDIO.walking, false);
+                world.playSound(this.AUDIO.walking, 1, false);
             }
             else if (this.keyboardListener.KEYS.LEFT.status) {
                 this.controlLeftMovement(maxCameraPosX);
-                world.playSound(this.AUDIO.walking, false);
+                world.playSound(this.AUDIO.walking, 1, false);
             }
             else {
                 world.stopSound(this.AUDIO.walking);

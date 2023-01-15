@@ -3,6 +3,7 @@ const CANVAS_HEIGHT = 600;
 let canvas;
 let world;
 let keyboardListener;
+let intervals = [];
 
 
 /**

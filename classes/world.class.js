@@ -33,12 +33,12 @@ class World {
 
     initBackgroundSound() {
         // Start the background music
-        this.playSound(this.AUDIO.background_music, true)
+        this.playSound(this.AUDIO.background_music, 0.25, true)
 
         // Start the loop for the rooster crow
         setInterval(() => {
             setTimeout(() => {
-                this.playSound(this.AUDIO.rooster, false);
+                this.playSound(this.AUDIO.rooster, 0.75, false);
             }, calcRandomNumber(0, 15000));
         }, 20000);
     }
@@ -120,9 +120,11 @@ class World {
     /**
      * Starts playing a sound
      * @param {Object} sound The Audio object to be played
+     * @param {Number} volume The value of the audio's volume
      * @param {Boolean} isLooping Flag to set the sound playing in a loop
      */
-    playSound(sound, isLooping) {
+    playSound(sound, volume, isLooping) {
+        sound.volume = volume;
         sound.loop = isLooping;
         sound.play();
     }
