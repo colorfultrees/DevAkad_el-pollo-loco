@@ -15,7 +15,7 @@ class MoveableObject {
     speedY = 0; // Vertical speed - rising: (+), falling: (-)
     acceleration = 5;
     groundPosition = 0;
-    collisionArea = {x: 0, y: 0, width: 0, height: 0}
+    collisionArea = {x: 0, y: 0, width: 0, height: 0};
 
 
     constructor(positionX, positionY) {
@@ -62,6 +62,26 @@ class MoveableObject {
             this.collisionArea.width = this.width * widthRatio;
             this.collisionArea.height = this.height * heightRatio;
         }, 100);
+    }
+
+
+    /**
+     * Checks if a collision happens
+     * @param {Object} obj The object to be checked for collision
+     * @returns Boolean
+     */
+    isColliding(obj) {
+        const thisX = this.collisionArea.x;
+        const thisY = this.collisionArea.y;
+        const thisWidth = this.collisionArea.width;
+        const thisHeight = this.collisionArea.height;
+        const objX = obj.collisionArea.x;
+        const objY = obj.collisionArea.y;
+        const objHeight = obj.collisionArea.height;
+        return  thisX + thisWidth > objX &&
+                thisY + thisHeight > objY &&
+                thisX < objX &&
+                thisY < objY + objHeight;
     }
 
 

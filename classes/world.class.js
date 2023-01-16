@@ -12,6 +12,7 @@ class World {
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
+        this.checkCollision();
     }
 
 
@@ -54,6 +55,21 @@ class World {
                 this.playSound(this.AUDIO.rooster, 0.75, false);
             }, calcRandomNumber(0, 15000));
         }, 20000);
+    }
+
+
+    checkCollision() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                console.log(`Collision check: ${enemy}`);
+                if (this.character.isColliding(enemy)) {
+                    console.log(`Character collides with ${enemy}`);
+                }
+            })
+            if (this.character.isColliding(this.endboss)) {
+                console.log(`Character collides with endboss!`);
+            }
+        }, 2000);
     }
 
 
