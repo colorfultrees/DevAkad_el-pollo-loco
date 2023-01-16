@@ -71,17 +71,29 @@ class MoveableObject {
      * @returns Boolean
      */
     isColliding(obj) {
-        const thisX = this.collisionArea.x;
+        const thisX = this.getCollisionX(this);
+        // console.log(`thisX: ${thisX}`);
         const thisY = this.collisionArea.y;
         const thisWidth = this.collisionArea.width;
         const thisHeight = this.collisionArea.height;
-        const objX = obj.collisionArea.x;
+        const objX = this.getCollisionX(obj);
+        // console.log(`objX: ${objX}`);
         const objY = obj.collisionArea.y;
         const objHeight = obj.collisionArea.height;
         return  thisX + thisWidth > objX &&
                 thisY + thisHeight > objY &&
                 thisX < objX &&
                 thisY < objY + objHeight;
+    }
+
+
+    getCollisionX(obj) {
+        if (obj.isImageMirrored) {
+            return obj.positionX + obj.collisionArea.x + obj.positionX;
+        }
+        else {
+            return obj.collisionArea.x;
+        }
     }
 
 
