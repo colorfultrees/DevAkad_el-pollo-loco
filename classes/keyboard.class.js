@@ -98,7 +98,7 @@ class Keyboard {
 
     handleKeyDown() {
         document.addEventListener('keydown', (event) => {
-            console.log(`KeyCode in handleKeyDown(): ${event.code}, ${typeof(event.code)}`);
+            // console.log(`KeyCode in handleKeyDown(): ${event.code}, ${typeof(event.code)}`);
 
             switch (event.code) {
                 case this.KEYS.LEFT.code:

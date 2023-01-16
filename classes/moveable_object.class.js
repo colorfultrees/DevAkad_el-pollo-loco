@@ -107,7 +107,7 @@ class MoveableObject {
             this.positionY -= this.speedY;
             this.speedY -= this.acceleration;
             step++; // TEST
-            console.log(`Jumping step ${step}`); // TEST
+            // console.log(`Jumping step ${step}`); // TEST
             if (!this.isAboveGround()) {
                 clearInterval(interval);
                 this.positionY = this.groundPosition;
@@ -171,7 +171,7 @@ class MoveableObject {
             clearInterval(this.walkIntervalId);
             objCategory.splice(objId, 1);
 
-            console.log(`Object: ${this.constructor.name} | Intervals cleared: hor - ${this.horizMoveIntervalId} / walk - ${this.walkIntervalId} | objCategory[${objId}] removed.`);
+            // console.log(`Object: ${this.constructor.name} | Intervals cleared: hor - ${this.horizMoveIntervalId} / walk - ${this.walkIntervalId} | objCategory[${objId}] removed.`);
         }
     }
 }

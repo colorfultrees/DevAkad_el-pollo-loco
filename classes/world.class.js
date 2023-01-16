@@ -61,15 +61,15 @@ class World {
     checkCollision() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                console.log(`Collision check: ${enemy}`);
+                // console.log(`Collision check: ${enemy.constructor.name}`);
                 if (this.character.isColliding(enemy)) {
-                    console.log(`Character collides with ${enemy}`);
+                    console.log(`Character collides with ${enemy.constructor.name}`);
                 }
             })
-            if (this.character.isColliding(this.endboss)) {
+            if (this.character.isColliding(this.level.endboss)) {
                 console.log(`Character collides with endboss!`);
             }
-        }, 2000);
+        }, 200);
     }
 
 

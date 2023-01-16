@@ -15,7 +15,7 @@ function init() {
     canvas.setAttribute('height', CANVAS_HEIGHT + 'px');
 
     keyboardListener = new Keyboard();
-    console.log('keyboardListener initiated.');
+    // console.log('keyboardListener initiated.');
     // document.addEventListener('keydown', keyboardListener.handleKeyDown);
     // document.addEventListener('keyup', keyboardListener.handleKeyUp);
     // console.log('eventListeners created.');

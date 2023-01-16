@@ -186,7 +186,7 @@ class Character extends MoveableObject {
                 this.currentImage = 2;
                 let interval = setInterval(() => {
                     
-                    console.log(`currImg_jump: ${this.currentImage}`);
+                    // console.log(`currImg_jump: ${this.currentImage}`);
 
                     this.playAnimation(this.IMAGES_JUMP);
                     if (!this.isAboveGround()) {
