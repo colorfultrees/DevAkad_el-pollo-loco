@@ -78,6 +78,7 @@ class Character extends MoveableObject {
         this.offsetPosX = positionX;
         // this.groundPosition = positionY;
         this.movingDistance = 5;
+        this.getCollisionArea(0.15, 0.45, 0.55, 0.5);
 
         this.loadImageCache(this.IMAGES_WAIT);
         this.loadImageCache(this.IMAGES_SNOOZE);
@@ -182,10 +183,11 @@ class Character extends MoveableObject {
     jump() {
         setInterval(() => {
             if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) || this.playInitAnim) {
-                this.speedY = 50;
-                this.applyGravity();
-                this.currentImage = 0;
+                this.currentImage = 2;
                 let interval = setInterval(() => {
+                    
+                    console.log(`currImg_jump: ${this.currentImage}`);
+
                     this.playAnimation(this.IMAGES_JUMP);
                     if (!this.isAboveGround()) {
                         this.currentImage = 0;
@@ -193,6 +195,9 @@ class Character extends MoveableObject {
                         clearInterval(interval);
                     }
                 }, 90);
+                this.speedY = 50;
+                setTimeout(() => {this.applyGravity()}, 100);
+                if (!this.playInitAnim) world.playSound(this.AUDIO.jump, 1, false);
             }
         }, 50);
     }

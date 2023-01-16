@@ -157,9 +157,12 @@ class World {
 
     // ++++++++ TEST ++++++++++++++
     drawRect(obj) {
-        this.ctx.beginPath();
-        this.ctx.rect(obj.positionX, obj.positionY, obj.width, obj.height);
-        this.ctx.stroke();
+        if (obj instanceof Character || obj instanceof Chicken || obj instanceof Chick | obj instanceof Endboss) {
+            this.ctx.beginPath();
+            // this.ctx.rect(obj.positionX, obj.positionY, obj.width, obj.height);
+            this.ctx.rect(obj.collisionArea.x, obj.collisionArea.y, obj.collisionArea.width, obj.collisionArea.height);
+            this.ctx.stroke();
+        }
     }
     // ++++++++ TEST ++++++++++++++
 }

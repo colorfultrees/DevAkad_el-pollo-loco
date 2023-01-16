@@ -15,6 +15,7 @@ class Chicken extends MoveableObject {
         this.width = 124;
         this.height = this.width / this.aspectRatio;
         this.movingDistance = 3;
+        this.getCollisionArea(0, 0, 1, 1);
 
         this.loadImageCache(this.IMAGES_WALK);
         this.loadImageCache(this.IMAGES_DIE);

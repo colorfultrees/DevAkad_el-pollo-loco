@@ -12,9 +12,10 @@ class MoveableObject {
     horizMoveIntervalId = 0;
     walkIntervalId = 0;
     isImageMirrored = false;
-    speedY = -1; // Vertical speed - rising: (+), falling: (-)
+    speedY = 0; // Vertical speed - rising: (+), falling: (-)
     acceleration = 5;
     groundPosition = 0;
+    collisionArea = {x: 0, y: 0, width: 0, height: 0}
 
 
     constructor(positionX, positionY) {
@@ -42,6 +43,25 @@ class MoveableObject {
             this.imageCache[url] = new Image();
             this.imageCache[url].src = url;
         })
+    }
+
+
+    /**
+     * Calculates the collision area of an object
+     * @param {Number} offsetXRatio Offset from x-coord. of the object
+     * @param {Number} offsetYRatio Offset from the y-coord. of the object
+     * @param {Number} heightRatio Percentage of the height of the object (0 ... 1)
+     * @param {Number} widthRatio Percentage of the width of the object (0 ... 1)
+     */
+    getCollisionArea(offsetXRatio, offsetYRatio, widthRatio, heightRatio) {
+        setInterval(() => {
+            let mirror = 1;
+            if (this.isImageMirrored) mirror = -1;
+            this.collisionArea.x = (mirror * this.positionX) + (this.width * offsetXRatio);
+            this.collisionArea.y = this.positionY + (this.height * offsetYRatio);
+            this.collisionArea.width = this.width * widthRatio;
+            this.collisionArea.height = this.height * heightRatio;
+        }, 100);
     }
 
 

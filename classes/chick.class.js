@@ -15,6 +15,7 @@ class Chick extends MoveableObject {
         this.width = 80;
         this.height = this.width / this.aspectRatio;
         this.movingDistance = 2.5;
+        this.getCollisionArea(0, 0, 1, 1);
 
         this.loadImageCache(this.IMAGES_WALK);
         this.loadImageCache(this.IMAGES_DIE);
