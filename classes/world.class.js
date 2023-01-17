@@ -60,13 +60,19 @@ class World {
 
     checkCollision() {
         setInterval(() => {
+            this.character.getCollisionArea();
             this.level.enemies.forEach((enemy) => {
                 // console.log(`Collision check: ${enemy.constructor.name}`);
-                if (this.character.isColliding(enemy)) {
-                    console.log(`Character collides with ${enemy.constructor.name}`);
+                enemy.getCollisionArea();
+                if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !this.character.gotHit) {
+                    this.character.healthPoints -= 1;
+                    this.character.gotHit = true;
+                    this.character.isHurt();
+                    // console.log(`Character collides with ${enemy.constructor.name}`);
                 }
             })
             if (this.character.isColliding(this.level.endboss)) {
+                this.level.endboss.getCollisionArea();
                 console.log(`Character collides with endboss!`);
             }
         }, 200);

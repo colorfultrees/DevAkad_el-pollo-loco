@@ -44,7 +44,12 @@ class Endboss extends MoveableObject {
         this.aspectRatio = 1045/1217;
         this.width = 400;
         this.height = this.width / this.aspectRatio;
-        this.getCollisionArea(0, 0, 1, 1);
+        this.healthPoints = 5;
+        this.collisionBasis.offsetXRatio = 0;
+        this.collisionBasis.offsetYRatio = 0;
+        this.collisionBasis.widthRatio = 1;
+        this.collisionBasis.heightRatio = 1;
+        // this.getCollisionArea(0, 0, 1, 1);
 
         this.loadImageCache(this.IMAGES_WALK);
         this.loadImageCache(this.IMAGES_ALERT);

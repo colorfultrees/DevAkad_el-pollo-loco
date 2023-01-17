@@ -78,7 +78,12 @@ class Character extends MoveableObject {
         this.offsetPosX = positionX;
         // this.groundPosition = positionY;
         this.movingDistance = 5;
-        this.getCollisionArea(0.15, 0.45, 0.55, 0.5);
+        this.healthPoints = 10;
+        this.collisionBasis.offsetXRatio = 0.15;
+        this.collisionBasis.offsetYRatio = 0.45;
+        this.collisionBasis.widthRatio = 0.55;
+        this.collisionBasis.heightRatio = 0.5;
+        // this.getCollisionArea(0.15, 0.45, 0.55, 0.5);
 
         this.loadImageCache(this.IMAGES_WAIT);
         this.loadImageCache(this.IMAGES_SNOOZE);
@@ -92,6 +97,11 @@ class Character extends MoveableObject {
         this.setHorizMoveIntval();
         this.walk();
         this.jump();
+    }
+
+
+    resetCharacterImg() {
+
     }
 
 
@@ -158,22 +168,29 @@ class Character extends MoveableObject {
         setInterval(() => {
             if ((this.keyboardListener.KEYS.RIGHT.status ||
                 this.keyboardListener.KEYS.LEFT.status) &&
-                !this.isAboveGround()) {
+                !this.isAboveGround() && !this.gotHit) {
+
+                    console.log(`currImg_walk: ${this.currentImage}`);
+
+                    this.isWalking = true;
                     this.playAnimation(this.IMAGES_WALK);
                     world.playSound(this.AUDIO.walking, 1, false);
             }
-            else {
-                world.stopSound(this.AUDIO.walking);
+            else if (this.isWalking) {
+                this.stopWalking();
             }
         }, 115);
     }
-
-
+    
+    
     /**
      * Stops the walking animation
-     */
+    */
     stopWalking() {
-        this.img = this.imageCache[this.IMAGES_WAIT[0]];
+        this.isWalking = false;
+        this.currentImage = 0;
+        this.loadImage(this.IMAGES_WAIT[0]);
+        world.stopSound(this.AUDIO.walking);
     }
 
 
@@ -186,11 +203,12 @@ class Character extends MoveableObject {
                 this.currentImage = 2;
                 let interval = setInterval(() => {
                     
-                    // console.log(`currImg_jump: ${this.currentImage}`);
+                    console.log(`currImg_jump: ${this.currentImage}`);
 
                     this.playAnimation(this.IMAGES_JUMP);
                     if (!this.isAboveGround()) {
                         this.currentImage = 0;
+                        this.speedY = 0;
                         this.loadImage(this.IMAGES_WAIT[0]);
                         clearInterval(interval);
                     }
@@ -200,5 +218,48 @@ class Character extends MoveableObject {
                 if (!this.playInitAnim) world.playSound(this.AUDIO.jump, 1, false);
             }
         }, 50);
+    }
+
+
+    /**
+     * Animates the hurting sequence
+     */
+    isHurt() {
+
+        // TEST
+        let start = false;
+        // TEST
+
+        this.currentImage = 0;
+        let interval = setInterval(() => {
+
+            // TEST
+            if (!start) {
+                console.log(`Interval ID ${interval} started at isHurt()`);
+                start = true;
+            }
+
+            console.log(`currImg_hurt: ${this.currentImage}`);
+            // TEST
+
+            this.playAnimation(this.IMAGES_HURT);
+            if (this.currentImage >= this.IMAGES_HURT.length) {
+                clearInterval(interval);
+
+                // TEST
+                console.log(`Interval ID ${interval} cleared at isHurt()`);
+                // TEST
+
+                this.gotHit = false;
+                this.currentImage = 0;
+                this.loadImage(this.IMAGES_WAIT[0]);
+                // setTimeout(() => {
+                //     this.gotHit = false;
+                //     this.currentImage = 0;
+                //     this.loadImage(this.IMAGES_WAIT[0]);
+                // }, 200);
+            }
+        }, 90);
+        world.playSound(this.AUDIO.hurt, 1, false);
     }
 }

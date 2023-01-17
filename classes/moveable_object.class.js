@@ -11,11 +11,15 @@ class MoveableObject {
     horizMoveInterval; // The moving interval in ms
     horizMoveIntervalId = 0;
     walkIntervalId = 0;
+    isWalking = false;
     isImageMirrored = false;
     speedY = 0; // Vertical speed - rising: (+), falling: (-)
     acceleration = 5;
     groundPosition = 0;
+    collisionBasis = {offsetXRatio: 0, offsetYRatio: 0, widthRatio: 0, heightRatio: 0};
     collisionArea = {x: 0, y: 0, width: 0, height: 0};
+    healthPoints = 0;
+    gotHit = false;
 
 
     constructor(positionX, positionY) {
@@ -53,16 +57,30 @@ class MoveableObject {
      * @param {Number} heightRatio Percentage of the height of the object (0 ... 1)
      * @param {Number} widthRatio Percentage of the width of the object (0 ... 1)
      */
-    getCollisionArea(offsetXRatio, offsetYRatio, widthRatio, heightRatio) {
-        setInterval(() => {
-            let mirror = 1;
-            if (this.isImageMirrored) mirror = -1;
-            this.collisionArea.x = (mirror * this.positionX) + (this.width * offsetXRatio);
-            this.collisionArea.y = this.positionY + (this.height * offsetYRatio);
-            this.collisionArea.width = this.width * widthRatio;
-            this.collisionArea.height = this.height * heightRatio;
-        }, 100);
+    // getCollisionArea(offsetXRatio, offsetYRatio, widthRatio, heightRatio) {
+    //     setInterval(() => {
+    //         let mirror = 1;
+    //         if (this.isImageMirrored) mirror = -1;
+    //         this.collisionArea.x = (mirror * this.positionX) + (this.width * offsetXRatio);
+    //         this.collisionArea.y = this.positionY + (this.height * offsetYRatio);
+    //         this.collisionArea.width = this.width * widthRatio;
+    //         this.collisionArea.height = this.height * heightRatio;
+    //     }, 50);
+    // }
+
+
+    /**
+     * Calculates the collision area of an object
+     */
+    getCollisionArea() {
+        let mirror = 1;
+        if (this.isImageMirrored) mirror = -1;
+        this.collisionArea.x = (mirror * this.positionX) + (this.width * this.collisionBasis.offsetXRatio);
+        this.collisionArea.y = this.positionY + (this.height * this.collisionBasis.offsetYRatio);
+        this.collisionArea.width = this.width * this.collisionBasis.widthRatio;
+        this.collisionArea.height = this.height * this.collisionBasis.heightRatio;
     }
+    
 
 
     /**
@@ -88,6 +106,11 @@ class MoveableObject {
     }
 
 
+    /**
+     * Calculates the x-position of the object's collision area depending on the mirroring state
+     * @param {Object} obj The object to be checked
+     * @returns Number
+     */
     getCollisionX(obj) {
         if (obj.isImageMirrored) {
             return obj.positionX + obj.collisionArea.x + obj.positionX;
@@ -104,6 +127,12 @@ class MoveableObject {
      */
     playAnimation(images) {
         this.currentImage = this.currentImage % images.length
+
+        if (this instanceof Character) {
+            console.log(`playAnimation_imgUrl: ${images[this.currentImage]}`);
+        }
+        
+
         this.img = this.imageCache[images[this.currentImage]];
         this.currentImage++;
     }
