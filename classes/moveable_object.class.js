@@ -80,10 +80,11 @@ class MoveableObject {
         // console.log(`objX: ${objX}`);
         const objY = obj.collisionArea.y;
         const objHeight = obj.collisionArea.height;
-        return  thisX + thisWidth > objX &&
-                thisY + thisHeight > objY &&
-                thisX < objX &&
-                thisY < objY + objHeight;
+        const objWidth = obj.collisionArea.width;
+        return  thisX + thisWidth >= objX &&
+                thisX <= objX + objWidth &&
+                thisY + thisHeight >= objY &&
+                thisY <= objY + objHeight;
     }
 
 
