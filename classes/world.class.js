@@ -68,6 +68,8 @@ class World {
                     this.character.healthPoints -= 1;
                     this.character.gotHit = true;
                     this.character.isHurt();
+
+
                     // console.log(`Character collides with ${enemy.constructor.name}`);
                 }
             })
@@ -181,7 +183,7 @@ class World {
     drawRect(obj) {
         if (obj instanceof Character || obj instanceof Chicken || obj instanceof Chick | obj instanceof Endboss) {
             this.ctx.beginPath();
-            // this.ctx.rect(obj.positionX, obj.positionY, obj.width, obj.height);
+            // this.ctx.rect(obj.positionX, obj.positionY, obj.width, obj.height); // FOR TESTING
             this.ctx.rect(obj.collisionArea.x, obj.collisionArea.y, obj.collisionArea.width, obj.collisionArea.height);
             this.ctx.stroke();
         }

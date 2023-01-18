@@ -33,6 +33,7 @@ class MoveableObject {
      * @param {String} imgUrl The URL of the image
      */
     loadImage(imgUrl) {
+        this.img = new Image();
         this.img.src = imgUrl;
     }
 
@@ -103,6 +104,11 @@ class MoveableObject {
                 thisX <= objX + objWidth &&
                 thisY + thisHeight >= objY &&
                 thisY <= objY + objHeight;
+
+        // return this.positionX + this.width >= obj.positionX &&
+        //        this.positionX <= obj.positionX + obj.width &&
+        //        this.positionY + this.height >= obj.positionY &&
+        //        this.positionY <= obj.positionY + obj.height;
     }
 
 
