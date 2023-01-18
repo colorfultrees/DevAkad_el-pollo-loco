@@ -9,8 +9,8 @@ class MoveableObject {
     currentImage = 0;
     movingDistance = 0; // The distance which the object moves at each step
     horizMoveInterval; // The moving interval in ms
-    horizMoveIntervalId = 0;
-    walkIntervalId = 0;
+    // horizMoveIntervalId = 0;
+    // walkIntervalId = 0;
     isWalking = false;
     isImageMirrored = false;
     speedY = 0; // Vertical speed - rising: (+), falling: (-)
@@ -20,6 +20,7 @@ class MoveableObject {
     collisionArea = {x: 0, y: 0, width: 0, height: 0};
     healthPoints = 0;
     gotHit = false;
+    isDead = false;
 
 
     constructor(positionX, positionY) {
@@ -150,11 +151,11 @@ class MoveableObject {
 
 
     applyGravity() {
-        let step = 0; // TEST
+        // let step = 0; // TEST
         let interval = setInterval(() => {
             this.positionY -= this.speedY;
             this.speedY -= this.acceleration;
-            step++; // TEST
+            // step++; // TEST
             // console.log(`Jumping step ${step}`); // TEST
             if (!this.isAboveGround()) {
                 clearInterval(interval);

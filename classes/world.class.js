@@ -59,25 +59,43 @@ class World {
 
 
     checkCollision() {
-        setInterval(() => {
-            this.character.getCollisionArea();
-            this.level.enemies.forEach((enemy) => {
-                // console.log(`Collision check: ${enemy.constructor.name}`);
-                enemy.getCollisionArea();
-                if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !this.character.gotHit) {
-                    this.character.healthPoints -= 1;
-                    this.character.gotHit = true;
-                    this.character.isHurt();
-
-
-                    // console.log(`Character collides with ${enemy.constructor.name}`);
-                }
-            })
-            if (this.character.isColliding(this.level.endboss)) {
+        intervals.push(
+            setInterval(() => {
+                this.character.getCollisionArea();
+                this.level.enemies.forEach((enemy) => {
+                    // console.log(`Collision check: ${enemy.constructor.name}`);
+                    enemy.getCollisionArea();
+                    if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !this.character.gotHit) {
+                        this.characterCollides(1);
+                        // console.log(`Character collides with ${enemy.constructor.name}`);
+                    }
+                })
                 this.level.endboss.getCollisionArea();
-                console.log(`Character collides with endboss!`);
-            }
-        }, 200);
+                if (this.character.isColliding(this.level.endboss)) {
+                    this.characterCollides(2);
+                    // console.log(`Character collides with endboss!`);
+                }
+            }, 200)
+        );
+    }
+
+
+    /**
+     * Manages the collision of the character with an enemy
+     * @param {Number} hp The amount of health points the character losses upon collision
+     */
+    characterCollides(hp) {
+        this.character.healthPoints -= hp;
+
+        if (this.character.healthPoints <= 0) {
+            this.character.isDead = true;
+            intervals.forEach(interval => clearInterval(interval));
+            this.character.die();
+        }
+        else {
+            this.character.gotHit = true;
+            this.character.hurt();
+        }
     }
 
 

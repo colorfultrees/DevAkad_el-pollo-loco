@@ -63,7 +63,8 @@ class Character extends MoveableObject {
         hurt:           new Audio('./audio/got-hurt_1.mp3'),
         bonusHp:        new Audio('./audio/get-bonus-hp.mp3'),
         collectCoin:    new Audio('./audio/collect-coin.mp3'),
-        collectBottle:  new Audio('./audio/collect-bottle.mp3')
+        collectBottle:  new Audio('./audio/collect-bottle.mp3'),
+        gameOver:       new Audio('./audio/game-over_4.mp3')
     };
     keyboardListener;
     offsetPosX = 0;
@@ -109,21 +110,23 @@ class Character extends MoveableObject {
      * Sets the interval for the horizontal movement
      */
     setHorizMoveIntval() {
-        setInterval(() => {
-            const maxCameraPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - canvas.width + this.offsetPosX;
-            const maxPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - this.offsetPosX - this.width;
-            if (this.keyboardListener.KEYS.RIGHT.status) {
-                this.controlRightMovement(maxCameraPosX, maxPosX);
-                // if (!this.isJumping) world.playSound(this.AUDIO.walking, 1, false);
-            }
-            else if (this.keyboardListener.KEYS.LEFT.status) {
-                this.controlLeftMovement(maxCameraPosX);
-                // if (!this.isJumping) world.playSound(this.AUDIO.walking, 1, false);
-            }
-            // else {
-            //     world.stopSound(this.AUDIO.walking);
-            // }
-        }, 55);
+        intervals.push(
+            setInterval(() => {
+                const maxCameraPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - canvas.width + this.offsetPosX;
+                const maxPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - this.offsetPosX - this.width;
+                if (this.keyboardListener.KEYS.RIGHT.status) {
+                    this.controlRightMovement(maxCameraPosX, maxPosX);
+                    // if (!this.isJumping) world.playSound(this.AUDIO.walking, 1, false);
+                }
+                else if (this.keyboardListener.KEYS.LEFT.status) {
+                    this.controlLeftMovement(maxCameraPosX);
+                    // if (!this.isJumping) world.playSound(this.AUDIO.walking, 1, false);
+                }
+                // else {
+                //     world.stopSound(this.AUDIO.walking);
+                // }
+            }, 55)
+        );
     }
     
     
@@ -165,21 +168,23 @@ class Character extends MoveableObject {
      * @param {Number} frequency The frequency of the animated images
      */
     walk() {
-        setInterval(() => {
-            if ((this.keyboardListener.KEYS.RIGHT.status ||
-                this.keyboardListener.KEYS.LEFT.status) &&
-                !this.isAboveGround() && !this.gotHit) {
+        intervals.push(
+            setInterval(() => {
+                if ((this.keyboardListener.KEYS.RIGHT.status ||
+                    this.keyboardListener.KEYS.LEFT.status) &&
+                    !this.isAboveGround() && !this.gotHit) {
 
-                    console.log(`currImg_walk: ${this.currentImage}`);
+                        console.log(`currImg_walk: ${this.currentImage}`);
 
-                    this.isWalking = true;
-                    this.playAnimation(this.IMAGES_WALK);
-                    world.playSound(this.AUDIO.walking, 1, false);
-            }
-            else if (this.isWalking) {
-                this.stopWalking();
-            }
-        }, 115);
+                        this.isWalking = true;
+                        this.playAnimation(this.IMAGES_WALK);
+                        world.playSound(this.AUDIO.walking, 1, false);
+                }
+                else if (this.isWalking) {
+                    this.stopWalking();
+                }
+            }, 115)
+        );
     }
     
     
@@ -198,48 +203,50 @@ class Character extends MoveableObject {
      * Animates the jumping sequence
      */
     jump() {
-        setInterval(() => {
-            if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) || this.playInitAnim) {
-                this.currentImage = 2;
-                let interval = setInterval(() => {
-                    
-                    console.log(`currImg_jump: ${this.currentImage}`);
+        intervals.push(
+            setInterval(() => {
+                if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) || this.playInitAnim) {
+                    this.currentImage = 2;
+                    let interval = setInterval(() => {
+                        
+                        console.log(`currImg_jump: ${this.currentImage}`);
 
-                    this.playAnimation(this.IMAGES_JUMP);
-                    if (!this.isAboveGround()) {
-                        this.currentImage = 0;
-                        this.speedY = 0;
-                        this.loadImage(this.IMAGES_WAIT[0]);
-                        clearInterval(interval);
-                    }
-                }, 90);
-                this.speedY = 50;
-                setTimeout(() => {this.applyGravity()}, 100);
-                if (!this.playInitAnim) world.playSound(this.AUDIO.jump, 1, false);
-            }
-        }, 50);
+                        this.playAnimation(this.IMAGES_JUMP);
+                        if (!this.isAboveGround()) {
+                            this.currentImage = 0;
+                            this.speedY = 0;
+                            this.loadImage(this.IMAGES_WAIT[0]);
+                            clearInterval(interval);
+                        }
+                    }, 90);
+                    this.speedY = 50;
+                    setTimeout(() => {this.applyGravity()}, 100);
+                    if (!this.playInitAnim) world.playSound(this.AUDIO.jump, 1, false);
+                }
+            }, 50)
+        );
     }
 
 
     /**
      * Animates the hurting sequence
      */
-    isHurt() {
+    hurt() {
 
         // TEST
-        let start = false;
+        // let start = false;
         // TEST
 
         this.currentImage = 0;
         let interval = setInterval(() => {
 
             // TEST
-            if (!start) {
-                console.log(`Interval ID ${interval} started at isHurt()`);
-                start = true;
-            }
+            // if (!start) {
+            //     console.log(`Interval ID ${interval} started at hurt()`);
+            //     start = true;
+            // }
 
-            console.log(`currImg_hurt: ${this.currentImage}`);
+            // console.log(`currImg_hurt: ${this.currentImage}`);
             // TEST
 
             this.playAnimation(this.IMAGES_HURT);
@@ -247,19 +254,31 @@ class Character extends MoveableObject {
                 clearInterval(interval);
 
                 // TEST
-                console.log(`Interval ID ${interval} cleared at isHurt()`);
+                // console.log(`Interval ID ${interval} cleared at hurt()`);
                 // TEST
 
                 this.gotHit = false;
                 this.currentImage = 0;
-                this.loadImage(this.IMAGES_WAIT[0]);
-                // setTimeout(() => {
-                //     this.gotHit = false;
-                //     this.currentImage = 0;
-                //     this.loadImage(this.IMAGES_WAIT[0]);
-                // }, 200);
+                // this.loadImage(this.IMAGES_WAIT[0]);
+                setTimeout(() => {
+                    this.gotHit = false;
+                    this.currentImage = 0;
+                    this.loadImage(this.IMAGES_WAIT[0]);
+                }, 200);
             }
         }, 90);
         world.playSound(this.AUDIO.hurt, 1, false);
+    }
+
+
+    die() {
+        this.currentImage = 0;
+        let interval = setInterval(() => {
+            this.playAnimation(this.IMAGES_DIE);
+            if (this.currentImage >= this.IMAGES_DIE.length) {
+                clearInterval(interval);
+            }
+        }, 160);
+        world.playSound(this.AUDIO.gameOver, 1, false);
     }
 }
