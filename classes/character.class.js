@@ -271,6 +271,9 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * Animates the dying sequence
+     */
     die() {
         this.currentImage = 0;
         let interval = setInterval(() => {

@@ -1,11 +1,5 @@
-class MoveableObject {
-    positionX = 0;
-    positionY = 0;
-    img = new Image();
+class MoveableObject extends DrawableObject {
     imageCache = {};
-    aspectRatio = 0; // width/height
-    width = 0;
-    height = 0;
     currentImage = 0;
     movingDistance = 0; // The distance which the object moves at each step
     horizMoveInterval; // The moving interval in ms
@@ -24,8 +18,7 @@ class MoveableObject {
 
 
     constructor(positionX, positionY) {
-        this.positionX = positionX;
-        this.positionY = positionY;
+        super(positionX, positionY);
     }
 
 

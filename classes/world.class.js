@@ -89,6 +89,7 @@ class World {
 
         if (this.character.healthPoints <= 0) {
             this.character.isDead = true;
+            this.stopSound(this.character.AUDIO.walking);
             intervals.forEach(interval => clearInterval(interval));
             this.character.die();
         }
