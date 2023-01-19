@@ -14,7 +14,7 @@ class Chicken extends MoveableObject {
         this.aspectRatio = 1.0206;
         this.width = 124;
         this.height = this.width / this.aspectRatio;
-        this.movingDistance = 3;
+        this.speedX = 3;
         this.healthPoints = 1;
         this.collisionBasis.offsetXRatio = 0;
         this.collisionBasis.offsetYRatio = 0;

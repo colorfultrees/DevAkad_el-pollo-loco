@@ -39,7 +39,7 @@ class Statusbar extends DrawableObject {
     type = '';
 
 
-    constructor(type) {
+    constructor(type, percent) {
         super();
         this.type = type;
         this.aspectRatio = 595 / 158;
@@ -47,14 +47,16 @@ class Statusbar extends DrawableObject {
         this.height = this.width / this.aspectRatio;
         this.positionX = this.TYPE[type].posX;
         this.positionY = this.TYPE[type].posY;
-        this.currentImage = 5;
-        this.loadImage(this.TYPE[type].img[this.currentImage]);
+        // this.currentImage = 5;
+        // this.loadImage(this.TYPE[type].img[this.currentImage]);
         this.loadImageCache(this.TYPE[type].img);
+        this.setValue(percent);
     }
 
 
     setValue(percent) {
-        this.currentImage = Math.ceil(percent * 5 / 100);
+        const maxId = 5;
+        this.currentImage = Math.ceil(percent * maxId / 100);
         this.img = this.imageCache[this.TYPE[this.type].img[this.currentImage]];
     }
 }

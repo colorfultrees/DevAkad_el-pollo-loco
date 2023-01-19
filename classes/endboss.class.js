@@ -57,7 +57,7 @@ class Endboss extends MoveableObject {
         this.loadImageCache(this.IMAGES_HURT);
         this.loadImageCache(this.IMAGES_DIE);
 
-        this.movingDistance = 4.5;
+        this.speedX = 4.5;
 
         this.moveAlerted();
     }

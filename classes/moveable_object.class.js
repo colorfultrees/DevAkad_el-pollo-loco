@@ -1,16 +1,16 @@
 class MoveableObject extends DrawableObject {
-    movingDistance = 0; // The distance which the object moves at each step
+    isImageMirrored = false;
+    speedX = 0; // The distance which the object moves at each step
     horizMoveInterval; // The moving interval in ms
     // horizMoveIntervalId = 0;
     // walkIntervalId = 0;
-    isWalking = false;
-    isImageMirrored = false;
     speedY = 0; // Vertical speed - rising: (+), falling: (-)
     acceleration = 5;
     groundPosition = 0;
     collisionBasis = {offsetXRatio: 0, offsetYRatio: 0, widthRatio: 0, heightRatio: 0};
     collisionArea = {x: 0, y: 0, width: 0, height: 0};
     healthPoints = 0;
+    isWalking = false;
     gotHit = false;
     isDead = false;
 
@@ -172,7 +172,7 @@ class MoveableObject extends DrawableObject {
      * @param {Number} direction The moving direction of the object: -1 = to left, 1 = to right
      */
     move(direction) {
-        this.positionX = this.positionX + (this.movingDistance * direction);
+        this.positionX = this.positionX + (this.speedX * direction);
     }
 
 

@@ -78,7 +78,7 @@ class Character extends MoveableObject {
         this.height = this.width / this.aspectRatio;
         this.offsetPosX = positionX;
         // this.groundPosition = positionY;
-        this.movingDistance = 5;
+        this.speedX = 5;
         this.healthPoints = 100;
         this.collisionBasis.offsetXRatio = 0.15;
         this.collisionBasis.offsetYRatio = 0.45;
@@ -98,6 +98,7 @@ class Character extends MoveableObject {
         this.setHorizMoveIntval();
         this.walk();
         this.jump();
+        this.throwBottle();
     }
 
 
@@ -213,10 +214,10 @@ class Character extends MoveableObject {
 
                         this.playAnimation(this.IMAGES_JUMP);
                         if (!this.isAboveGround()) {
+                            clearInterval(interval);
                             this.currentImage = 0;
                             this.speedY = 0;
                             this.loadImage(this.IMAGES_WAIT[0]);
-                            clearInterval(interval);
                         }
                     }, 90);
                     this.speedY = 50;
@@ -283,5 +284,16 @@ class Character extends MoveableObject {
             }
         }, 160);
         world.playSound(this.AUDIO.gameOver, 1, false);
+    }
+
+
+    throwBottle() {
+        intervals.push(
+            setInterval(() => {
+                if (this.keyboardListener.KEYS.THROW.status) {
+                    world.throwables.push(new ThrowableObject(this.positionX + (this.width / 2), this.positionY + (this.height / 3)));
+                }
+            }, 50)
+        );
     }
 }

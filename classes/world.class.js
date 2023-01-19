@@ -7,6 +7,7 @@ class World {
     level;
     // statusbars = [];
     statusbars = {};
+    throwables = [];
     canvas;
     ctx;
     cameraPos = 0;
@@ -64,9 +65,9 @@ class World {
         // this.statusbars.push(new Statusbar('health'));
         // this.statusbars.push(new Statusbar('bottle'));
         // this.statusbars.push(new Statusbar('coin'));
-        this.statusbars['health'] = new Statusbar('health');
-        this.statusbars['bottle'] = new Statusbar('bottle');
-        this.statusbars['coin'] = new Statusbar('coin');
+        this.statusbars['health'] = new Statusbar('health', 100);
+        this.statusbars['bottle'] = new Statusbar('bottle', 0);
+        this.statusbars['coin'] = new Statusbar('coin', 0);
     }
 
 
@@ -149,6 +150,9 @@ class World {
 
         // Draw the enemies
         this.drawMultipleObjectsToCanvas(this.level.enemies);
+
+        // Draw throwables
+        this.drawMultipleObjectsToCanvas(this.throwables);
 
         // Reset the context's position
         this.ctx.translate(-this.cameraPos, 0);

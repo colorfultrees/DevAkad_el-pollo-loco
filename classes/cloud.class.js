@@ -5,7 +5,7 @@ class Cloud extends MoveableObject {
         super(positionX, positionY).loadImage(this.imgUrls[Math.round(Math.random())]);
         this.aspectRatio = 1.7778;
         this.setDimensions();
-        this.movingDistance = 0.5;
+        this.speedX = 0.5;
         this.setHorizMoveIntval(35, 90);
         // this.initHorizontalMovement(world.level.background.clouds, -1);
     }

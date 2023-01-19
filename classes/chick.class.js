@@ -14,7 +14,7 @@ class Chick extends MoveableObject {
         this.aspectRatio = 1.1238;
         this.width = 80;
         this.height = this.width / this.aspectRatio;
-        this.movingDistance = 2.5;
+        this.speedX = 2.5;
         this.healthPoints = 1;
         this.collisionBasis.offsetXRatio = 0;
         this.collisionBasis.offsetYRatio = 0;
