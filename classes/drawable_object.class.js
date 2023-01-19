@@ -2,6 +2,8 @@ class DrawableObject {
     positionX = 0;
     positionY = 0;
     img = new Image();
+    imageCache = {};
+    currentImage = 0;
     aspectRatio = 0; // width/height
     width = 0;
     height = 0;
@@ -20,5 +22,18 @@ class DrawableObject {
     loadImage(imgUrl) {
         this.img = new Image();
         this.img.src = imgUrl;
+    }
+
+
+    /**
+     * Loads animation images into the given cache
+     * @param {Array} urlList The list of image URLs to be loaded
+     * @param {Object} imageCache The cache for animation images
+     */
+    loadImageCache(urlList) {
+        urlList.forEach(url => {
+            this.imageCache[url] = new Image();
+            this.imageCache[url].src = url;
+        })
     }
 }

@@ -1,5 +1,5 @@
-const CANVAS_WIDTH = 900;
-const CANVAS_HEIGHT = 600;
+// const CANVAS_WIDTH = 900;
+// const CANVAS_HEIGHT = 600;
 let canvas;
 let world;
 let keyboardListener;
@@ -11,8 +11,8 @@ let intervals = [];
  */
 function init() {
     canvas = document.querySelector('canvas');
-    canvas.setAttribute('width', CANVAS_WIDTH + 'px');
-    canvas.setAttribute('height', CANVAS_HEIGHT + 'px');
+    // canvas.setAttribute('width', CANVAS_WIDTH + 'px');
+    // canvas.setAttribute('height', CANVAS_HEIGHT + 'px');
 
     keyboardListener = new Keyboard();
     // console.log('keyboardListener initiated.');
@@ -24,6 +24,7 @@ function init() {
     createLevel1();
     world.setLevel(level1);
     world.createCharacter();
+    world.createStatusBars();
 
     renderWorld();
 

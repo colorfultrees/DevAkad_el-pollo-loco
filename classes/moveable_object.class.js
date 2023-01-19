@@ -1,6 +1,4 @@
 class MoveableObject extends DrawableObject {
-    imageCache = {};
-    currentImage = 0;
     movingDistance = 0; // The distance which the object moves at each step
     horizMoveInterval; // The moving interval in ms
     // horizMoveIntervalId = 0;
@@ -19,29 +17,6 @@ class MoveableObject extends DrawableObject {
 
     constructor(positionX, positionY) {
         super(positionX, positionY);
-    }
-
-
-    /**
-     * Loads an image from the given URL
-     * @param {String} imgUrl The URL of the image
-     */
-    loadImage(imgUrl) {
-        this.img = new Image();
-        this.img.src = imgUrl;
-    }
-
-
-    /**
-     * Loads animation images into the given cache
-     * @param {Array} urlList The list of image URLs to be loaded
-     * @param {Object} imageCache The cache for animation images
-     */
-    loadImageCache(urlList) {
-        urlList.forEach(url => {
-            this.imageCache[url] = new Image();
-            this.imageCache[url].src = url;
-        })
     }
 
 

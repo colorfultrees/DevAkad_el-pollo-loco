@@ -5,6 +5,8 @@ class World {
     }
     character;
     level;
+    // statusbars = [];
+    statusbars = {};
     canvas;
     ctx;
     cameraPos = 0;
@@ -58,34 +60,38 @@ class World {
     }
 
 
-    checkCollision() {
-        intervals.push(
-            setInterval(() => {
-                this.character.getCollisionArea();
-                this.level.enemies.forEach((enemy) => {
-                    // console.log(`Collision check: ${enemy.constructor.name}`);
-                    enemy.getCollisionArea();
-                    if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !this.character.gotHit) {
-                        this.characterCollides(1);
-                        // console.log(`Character collides with ${enemy.constructor.name}`);
-                    }
-                })
-                this.level.endboss.getCollisionArea();
-                if (this.character.isColliding(this.level.endboss)) {
-                    this.characterCollides(2);
-                    // console.log(`Character collides with endboss!`);
-                }
-            }, 200)
-        );
+    createStatusBars() {
+        // this.statusbars.push(new Statusbar('health'));
+        // this.statusbars.push(new Statusbar('bottle'));
+        // this.statusbars.push(new Statusbar('coin'));
+        this.statusbars['health'] = new Statusbar('health');
+        this.statusbars['bottle'] = new Statusbar('bottle');
+        this.statusbars['coin'] = new Statusbar('coin');
+    }
+
+
+    /**
+     * Updates the health points of an object
+     * @param {Object} obj The object whose health points should be updated
+     * @param {Number} hp The amount of health points the object loses
+     */
+    setHealthPoints(obj, hp) {
+        if (obj.healthPoints >= hp) {
+            obj.healthPoints -= hp;
+        }
+        else {
+            obj.healthPoints = 0;
+        }
     }
 
 
     /**
      * Manages the collision of the character with an enemy
-     * @param {Number} hp The amount of health points the character losses upon collision
+     * @param {Number} hp The amount of health points the character loses upon collision
      */
     characterCollides(hp) {
-        this.character.healthPoints -= hp;
+        this.setHealthPoints(this.character, hp);
+        world.statusbars.health.setValue(this.character.healthPoints);
 
         if (this.character.healthPoints <= 0) {
             this.character.isDead = true;
@@ -97,6 +103,28 @@ class World {
             this.character.gotHit = true;
             this.character.hurt();
         }
+    }
+
+
+    checkCollision() {
+        intervals.push(
+            setInterval(() => {
+                this.character.getCollisionArea();
+                this.level.enemies.forEach((enemy) => {
+                    // console.log(`Collision check: ${enemy.constructor.name}`);
+                    enemy.getCollisionArea();
+                    if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !this.character.gotHit) {
+                        this.characterCollides(5);
+                        // console.log(`Character collides with ${enemy.constructor.name}`);
+                    }
+                })
+                this.level.endboss.getCollisionArea();
+                if (this.character.isColliding(this.level.endboss)) {
+                    this.characterCollides(8);
+                    // console.log(`Character collides with endboss!`);
+                }
+            }, 200)
+        );
     }
 
 
@@ -124,6 +152,9 @@ class World {
 
         // Reset the context's position
         this.ctx.translate(-this.cameraPos, 0);
+
+        // Draw the statusbars
+        this.drawMultipleObjectsToCanvas(Object.values(this.statusbars));
 
         let self = this;
         requestAnimationFrame(() => self.draw());

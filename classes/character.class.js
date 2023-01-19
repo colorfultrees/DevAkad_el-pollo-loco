@@ -79,7 +79,7 @@ class Character extends MoveableObject {
         this.offsetPosX = positionX;
         // this.groundPosition = positionY;
         this.movingDistance = 5;
-        this.healthPoints = 10;
+        this.healthPoints = 100;
         this.collisionBasis.offsetXRatio = 0.15;
         this.collisionBasis.offsetYRatio = 0.45;
         this.collisionBasis.widthRatio = 0.55;
@@ -250,7 +250,7 @@ class Character extends MoveableObject {
             // TEST
 
             this.playAnimation(this.IMAGES_HURT);
-            if (this.currentImage >= this.IMAGES_HURT.length) {
+            if (this.currentImage >= this.IMAGES_HURT.length || this.isAboveGround()) {
                 clearInterval(interval);
 
                 // TEST
