@@ -84,7 +84,7 @@ class Character extends MoveableObject {
         this.collisionBasis.offsetXRatio = 0.15;
         this.collisionBasis.offsetYRatio = 0.45;
         this.collisionBasis.widthRatio = 0.55;
-        this.collisionBasis.heightRatio = 0.5;
+        this.collisionBasis.heightRatio = 0.55;
         // this.getCollisionArea(0.15, 0.45, 0.55, 0.5);
 
         this.loadImageCache(this.IMAGES_WAIT);
@@ -171,7 +171,7 @@ class Character extends MoveableObject {
                     this.keyboardListener.KEYS.LEFT.status) &&
                     !this.isAboveGround() && !this.gotHit) {
 
-                        console.log(`currImg_walk: ${this.currentImage}`);
+                        // console.log(`currImg_walk: ${this.currentImage}`);
 
                         this.isWalking = true;
                         this.playAnimation(this.IMAGES_WALK);
@@ -203,10 +203,11 @@ class Character extends MoveableObject {
         intervals.push(
             setInterval(() => {
                 if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) || this.playInitAnim) {
+                    this.isJumping = true;
                     this.currentImage = 2;
                     let interval = setInterval(() => {
                         
-                        console.log(`currImg_jump: ${this.currentImage}`);
+                        // console.log(`currImg_jump: ${this.currentImage}`);
 
                         this.playAnimation(this.IMAGES_JUMP);
                         if (!this.isAboveGround()) {

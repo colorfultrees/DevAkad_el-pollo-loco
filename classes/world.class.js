@@ -114,9 +114,29 @@ class World {
                 this.level.enemies.forEach((enemy) => {
                     // console.log(`Collision check: ${enemy.constructor.name}`);
                     enemy.getCollisionArea();
-                    if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !this.character.gotHit) {
-                        this.characterCollides(5);
-                        // console.log(`Character collides with ${enemy.constructor.name}`);
+                    if (this.character.isColliding(enemy)) {
+                        if (enemy instanceof Chicken && !enemy.isDead && !this.character.isAboveGround() && !this.character.gotHit) {
+                            this.characterCollides(5);
+                            console.log(`Character walks into ${enemy.constructor.name}`);
+                        }
+                        else if (this.character.isJumping && this.character.speedY <= 0 && !enemy.isDead) {
+                            clearInterval(enemy.horizMoveIntervalId);
+                            clearInterval(enemy.walkIntervalId);
+                            enemy.isDead = true;
+
+                            console.log(`${enemy.constructor.name} ID ${this.level.enemies.findIndex(obj => obj.isDead)} died`);
+
+                            enemy.img = enemy.imageCache[enemy.IMAGES_DIE[0]];
+                            setTimeout(() => {
+                                const objId = this.level.enemies.findIndex(obj => obj.isDead);
+                                this.level.enemies.splice(objId, 1);
+
+                                console.log(`ID ${objId} removed from [enemies]`);
+
+                            }, 1500);
+                            console.log(`Character jumps into ${enemy.constructor.name}`);
+                        }
+                        
                     }
                 })
                 this.level.endboss.getCollisionArea();
@@ -124,7 +144,7 @@ class World {
                     this.characterCollides(8);
                     // console.log(`Character collides with endboss!`);
                 }
-            }, 200)
+            }, 100)
         );
     }
 

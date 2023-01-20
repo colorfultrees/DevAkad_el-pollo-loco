@@ -2,8 +2,8 @@ class MoveableObject extends DrawableObject {
     isImageMirrored = false;
     speedX = 0; // The distance which the object moves at each step
     horizMoveInterval; // The moving interval in ms
-    // horizMoveIntervalId = 0;
-    // walkIntervalId = 0;
+    horizMoveIntervalId = 0;
+    walkIntervalId = 0;
     speedY = 0; // Vertical speed - rising: (+), falling: (-)
     acceleration = 5;
     groundPosition = 0;
@@ -11,6 +11,7 @@ class MoveableObject extends DrawableObject {
     collisionArea = {x: 0, y: 0, width: 0, height: 0};
     healthPoints = 0;
     isWalking = false;
+    isJumping = false;
     gotHit = false;
     isDead = false;
 
@@ -104,7 +105,7 @@ class MoveableObject extends DrawableObject {
         this.currentImage = this.currentImage % images.length
 
         if (this instanceof Character) {
-            console.log(`playAnimation_imgUrl: ${images[this.currentImage]}`);
+            // console.log(`playAnimation_imgUrl: ${images[this.currentImage]}`);
         }
         
 
@@ -129,6 +130,7 @@ class MoveableObject extends DrawableObject {
                 clearInterval(interval);
                 this.positionY = this.groundPosition;
                 this.speedY = 0;
+                setTimeout(() => {this.isJumping = false;}, 200);
             }
         }, 1000 / 25);
     }
@@ -146,6 +148,7 @@ class MoveableObject extends DrawableObject {
 
     /**
      * Sets the animation interval for the movement of the object
+     * @param {Array} objCategory Array of the respective objects
      * @param {Number} direction The moving direction of the object: -1 = to left, 1 = to right
      */
     initHorizontalMovement(objCategory, direction) {

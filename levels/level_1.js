@@ -9,7 +9,7 @@ function createLevel1() {
         './img/5_background/layers/3_third_layer/full.png'
     );
     level1.createClouds(0, 10);
-    level1.createEnemies(Chicken, 9, 350, level1.background.landscapeLayer[0].width * level1.sceneParts);
+    level1.createEnemies(Chicken, 11, 350, level1.background.landscapeLayer[0].width * level1.sceneParts);
     level1.createEnemies(Chick, 5, 350, level1.background.landscapeLayer[0].width * level1.sceneParts);
     level1.createEndboss();
 }
