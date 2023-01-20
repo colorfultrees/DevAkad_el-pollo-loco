@@ -19,14 +19,15 @@ class ThrowableObject extends MoveableObject {
     ]
 
 
-    constructor(positionX, positionY) {
+    constructor(positionX, positionY, isImageMirrored) {
         super(positionX, positionY).loadImage(this.IMAGES_ROTATE[0]);
-        this.speedX = 8;
-        this.speedY = 20;
+        this.isImageMirrored = isImageMirrored;
+        this.speedX = 18;
+        this.speedY = 45;
         this.aspectRatio = 400 / 400;
-        this.width = 100;
+        this.width = 80;
         this.height = this.width/this.aspectRatio;
-        this.groundPosition = canvas.height - 20;
+        this.groundPosition = canvas.height - this.height - 13;
         this.collisionBasis.offsetXRatio = 0.15;
         this.collisionBasis.offsetYRatio = 0.15;
         this.collisionBasis.widthRatio = 0.72;
@@ -42,13 +43,12 @@ class ThrowableObject extends MoveableObject {
         this.currentImage = 0;
         let interval = setInterval(() => {
             this.playAnimation(this.IMAGES_ROTATE);
+            this.isImageMirrored ? this.move(-1) : this.move(1);
             if (!this.isAboveGround()) {
                 clearInterval(interval);
-                this.currentImage = 0;
-                this.speedY = 0;
                 this.loadImage(this.IMAGES_GROUND[Math.round(Math.random())]);
             }
-        }, 90);
+        }, 40);
         setTimeout(() => {this.applyGravity()}, 100);
     }
 }

@@ -69,6 +69,7 @@ class Character extends MoveableObject {
     keyboardListener;
     offsetPosX = 0;
     playInitAnim = true;
+    hasThrownBottle = false;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage(this.IMAGES_WAIT[0]);
@@ -99,11 +100,6 @@ class Character extends MoveableObject {
         this.walk();
         this.jump();
         this.throwBottle();
-    }
-
-
-    resetCharacterImg() {
-
     }
 
 
@@ -287,11 +283,18 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * Initiates the throw of a bottle
+     */
     throwBottle() {
         intervals.push(
             setInterval(() => {
-                if (this.keyboardListener.KEYS.THROW.status) {
-                    world.throwables.push(new ThrowableObject(this.positionX + (this.width / 2), this.positionY + (this.height / 3)));
+                if (this.keyboardListener.KEYS.THROW.status && !this.hasThrownBottle) {
+                    this.hasThrownBottle = true;
+                    const startX = this.positionX + (this.width / 2);
+                    const startY = this.positionY + (this.height / 3);
+                    world.throwables.push(new ThrowableObject(startX, startY, this.isImageMirrored));
+                    setTimeout(() => {this.hasThrownBottle = false;}, 300);
                 }
             }, 50)
         );
