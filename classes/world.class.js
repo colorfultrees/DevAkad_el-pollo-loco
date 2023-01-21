@@ -1,7 +1,16 @@
 class World {
     AUDIO = {
-        background_music: new Audio('./audio/background-music_1.wav'),
-        rooster: new Audio('./audio/rooster.wav')
+        background_music:   new Audio('./audio/background-music_1.wav'),
+        rooster:            new Audio('./audio/rooster.wav'),
+        walking:            new Audio('./audio/walk-on-sand.wav'),
+        jump:               new Audio('./audio/jump_1.wav'),
+        hurt:               new Audio('./audio/got-hurt_1.mp3'),
+        bonusHp:            new Audio('./audio/get-bonus-hp.mp3'),
+        collectCoin:        new Audio('./audio/collect-coin.mp3'),
+        collectBottle:      new Audio('./audio/collect-bottle.mp3'),
+        gameOver:           new Audio('./audio/game-over_4.mp3'),
+        chicken_alarm:      new Audio('./audio/chicken-single-alarm-call.wav'),
+        bottle_smash:       new Audio('./audio/bottle-smash_2.mp3')
     }
     character;
     level;
@@ -72,11 +81,11 @@ class World {
 
 
     /**
-     * Updates the health points of an object
-     * @param {Object} obj The object whose health points should be updated
+     * Reduces health points of an object
+     * @param {Object} obj The object whose health points should be reduced
      * @param {Number} hp The amount of health points the object loses
      */
-    setHealthPoints(obj, hp) {
+    looseHealthPoints(obj, hp) {
         if (obj.healthPoints >= hp) {
             obj.healthPoints -= hp;
         }
@@ -87,23 +96,59 @@ class World {
 
 
     /**
+     * Increases health points of an object
+     * @param {Object} obj The object whose health points should be increased
+     * @param {Number} hp The amount of health points the object gains
+     */
+    gainHealthPoints(obj, hp) {
+        if (obj.isDead) return;
+        
+        if (obj.healthPoints <= hp) {
+            obj.healthPoints += hp;
+        }
+        else {
+            obj.healthPoints = 100;
+        }
+    }
+
+
+    /**
      * Manages the collision of the character with an enemy
      * @param {Number} hp The amount of health points the character loses upon collision
      */
     characterCollides(hp) {
-        this.setHealthPoints(this.character, hp);
+        this.looseHealthPoints(this.character, hp);
         world.statusbars.health.setValue(this.character.healthPoints);
 
         if (this.character.healthPoints <= 0) {
-            this.character.isDead = true;
-            this.stopSound(this.character.AUDIO.walking);
             intervals.forEach(interval => clearInterval(interval));
+            this.character.isDead = true;
             this.character.die();
+            this.stopSound(this.AUDIO.walking);
         }
         else {
             this.character.gotHit = true;
             this.character.hurt();
         }
+    }
+
+
+    /**
+     * Deactivates an enemy object
+     * @param {Object} enemy The enemy object to be deactivated
+     */
+    deactivateEnemy(enemy) {
+        clearInterval(enemy.horizMoveIntervalId);
+        clearInterval(enemy.walkIntervalId);
+        enemy.isDead = true;
+    }
+
+
+    removeDeadEnemy() {
+        const objId = this.level.enemies.findIndex(obj => obj.isDead);
+        this.level.enemies.splice(objId, 1);
+
+        console.log(`ID ${objId} removed from [enemies]`);
     }
 
 
@@ -115,28 +160,32 @@ class World {
                     // console.log(`Collision check: ${enemy.constructor.name}`);
                     enemy.getCollisionArea();
                     if (this.character.isColliding(enemy)) {
-                        if (enemy instanceof Chicken && !enemy.isDead && !this.character.isAboveGround() && !this.character.gotHit) {
-                            this.characterCollides(5);
-                            console.log(`Character walks into ${enemy.constructor.name}`);
-                        }
-                        else if (this.character.isJumping && this.character.speedY <= 0 && !enemy.isDead) {
-                            clearInterval(enemy.horizMoveIntervalId);
-                            clearInterval(enemy.walkIntervalId);
-                            enemy.isDead = true;
+                        if (this.character.isJumping && this.character.speedY <= 0 && !enemy.isDead) {
+                            this.deactivateEnemy(enemy);
 
                             console.log(`${enemy.constructor.name} ID ${this.level.enemies.findIndex(obj => obj.isDead)} died`);
 
                             enemy.img = enemy.imageCache[enemy.IMAGES_DIE[0]];
+                            this.playSound(this.AUDIO.chicken_alarm, 1, false);
                             setTimeout(() => {
-                                const objId = this.level.enemies.findIndex(obj => obj.isDead);
-                                this.level.enemies.splice(objId, 1);
-
-                                console.log(`ID ${objId} removed from [enemies]`);
-
+                                this.removeDeadEnemy();
                             }, 1500);
                             console.log(`Character jumps into ${enemy.constructor.name}`);
                         }
-                        
+                        else if (!enemy.isDead && !this.character.isAboveGround() && !this.character.gotHit) {
+                            if (enemy instanceof Chicken) {
+                                this.characterCollides(5);
+                            }
+                            else if (enemy instanceof Chick && !this.character.isJumping) {
+                                this.deactivateEnemy(enemy);
+                                this.removeDeadEnemy();
+                                this.gainHealthPoints(this.character, 10);
+                                world.statusbars.health.setValue(this.character.healthPoints);
+                                this.playSound(this.AUDIO.bonusHp, 1, false);
+                            }
+                            
+                            console.log(`Character walks into ${enemy.constructor.name}`);
+                        }
                     }
                 })
                 this.level.endboss.getCollisionArea();

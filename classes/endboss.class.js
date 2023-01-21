@@ -36,7 +36,7 @@ class Endboss extends MoveableObject {
         './img/4_enemie_boss_chicken/5_dead/G26.png',
     ]
     moveAlertedIntvalId = 0;
-    isPaused = false; // Flag to create a pause between animations
+    isAnimPaused = false; // Flag to create a pause between animations
 
     constructor(positionX, positionY) {
         super(positionX, positionY).loadImage(this.IMAGES_WALK[0]);
@@ -68,11 +68,11 @@ class Endboss extends MoveableObject {
      */
     moveAlerted() {
         this.moveAlertedIntvalId = setInterval(() => {
-            if (!this.isPaused) {
+            if (!this.isAnimPaused) {
                 if (this.currentImage > 0 && this.currentImage % this.IMAGES_ALERT.length == 0) {
-                    this.isPaused = true;
+                    this.isAnimPaused = true;
                     setTimeout(() => {
-                        this.isPaused = false;
+                        this.isAnimPaused = false;
                         this.playAnimation(this.IMAGES_ALERT);
                     }, calcRandomNumber(200, 700));
                 }

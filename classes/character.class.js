@@ -57,15 +57,6 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-56.png',
         './img/2_character_pepe/5_dead/D-57.png'
     ];
-    AUDIO = {
-        walking:        new Audio('./audio/walk-on-sand.wav'),
-        jump:           new Audio('./audio/jump_1.wav'),
-        hurt:           new Audio('./audio/got-hurt_1.mp3'),
-        bonusHp:        new Audio('./audio/get-bonus-hp.mp3'),
-        collectCoin:    new Audio('./audio/collect-coin.mp3'),
-        collectBottle:  new Audio('./audio/collect-bottle.mp3'),
-        gameOver:       new Audio('./audio/game-over_4.mp3')
-    };
     keyboardListener;
     offsetPosX = 0;
     playInitAnim = true;
@@ -175,7 +166,7 @@ class Character extends MoveableObject {
 
                         this.isWalking = true;
                         this.playAnimation(this.IMAGES_WALK);
-                        world.playSound(this.AUDIO.walking, 1, false);
+                        world.playSound(world.AUDIO.walking, 1, false);
                 }
                 else if (this.isWalking) {
                     this.stopWalking();
@@ -192,7 +183,7 @@ class Character extends MoveableObject {
         this.isWalking = false;
         this.currentImage = 0;
         this.loadImage(this.IMAGES_WAIT[0]);
-        world.stopSound(this.AUDIO.walking);
+        world.stopSound(world.AUDIO.walking);
     }
 
 
@@ -219,7 +210,7 @@ class Character extends MoveableObject {
                     }, 90);
                     this.speedY = 50;
                     setTimeout(() => {this.applyGravity()}, 100);
-                    if (!this.playInitAnim) world.playSound(this.AUDIO.jump, 1, false);
+                    if (!this.playInitAnim) world.playSound(world.AUDIO.jump, 1, false);
                 }
             }, 50)
         );
@@ -265,7 +256,7 @@ class Character extends MoveableObject {
                 }, 200);
             }
         }, 90);
-        world.playSound(this.AUDIO.hurt, 1, false);
+        world.playSound(world.AUDIO.hurt, 1, false);
     }
 
 
@@ -280,7 +271,7 @@ class Character extends MoveableObject {
                 clearInterval(interval);
             }
         }, 160);
-        world.playSound(this.AUDIO.gameOver, 1, false);
+        world.playSound(world.AUDIO.gameOver, 1, false);
     }
 
 

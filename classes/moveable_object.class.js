@@ -130,7 +130,7 @@ class MoveableObject extends DrawableObject {
                 clearInterval(interval);
                 this.positionY = this.groundPosition;
                 this.speedY = 0;
-                setTimeout(() => {this.isJumping = false;}, 200);
+                setTimeout(() => {this.isJumping = false;}, 300);
             }
         }, 1000 / 25);
     }
