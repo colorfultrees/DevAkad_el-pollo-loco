@@ -104,9 +104,9 @@ class MoveableObject extends DrawableObject {
     playAnimation(images) {
         this.currentImage = this.currentImage % images.length
 
-        if (this instanceof Character) {
-            // console.log(`playAnimation_imgUrl: ${images[this.currentImage]}`);
-        }
+        // if (this instanceof Character) {
+        //     console.log(`playAnimation_imgUrl: ${images[this.currentImage]}`);
+        // }
         
 
         this.img = this.imageCache[images[this.currentImage]];
