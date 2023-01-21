@@ -4,7 +4,7 @@ class Endboss extends MoveableObject {
         './img/4_enemie_boss_chicken/1_walk/G2.png',
         './img/4_enemie_boss_chicken/1_walk/G3.png',
         './img/4_enemie_boss_chicken/1_walk/G4.png'
-    ]
+    ];
     IMAGES_ALERT = [
         './img/4_enemie_boss_chicken/2_alert/G5.png',
         './img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -14,7 +14,7 @@ class Endboss extends MoveableObject {
         './img/4_enemie_boss_chicken/2_alert/G10.png',
         './img/4_enemie_boss_chicken/2_alert/G11.png',
         './img/4_enemie_boss_chicken/2_alert/G12.png'
-    ]
+    ];
     IMAGES_ATTACK = [
         './img/4_enemie_boss_chicken/3_attack/G13.png',
         './img/4_enemie_boss_chicken/3_attack/G14.png',
@@ -24,17 +24,25 @@ class Endboss extends MoveableObject {
         './img/4_enemie_boss_chicken/3_attack/G18.png',
         './img/4_enemie_boss_chicken/3_attack/G19.png',
         './img/4_enemie_boss_chicken/3_attack/G20.png'
-    ]
+    ];
     IMAGES_HURT = [
         './img/4_enemie_boss_chicken/4_hurt/G21.png',
         './img/4_enemie_boss_chicken/4_hurt/G22.png',
         './img/4_enemie_boss_chicken/4_hurt/G23.png',
-    ]
+    ];
     IMAGES_DIE = [
         './img/4_enemie_boss_chicken/5_dead/G24.png',
         './img/4_enemie_boss_chicken/5_dead/G25.png',
         './img/4_enemie_boss_chicken/5_dead/G26.png',
-    ]
+    ];
+    IMAGE_STATUS_ICON = {
+        img: new Image(),
+        positionX: 0,
+        positionY: 0,
+        width: 0,
+        height: 0
+    };
+    statusbar = new Statusbar('health', 100);
     moveAlertedIntvalId = 0;
     isAnimPaused = false; // Flag to create a pause between animations
     status = 'alert';
@@ -45,7 +53,7 @@ class Endboss extends MoveableObject {
         this.aspectRatio = 1045/1217;
         this.width = 400;
         this.height = this.width / this.aspectRatio;
-        this.healthPoints = 5;
+        this.healthPoints = 100;
         this.collisionBasis.offsetXRatio = 0;
         this.collisionBasis.offsetYRatio = 0;
         this.collisionBasis.widthRatio = 1;
@@ -58,7 +66,15 @@ class Endboss extends MoveableObject {
         this.loadImageCache(this.IMAGES_HURT);
         this.loadImageCache(this.IMAGES_DIE);
 
-        this.speedX = 3.5;
+        this.speedX = 4;
+
+        this.statusbar.positionX = canvas.width + 100;
+        this.IMAGE_STATUS_ICON.img.src = './img/7_statusbars/3_icons/icon_health_endboss.png';
+        this.IMAGE_STATUS_ICON.positionX = this.statusbar.positionX;
+        this.IMAGE_STATUS_ICON.positionY = this.statusbar.positionY;
+        this.IMAGE_STATUS_ICON.width = 65;
+        this.IMAGE_STATUS_ICON.height = 65;
+        this.controlStatusbarPos();
 
         this.moveAlerted();
 
@@ -66,6 +82,25 @@ class Endboss extends MoveableObject {
         // this.status = 'attack';
         // this.attack();
         // TEST
+    }
+
+
+    /**
+     * Controls the position of the endboss' statusbar
+     */
+    controlStatusbarPos() {
+        intervals.push(
+            setInterval(() => {
+                if (this.positionX - world.character.positionX < canvas.width - world.character.offsetPosX) {
+                    this.statusbar.positionX = canvas.width - this.statusbar.width - 30;
+                    this.IMAGE_STATUS_ICON.positionX = this.statusbar.positionX - 25;
+                }
+                else {
+                    this.statusbar.positionX = canvas.width + 100;
+                    this.IMAGE_STATUS_ICON.positionX = this.statusbar.positionX;
+                }
+            }, 1000)
+        )
     }
 
 
@@ -112,7 +147,7 @@ class Endboss extends MoveableObject {
 
                     console.log(`endboss WALK currImg = ${this.currentImage}`);
 
-                    if (sequCount >= this.IMAGES_WALK.length * 2) {
+                    if (sequCount >= this.IMAGES_WALK.length * 3) {
                         this.currentImage = 0;
                         sequCount = 0;
                         this.status = 'attack';

@@ -86,12 +86,14 @@ class World {
      * @param {Number} hp The amount of health points the object loses
      */
     looseHealthPoints(obj, hp) {
-        if (obj.healthPoints >= hp) {
+        if (obj.healthPoints - hp >= 0) {
             obj.healthPoints -= hp;
         }
         else {
             obj.healthPoints = 0;
         }
+
+        console.log(`${obj.constructor.name} HP = ${obj.healthPoints}`);
     }
 
 
@@ -102,13 +104,15 @@ class World {
      */
     gainHealthPoints(obj, hp) {
         if (obj.isDead) return;
-        
-        if (obj.healthPoints <= hp) {
+
+        if (obj.healthPoints + hp <= 100) {
             obj.healthPoints += hp;
         }
         else {
             obj.healthPoints = 100;
         }
+
+        console.log(`${obj.constructor.name} HP = ${obj.healthPoints}`);
     }
 
 
@@ -179,7 +183,7 @@ class World {
                             else if (enemy instanceof Chick && !this.character.isJumping) {
                                 this.deactivateEnemy(enemy);
                                 this.removeDeadEnemy();
-                                this.gainHealthPoints(this.character, 10);
+                                this.gainHealthPoints(this.character, 5);
                                 world.statusbars.health.setValue(this.character.healthPoints);
                                 this.playSound(this.AUDIO.bonusHp, 1, false);
                             }
@@ -228,6 +232,8 @@ class World {
 
         // Draw the statusbars
         this.drawMultipleObjectsToCanvas(Object.values(this.statusbars));
+        this.drawSingleObjectToCanvas(this.level.endboss.statusbar);
+        this.drawSingleObjectToCanvas(this.level.endboss.IMAGE_STATUS_ICON);
 
         let self = this;
         requestAnimationFrame(() => self.draw());
