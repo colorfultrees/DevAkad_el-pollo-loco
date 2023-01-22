@@ -130,7 +130,7 @@ class World {
         if (this.character.healthPoints <= 0) {
             this.clearAllIntervals();
             this.character.isDead = true;
-            this.stopAllSounds();
+            this.stopMainSounds();
             this.character.die();
             // this.stopSound(this.AUDIO.walking);
             // this.stopSound(this.AUDIO.backgroundMusic);
@@ -152,16 +152,16 @@ class World {
         if (this.level.endboss.healthPoints <= 0) {
             this.clearAllIntervals();
             this.level.endboss.isDead = true;
-            this.stopAllSounds();
+            this.stopMainSounds();
             this.level.endboss.die();
 
-            console.log('Endboss died!');
+            console.log(`Endboss died (HP ${this.level.endboss.healthPoints}!`);
         }
         else {
             this.level.endboss.gotHit = true;
             this.level.endboss.hurt();
             
-            console.log('Endboss hit by bottle!');
+            console.log(`Endboss hit by bottle (HP ${this.level.endboss.healthPoints}!`);
         }
 
     }
@@ -348,13 +348,11 @@ class World {
     /**
      * Stops all sounds and resets them to start
      */
-    stopAllSounds() {
-        for (let sound in this.AUDIO) {
-            this.AUDIO[sound].pause();
-            this.AUDIO[sound].currentTime = 0;
-
-            console.log(`stopAllSounds: ${sound} stopped`);
-        }
+    stopMainSounds() {
+        this.stopSound(this.AUDIO.backgroundMusic);
+        this.AUDIO.backgroundMusic.currentTime = 0;
+        this.stopSound(this.AUDIO.walking);
+        this.AUDIO.walking.currentTime = 0;
     }
 
 
