@@ -71,7 +71,7 @@ class Level {
         for (let e = 1; e <= count; e++) {
             const obj = new EnemyClass(0, 0);
             obj.positionX = calcRandomNumber(startPos, endPos);
-            obj.positionY = canvas.height - obj.height - 15;
+            obj.positionY = canvas.height - obj.height - 55;
             this.enemies.push(obj);
             obj.initHorizontalMovement(this.enemies, -1);
         }
@@ -84,7 +84,7 @@ class Level {
     createEndboss() {
         this.endboss = new Endboss(0, 0);
         this.endboss.positionX = level1.background.landscapeLayer[0].width * level1.sceneParts - this.endboss.width - 100;
-        this.endboss.positionY = canvas.height - this.endboss.height;
+        this.endboss.positionY = canvas.height - this.endboss.height - 40;
     }
 
 

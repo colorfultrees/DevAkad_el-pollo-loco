@@ -66,7 +66,7 @@ class Character extends MoveableObject {
         super(positionX, positionY).loadImage(this.IMAGES_WAIT[0]);
 
         this.aspectRatio = 0.5083;
-        this.width = 244;
+        this.width = 220;
         this.height = this.width / this.aspectRatio;
         this.offsetPosX = positionX;
         // this.groundPosition = positionY;

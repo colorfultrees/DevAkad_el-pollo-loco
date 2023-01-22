@@ -93,7 +93,7 @@ class Endboss extends MoveableObject {
             setInterval(() => {
                 if (this.positionX - world.character.positionX < canvas.width - world.character.offsetPosX) {
                     this.statusbar.positionX = canvas.width - this.statusbar.width - 30;
-                    this.IMAGE_STATUS_ICON.positionX = this.statusbar.positionX - 25;
+                    this.IMAGE_STATUS_ICON.positionX = this.statusbar.positionX - 15;
                 }
                 else {
                     this.statusbar.positionX = canvas.width + 100;

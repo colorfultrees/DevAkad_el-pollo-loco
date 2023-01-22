@@ -27,7 +27,7 @@ class ThrowableObject extends MoveableObject {
         this.aspectRatio = 400 / 400;
         this.width = 80;
         this.height = this.width/this.aspectRatio;
-        this.groundPosition = canvas.height - this.height - 13;
+        this.groundPosition = canvas.height - this.height - 53;
         this.collisionBasis.offsetXRatio = 0.15;
         this.collisionBasis.offsetYRatio = 0.15;
         this.collisionBasis.widthRatio = 0.72;

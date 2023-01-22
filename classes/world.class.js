@@ -38,7 +38,7 @@ class World {
         // ++++++++++ TEST
         // this.character.positionY = -150;
         // this.character.groundPosition = canvas.height - this.character.height;
-        this.character.positionY = canvas.height - this.character.height;
+        this.character.positionY = canvas.height - this.character.height - 40;
         this.character.groundPosition = this.character.positionY;
         this.character.applyGravity();
         // this.currentImage = 4;

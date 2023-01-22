@@ -12,7 +12,7 @@ class Chick extends MoveableObject {
         super(positionX, positionY); //.loadImage(this.IMAGES_WALK[0]);
 
         this.aspectRatio = 1.1238;
-        this.width = 80;
+        this.width = 70;
         this.height = this.width / this.aspectRatio;
         this.speedX = 2.5;
         this.healthPoints = 1;
