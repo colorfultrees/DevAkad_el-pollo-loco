@@ -14,6 +14,7 @@ class MoveableObject extends DrawableObject {
     isJumping = false;
     gotHit = false;
     isDead = false;
+    isSmashed = false;
 
 
     constructor(positionX, positionY) {
@@ -126,11 +127,13 @@ class MoveableObject extends DrawableObject {
             this.speedY -= this.acceleration;
             // step++; // TEST
             // console.log(`Jumping step ${step}`); // TEST
-            if (!this.isAboveGround()) {
+            if (!this.isAboveGround() || this.isSmashed) {
                 clearInterval(interval);
-                this.positionY = this.groundPosition;
                 this.speedY = 0;
-                setTimeout(() => {this.isJumping = false;}, 300);
+                if (this instanceof Character) {
+                    this.positionY = this.groundPosition;
+                    setTimeout(() => {this.isJumping = false;}, 300);
+                }
             }
         }, 1000 / 25);
     }

@@ -1,6 +1,6 @@
 class World {
     AUDIO = {
-        background_music:   new Audio('./audio/background-music_1.wav'),
+        backgroundMusic:    new Audio('./audio/background-music_1.wav'),
         rooster:            new Audio('./audio/rooster.wav'),
         walking:            new Audio('./audio/walk-on-sand.wav'),
         jump:               new Audio('./audio/jump_1.wav'),
@@ -9,8 +9,9 @@ class World {
         collectCoin:        new Audio('./audio/collect-coin.mp3'),
         collectBottle:      new Audio('./audio/collect-bottle.mp3'),
         gameOver:           new Audio('./audio/game-over_4.mp3'),
-        chicken_alarm:      new Audio('./audio/chicken-single-alarm-call.wav'),
-        bottle_smash:       new Audio('./audio/bottle-smash_2.mp3')
+        win:                new Audio('./audio/win_2.mp3'),
+        chickenAlarm:       new Audio('./audio/chicken-single-alarm-call.wav'),
+        bottleSmash:        new Audio('./audio/bottle-smash_2.mp3')
     }
     character;
     level;
@@ -59,7 +60,7 @@ class World {
 
     initBackgroundSound() {
         // Start the background music
-        this.playSound(this.AUDIO.background_music, 0.25, true)
+        this.playSound(this.AUDIO.backgroundMusic, 0.25, true)
 
         // Start the loop for the rooster crow
         intervals.push(
@@ -124,19 +125,35 @@ class World {
      */
     characterCollides(hp) {
         this.looseHealthPoints(this.character, hp);
-        world.statusbars.health.setValue(this.character.healthPoints);
+        this.statusbars.health.setValue(this.character.healthPoints);
 
         if (this.character.healthPoints <= 0) {
             intervals.forEach(interval => clearInterval(interval));
             this.character.isDead = true;
+            this.stopAllSounds();
             this.character.die();
-            this.stopSound(this.AUDIO.walking);
-            this.stopSound(this.AUDIO.background_music);
+            // this.stopSound(this.AUDIO.walking);
+            // this.stopSound(this.AUDIO.backgroundMusic);
         }
         else {
             this.character.gotHit = true;
             this.character.hurt();
         }
+    }
+
+
+    /**
+     * Manages the hit of the endboss by a bottle
+     */
+    endbossHit() {
+        this.looseHealthPoints(this.level.endboss, 20);
+        this.level.endboss.statusbar.setValue(this.level.endboss.healthPoints);
+
+        this.level.endboss.gotHit = true;
+        this.level.endboss.hurt();
+
+
+        console.log('Endboss hit by bottle!');
     }
 
 
@@ -173,7 +190,7 @@ class World {
                             // console.log(`${enemy.constructor.name} ID ${this.level.enemies.findIndex(obj => obj.isDead)} died`);
 
                             enemy.img = enemy.imageCache[enemy.IMAGES_DIE[0]];
-                            this.playSound(this.AUDIO.chicken_alarm, 0.7, false);
+                            this.playSound(this.AUDIO.chickenAlarm, 0.5, false);
                             setTimeout(() => {
                                 this.removeDeadEnemy();
                             }, 1500);
@@ -203,9 +220,8 @@ class World {
                 this.throwables.forEach((throwable) => {
                     throwable.getCollisionArea();
                     if (throwable.positionY != throwable.groundPosition && this.level.endboss.isColliding(throwable) && !this.level.endboss.gotHit) {
-                        this.level.endboss.gotHit = true;
-                        this.level.endboss.hurt();
-                        console.log('Endboss hit by bottle!');
+                        throwable.smash();
+                        this.endbossHit();
                     }
                 });
             }, 100)
@@ -316,6 +332,17 @@ class World {
     stopSound(sound) {
         sound.pause();
         sound.currentTime = 0;
+    }
+
+
+    /**
+     * Stops all sounds and resets them to start
+     */
+    stopAllSounds() {
+        for (let sound in this.AUDIO) {
+            this.AUDIO[sound].pause();
+            this.AUDIO[sound].currentTime = 0;
+        }
     }
 
 

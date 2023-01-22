@@ -54,9 +54,9 @@ class Endboss extends MoveableObject {
         this.width = 400;
         this.height = this.width / this.aspectRatio;
         this.healthPoints = 100;
-        this.collisionBasis.offsetXRatio = 0.05;
+        this.collisionBasis.offsetXRatio = 0.12;
         this.collisionBasis.offsetYRatio = 0.25;
-        this.collisionBasis.widthRatio = 0.9;
+        this.collisionBasis.widthRatio = 0.85;
         this.collisionBasis.heightRatio = 0.6;
         // this.getCollisionArea(0, 0, 1, 1);
 
@@ -183,7 +183,7 @@ class Endboss extends MoveableObject {
                 }, 200);
             }
         }, 150);
-        world.playSound(world.AUDIO.chicken_alarm, 1, false);
+        world.playSound(world.AUDIO.chickenAlarm, 1, false);
     }
 
 

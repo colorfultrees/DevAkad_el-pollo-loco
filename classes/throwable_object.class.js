@@ -17,6 +17,7 @@ class ThrowableObject extends MoveableObject {
         './img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         './img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ]
+    moveIntvalId = 0;
 
 
     constructor(positionX, positionY, isImageMirrored) {
@@ -39,16 +40,38 @@ class ThrowableObject extends MoveableObject {
     }
 
 
+    /**
+     * Animate the flying bottle
+     */
     throw() {
         this.currentImage = 0;
-        let interval = setInterval(() => {
+        this.moveIntvalId = setInterval(() => {
             this.playAnimation(this.IMAGES_ROTATE);
             this.isImageMirrored ? this.move(-1) : this.move(1);
             if (!this.isAboveGround()) {
-                clearInterval(interval);
+                clearInterval(this.moveIntvalId);
                 this.loadImage(this.IMAGES_GROUND[Math.round(Math.random())]);
             }
         }, 40);
         setTimeout(() => {this.applyGravity()}, 100);
+    }
+
+
+    /**
+     * Animate the smashed bottle
+     */
+    smash() {
+        this.currentImage = 0;
+        this.isSmashed = true;
+        clearInterval(this.moveIntvalId);
+        let interval = setInterval(() => {
+            this.playAnimation(this.IMAGES_SPLASH);
+            if (this.currentImage >= this.IMAGES_SPLASH.length) {
+                const objId = world.throwables.findIndex(b => b === this);
+                clearInterval(interval);
+                world.throwables.splice(objId, 1);
+            }
+        }, 70);
+        world.playSound(world.AUDIO.bottleSmash, 0.8, false);
     }
 }
