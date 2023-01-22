@@ -35,7 +35,7 @@ class World {
         const startPosX = 100;
         this.character = new Character(startPosX, 0, keyboardListener);
         
-        // ++++++++++ TEST
+        
         // this.character.positionY = -150;
         // this.character.groundPosition = canvas.height - this.character.height;
         this.character.positionY = canvas.height - this.character.height - 40;
@@ -46,7 +46,7 @@ class World {
             this.character.playInitAnim = false;
             this.character.loadImage(this.character.IMAGES_WAIT[0]);
         }, 100);
-        // ++++++++++ TEST
+        
 
         // world.setCameraPos(-startPosX);
     }
@@ -62,11 +62,13 @@ class World {
         this.playSound(this.AUDIO.background_music, 0.25, true)
 
         // Start the loop for the rooster crow
-        setInterval(() => {
-            setTimeout(() => {
-                this.playSound(this.AUDIO.rooster, 0.75, false);
-            }, calcRandomNumber(0, 15000));
-        }, 20000);
+        intervals.push(
+            setInterval(() => {
+                setTimeout(() => {
+                    this.playSound(this.AUDIO.rooster, 0.75, false);
+                }, calcRandomNumber(0, 15000));
+            }, 20000)
+        );
     }
 
 
@@ -93,7 +95,7 @@ class World {
             obj.healthPoints = 0;
         }
 
-        console.log(`${obj.constructor.name} HP = ${obj.healthPoints}`);
+        // console.log(`${obj.constructor.name} HP = ${obj.healthPoints}`);
     }
 
 
@@ -112,7 +114,7 @@ class World {
             obj.healthPoints = 100;
         }
 
-        console.log(`${obj.constructor.name} HP = ${obj.healthPoints}`);
+        // console.log(`${obj.constructor.name} HP = ${obj.healthPoints}`);
     }
 
 
@@ -129,6 +131,7 @@ class World {
             this.character.isDead = true;
             this.character.die();
             this.stopSound(this.AUDIO.walking);
+            this.stopSound(this.AUDIO.background_music);
         }
         else {
             this.character.gotHit = true;
@@ -152,7 +155,7 @@ class World {
         const objId = this.level.enemies.findIndex(obj => obj.isDead);
         this.level.enemies.splice(objId, 1);
 
-        console.log(`ID ${objId} removed from [enemies]`);
+        // console.log(`ID ${objId} removed from [enemies]`);
     }
 
 
@@ -167,14 +170,14 @@ class World {
                         if (this.character.isJumping && this.character.speedY <= 0 && !enemy.isDead) {
                             this.deactivateEnemy(enemy);
 
-                            console.log(`${enemy.constructor.name} ID ${this.level.enemies.findIndex(obj => obj.isDead)} died`);
+                            // console.log(`${enemy.constructor.name} ID ${this.level.enemies.findIndex(obj => obj.isDead)} died`);
 
                             enemy.img = enemy.imageCache[enemy.IMAGES_DIE[0]];
-                            this.playSound(this.AUDIO.chicken_alarm, 1, false);
+                            this.playSound(this.AUDIO.chicken_alarm, 0.7, false);
                             setTimeout(() => {
                                 this.removeDeadEnemy();
                             }, 1500);
-                            console.log(`Character jumps into ${enemy.constructor.name}`);
+                            // console.log(`Character jumps into ${enemy.constructor.name}`);
                         }
                         else if (!enemy.isDead && !this.character.isAboveGround() && !this.character.gotHit) {
                             if (enemy instanceof Chicken) {
@@ -188,7 +191,7 @@ class World {
                                 this.playSound(this.AUDIO.bonusHp, 1, false);
                             }
                             
-                            console.log(`Character walks into ${enemy.constructor.name}`);
+                            // console.log(`Character walks into ${enemy.constructor.name}`);
                         }
                     }
                 })
@@ -197,6 +200,14 @@ class World {
                     this.characterCollides(8);
                     // console.log(`Character collides with endboss!`);
                 }
+                this.throwables.forEach((throwable) => {
+                    throwable.getCollisionArea();
+                    if (throwable.positionY != throwable.groundPosition && this.level.endboss.isColliding(throwable) && !this.level.endboss.gotHit) {
+                        this.level.endboss.gotHit = true;
+                        this.level.endboss.hurt();
+                        console.log('Endboss hit by bottle!');
+                    }
+                });
             }, 100)
         );
     }

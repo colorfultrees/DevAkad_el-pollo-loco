@@ -54,10 +54,10 @@ class Endboss extends MoveableObject {
         this.width = 400;
         this.height = this.width / this.aspectRatio;
         this.healthPoints = 100;
-        this.collisionBasis.offsetXRatio = 0;
-        this.collisionBasis.offsetYRatio = 0;
-        this.collisionBasis.widthRatio = 1;
-        this.collisionBasis.heightRatio = 1;
+        this.collisionBasis.offsetXRatio = 0.05;
+        this.collisionBasis.offsetYRatio = 0.25;
+        this.collisionBasis.widthRatio = 0.9;
+        this.collisionBasis.heightRatio = 0.6;
         // this.getCollisionArea(0, 0, 1, 1);
 
         this.loadImageCache(this.IMAGES_WALK);
@@ -77,6 +77,7 @@ class Endboss extends MoveableObject {
         this.controlStatusbarPos();
 
         this.moveAlerted();
+        this.attack();
 
         // TEST
         // this.status = 'attack';
@@ -108,49 +109,56 @@ class Endboss extends MoveableObject {
      * Animates the alerted state
      */
     moveAlerted() {
-        this.moveAlertedIntvalId = setInterval(() => {
-            if (!this.isAnimPaused) {
-                if (this.currentImage > 0 && this.currentImage % this.IMAGES_ALERT.length == 0) {
-                    this.isAnimPaused = true;
-                    setTimeout(() => {
-                        this.isAnimPaused = false;
+        intervals.push(
+            setInterval(() => {
+                if (!this.isAnimPaused && this.status == 'alert') {
+                    if (this.currentImage > 0 && this.currentImage % this.IMAGES_ALERT.length == 0) {
+                        this.isAnimPaused = true;
+                        setTimeout(() => {
+                            this.isAnimPaused = false;
+                            this.playAnimation(this.IMAGES_ALERT);
+                        }, calcRandomNumber(200, 700));
+                    }
+                    else {
                         this.playAnimation(this.IMAGES_ALERT);
-                    }, calcRandomNumber(200, 700));
+                    }
                 }
-                else {
-                    this.playAnimation(this.IMAGES_ALERT);
-                }
-            }
-        }, 150);
+            }, 150)
+        );
     }
 
 
+    /**
+     * Animates the attack sequence (alternates between walking and attacking)
+     */
     attack() {
         let sequCount = 0;
         this.currentImage = 0;
         intervals.push(
             setInterval(() => {
-                if (this.status == 'attack') {
-                    this.playAnimation(this.IMAGES_ATTACK);
-
-                    console.log(`endboss ATTACK currImg = ${this.currentImage}`);
-
-                    if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                        this.currentImage = 0;
-                        this.status = 'walk';
+                if (!this.gotHit) {
+                    if (this.status == 'attack') {
+                        this.playAnimation(this.IMAGES_ATTACK);
+    
+                        // console.log(`endboss ATTACK currImg = ${this.currentImage}`);
+    
+                        if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                            this.currentImage = 0;
+                            this.status = 'walk';
+                        }
                     }
-                }
-                else if (this.status == 'walk') {
-                    this.move(-1);
-                    this.playAnimation(this.IMAGES_WALK);
-                    sequCount++;
-
-                    console.log(`endboss WALK currImg = ${this.currentImage}`);
-
-                    if (sequCount >= this.IMAGES_WALK.length * 3) {
-                        this.currentImage = 0;
-                        sequCount = 0;
-                        this.status = 'attack';
+                    else if (this.status == 'walk') {
+                        this.move(-1);
+                        this.playAnimation(this.IMAGES_WALK);
+                        sequCount++;
+    
+                        // console.log(`endboss WALK currImg = ${this.currentImage}`);
+    
+                        if (sequCount >= this.IMAGES_WALK.length * 3) {
+                            this.currentImage = 0;
+                            sequCount = 0;
+                            this.status = 'attack';
+                        }
                     }
                 }
             }, 150)
@@ -158,11 +166,30 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * Animates the hurting sequence
+     */
     hurt() {
-
+        this.currentImage = 0;
+        let interval = setInterval(() => {
+            this.playAnimation(this.IMAGES_HURT);
+            if (this.currentImage >= this.IMAGES_HURT.length) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    this.gotHit = false;
+                    this.status = 'attack';
+                    this.currentImage = 0;
+                    // this.loadImage(this.IMAGES_WAIT[0]);
+                }, 200);
+            }
+        }, 150);
+        world.playSound(world.AUDIO.chicken_alarm, 1, false);
     }
 
 
+    /**
+     * Animates the dying sequence
+     */
     die() {
 
     }
