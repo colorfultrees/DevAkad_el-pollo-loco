@@ -184,13 +184,22 @@ class Endboss extends MoveableObject {
             }
         }, 150);
         world.playSound(world.AUDIO.chickenAlarm, 1, false);
+
+        console.log('Endboss Alarm Sound startet');
     }
 
 
     /**
      * Animates the dying sequence
      */
-    die() {
-
-    }
+    // die() {
+    //     this.currentImage = 0;
+    //     let interval = setInterval(() => {
+    //         this.playAnimation(this.IMAGES_DIE);
+    //         if (this.currentImage >= this.IMAGES_DIE.length) {
+    //             clearInterval(interval);
+    //         }
+    //     }, 160);
+    //     world.playSound(world.AUDIO.win, 1, false);
+    // }
 }

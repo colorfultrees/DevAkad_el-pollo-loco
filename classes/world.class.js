@@ -128,7 +128,7 @@ class World {
         this.statusbars.health.setValue(this.character.healthPoints);
 
         if (this.character.healthPoints <= 0) {
-            intervals.forEach(interval => clearInterval(interval));
+            this.clearAllIntervals();
             this.character.isDead = true;
             this.stopAllSounds();
             this.character.die();
@@ -149,11 +149,21 @@ class World {
         this.looseHealthPoints(this.level.endboss, 20);
         this.level.endboss.statusbar.setValue(this.level.endboss.healthPoints);
 
-        this.level.endboss.gotHit = true;
-        this.level.endboss.hurt();
+        if (this.level.endboss.healthPoints <= 0) {
+            this.clearAllIntervals();
+            this.level.endboss.isDead = true;
+            this.stopAllSounds();
+            this.level.endboss.die();
 
+            console.log('Endboss died!');
+        }
+        else {
+            this.level.endboss.gotHit = true;
+            this.level.endboss.hurt();
+            
+            console.log('Endboss hit by bottle!');
+        }
 
-        console.log('Endboss hit by bottle!');
     }
 
 
@@ -342,7 +352,17 @@ class World {
         for (let sound in this.AUDIO) {
             this.AUDIO[sound].pause();
             this.AUDIO[sound].currentTime = 0;
+
+            console.log(`stopAllSounds: ${sound} stopped`);
         }
+    }
+
+
+    /**
+     * Clears all intervals
+     */
+    clearAllIntervals() {
+        intervals.forEach(interval => clearInterval(interval));
     }
 
 

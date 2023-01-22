@@ -197,4 +197,29 @@ class MoveableObject extends DrawableObject {
             // console.log(`Object: ${this.constructor.name} | Intervals cleared: hor - ${this.horizMoveIntervalId} / walk - ${this.walkIntervalId} | objCategory[${objId}] removed.`);
         }
     }
+
+
+    /**
+     * Animates the dying sequence
+     */
+    die() {
+        this.currentImage = 0;
+        let interval = setInterval(() => {
+            this.playAnimation(this.IMAGES_DIE);
+            if (this.currentImage >= this.IMAGES_DIE.length) {
+                clearInterval(interval);
+            }
+        }, 160);
+
+        if (this instanceof Character) {
+            world.playSound(world.AUDIO.gameOver, 1, false);
+            
+            console.log('GameOver Sound startet');
+        }
+        else if (this instanceof Endboss) {
+            world.playSound(world.AUDIO.win, 1, false);
+
+            console.log('GameWin Sound startet');
+        }
+    }
 }

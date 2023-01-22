@@ -263,16 +263,16 @@ class Character extends MoveableObject {
     /**
      * Animates the dying sequence
      */
-    die() {
-        this.currentImage = 0;
-        let interval = setInterval(() => {
-            this.playAnimation(this.IMAGES_DIE);
-            if (this.currentImage >= this.IMAGES_DIE.length) {
-                clearInterval(interval);
-            }
-        }, 160);
-        world.playSound(world.AUDIO.gameOver, 1, false);
-    }
+    // die() {
+    //     this.currentImage = 0;
+    //     let interval = setInterval(() => {
+    //         this.playAnimation(this.IMAGES_DIE);
+    //         if (this.currentImage >= this.IMAGES_DIE.length) {
+    //             clearInterval(interval);
+    //         }
+    //     }, 160);
+    //     world.playSound(world.AUDIO.gameOver, 1, false);
+    // }
 
 
     /**
