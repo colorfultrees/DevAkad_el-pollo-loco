@@ -120,51 +120,72 @@ class World {
 
 
     /**
-     * Manages the collision of the character with an enemy
-     * @param {Number} hp The amount of health points the character loses upon collision
+     * Manages the collision of an object
+     * @param {Object} obj The object to be analysed
+     * @param {Number} hp The amount of health points the object loses upon collision
+     * @param {Object} statBar The statusbar of the object's health points
      */
-    characterCollides(hp) {
-        this.looseHealthPoints(this.character, hp);
-        this.statusbars.health.setValue(this.character.healthPoints);
+    objCollides(obj, hp, statBar) {
+        this.looseHealthPoints(obj, hp);
+        statBar.setValue(obj.healthPoints);
 
-        if (this.character.healthPoints <= 0) {
+        if (obj.healthPoints <= 0) {
             this.clearAllIntervals();
-            this.character.isDead = true;
+            obj.isDead = true;
             this.stopMainSounds();
-            this.character.die();
-            // this.stopSound(this.AUDIO.walking);
-            // this.stopSound(this.AUDIO.backgroundMusic);
+            obj.die();
         }
         else {
-            this.character.gotHit = true;
-            this.character.hurt();
+            obj.gotHit = true;
+            obj.hurt();
         }
     }
 
 
     /**
+     * Manages the collision of the character with an enemy
+     * @param {Number} hp The amount of health points the character loses upon collision
+     */
+    // characterCollides(hp) {
+    //     this.looseHealthPoints(this.character, hp);
+    //     this.statusbars.health.setValue(this.character.healthPoints);
+
+    //     if (this.character.healthPoints <= 0) {
+    //         this.clearAllIntervals();
+    //         this.character.isDead = true;
+    //         this.stopMainSounds();
+    //         this.character.die();
+    //     }
+    //     else {
+    //         this.character.gotHit = true;
+    //         this.character.hurt();
+    //     }
+    // }
+
+
+    /**
      * Manages the hit of the endboss by a bottle
      */
-    endbossHit() {
-        this.looseHealthPoints(this.level.endboss, 20);
-        this.level.endboss.statusbar.setValue(this.level.endboss.healthPoints);
+    // endbossHit() {
+    //     this.looseHealthPoints(this.level.endboss, 20);
+    //     this.level.endboss.statusbar.setValue(this.level.endboss.healthPoints);
 
-        if (this.level.endboss.healthPoints <= 0) {
-            this.clearAllIntervals();
-            this.level.endboss.isDead = true;
-            this.stopMainSounds();
-            this.level.endboss.die();
+    //     if (this.level.endboss.healthPoints <= 0) {
+    //         this.clearAllIntervals();
+    //         this.level.endboss.isDead = true;
+    //         this.stopMainSounds();
+    //         this.level.endboss.die();
 
-            console.log(`Endboss died (HP ${this.level.endboss.healthPoints}!`);
-        }
-        else {
-            this.level.endboss.gotHit = true;
-            this.level.endboss.hurt();
+    //         console.log(`Endboss died (HP ${this.level.endboss.healthPoints}!`);
+    //     }
+    //     else {
+    //         this.level.endboss.gotHit = true;
+    //         this.level.endboss.hurt();
             
-            console.log(`Endboss hit by bottle (HP ${this.level.endboss.healthPoints}!`);
-        }
+    //         console.log(`Endboss hit by bottle (HP ${this.level.endboss.healthPoints}!`);
+    //     }
 
-    }
+    // }
 
 
     /**
@@ -208,7 +229,8 @@ class World {
                         }
                         else if (!enemy.isDead && !this.character.isAboveGround() && !this.character.gotHit) {
                             if (enemy instanceof Chicken) {
-                                this.characterCollides(5);
+                                // this.characterCollides(5);
+                                this.objCollides(this.character, 5, this.statusbars.health);
                             }
                             else if (enemy instanceof Chick && !this.character.isJumping) {
                                 this.deactivateEnemy(enemy);
@@ -224,14 +246,16 @@ class World {
                 })
                 this.level.endboss.getCollisionArea();
                 if (this.character.isColliding(this.level.endboss)) {
-                    this.characterCollides(8);
+                    // this.characterCollides(8);
+                    this.objCollides(this.character, 8, this.statusbars.health);
                     // console.log(`Character collides with endboss!`);
                 }
                 this.throwables.forEach((throwable) => {
                     throwable.getCollisionArea();
                     if (throwable.positionY != throwable.groundPosition && this.level.endboss.isColliding(throwable) && !this.level.endboss.gotHit) {
                         throwable.smash();
-                        this.endbossHit();
+                        // this.endbossHit();
+                        this.objCollides(this.level.endboss, 20, this.level.endboss.statusbar);
                     }
                 });
             }, 100)
