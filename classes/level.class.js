@@ -1,14 +1,19 @@
 class Level {
     background = {sky: [], clouds: [], landscapeLayer: []};
     enemies = [];
+    collectables = [];
+    maxBottles = 0;
+    maxCoins = 0;
     endboss = undefined;
     sceneParts = 0; // Number of aligned landscape parts
     parallaxLandscapeLayer = [];
 
 
-    constructor(sceneParts, parallaxLandscapeLayer) {
+    constructor(sceneParts, parallaxLandscapeLayer, maxBottles, maxCoins) {
         this.sceneParts = sceneParts;
         this.parallaxLandscapeLayer = parallaxLandscapeLayer;
+        this.maxBottles = maxBottles;
+        this.maxCoins = maxCoins;
     }
 
 
@@ -83,8 +88,43 @@ class Level {
      */
     createEndboss() {
         this.endboss = new Endboss(0, 0);
-        this.endboss.positionX = level1.background.landscapeLayer[0].width * level1.sceneParts - this.endboss.width - 100;
+        this.endboss.positionX = this.background.landscapeLayer[0].width * this.sceneParts - this.endboss.width - 100;
         this.endboss.positionY = canvas.height - this.endboss.height - 40;
+    }
+
+
+    createCollectables() {
+        const objects = ['bottle', 'coin'];
+        const collAmount = this.maxBottles + this.maxCoins;
+        const startPos = canvas.width * 0.6;
+        const endPos = (this.background.landscapeLayer[0].width * this.sceneParts) - (canvas.width * 0.7);
+        const dist = (endPos - startPos) / collAmount;
+        let bottlesRemain = this.maxBottles;
+        let coinsRemain = this.maxCoins;
+        let currPos = startPos - dist;
+
+        for (let c = 0; c < collAmount; c++) {
+            let objId;
+            if (bottlesRemain == 0) {
+                objId = 1;
+            }
+            else if (coinsRemain == 0) {
+                objId = 0;
+            }
+            else {
+                objId = Math.round(Math.random());
+            }
+            const posX = currPos + (dist * (calcRandomNumber(80, 110) / 100));
+            const posY = (canvas.height / 2) + (canvas.height / 4 * (calcRandomNumber(-170, 30) / 100));
+            currPos = posX;
+            this.collectables.push(new ColleactableObject(posX, posY, objects[objId]))
+            if (objId == 0) {
+                bottlesRemain--;
+            }
+            else {
+                coinsRemain--;
+            }
+        }
     }
 
 

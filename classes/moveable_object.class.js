@@ -7,8 +7,6 @@ class MoveableObject extends DrawableObject {
     speedY = 0; // Vertical speed - rising: (+), falling: (-)
     acceleration = 5;
     groundPosition = 0;
-    collisionBasis = {offsetXRatio: 0, offsetYRatio: 0, widthRatio: 0, heightRatio: 0};
-    collisionArea = {x: 0, y: 0, width: 0, height: 0};
     healthPoints = 0;
     isWalking = false;
     isJumping = false;
@@ -39,19 +37,6 @@ class MoveableObject extends DrawableObject {
     //         this.collisionArea.height = this.height * heightRatio;
     //     }, 50);
     // }
-
-
-    /**
-     * Calculates the collision area of an object
-     */
-    getCollisionArea() {
-        let mirror = 1;
-        if (this.isImageMirrored) mirror = -1;
-        this.collisionArea.x = (mirror * this.positionX) + (this.width * this.collisionBasis.offsetXRatio);
-        this.collisionArea.y = this.positionY + (this.height * this.collisionBasis.offsetYRatio);
-        this.collisionArea.width = this.width * this.collisionBasis.widthRatio;
-        this.collisionArea.height = this.height * this.collisionBasis.heightRatio;
-    }
     
 
 

@@ -275,6 +275,9 @@ class World {
 
         // Draw the landscape
         this.drawMultipleObjectsToCanvas(this.level.background.landscapeLayer);
+
+        // Draw the collectables
+        this.drawMultipleObjectsToCanvas(this.level.collectables);
         
         // Draw the character
         this.drawSingleObjectToCanvas(this.character);

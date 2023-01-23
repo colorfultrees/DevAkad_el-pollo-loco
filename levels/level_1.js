@@ -1,7 +1,7 @@
 let level1;
 
 function createLevel1() {
-    level1 = new Level(2, [0.7, 1.4]);
+    level1 = new Level(2, [0.7, 1.4], 10, 10);
     level1.createSky('./img/5_background/layers/air.png');
     level1.createLandscape(
         './img/5_background/layers/1_first_layer/full.png',
@@ -12,6 +12,7 @@ function createLevel1() {
     level1.createEnemies(Chicken, 11, 350, level1.background.landscapeLayer[0].width * level1.sceneParts);
     level1.createEnemies(Chick, 5, 350, level1.background.landscapeLayer[0].width * level1.sceneParts);
     level1.createEndboss();
+    level1.createCollectables();
 }
 
 
