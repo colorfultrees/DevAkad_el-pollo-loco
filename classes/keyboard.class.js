@@ -161,6 +161,16 @@ class Keyboard {
     }
 
 
+    getKeyboardStatus() {
+        for (let key in this.KEYS) {
+
+            // console.log(`check keys: ${key} = ${key.status}`);
+
+            if (this.KEYS[key].status) return true;
+        }
+    }
+
+
 
     // handleKeyDown(event) {
     //     console.log(`KeyCode in handleKeyDown(): ${event.code}, ${typeof(event.code)}`);

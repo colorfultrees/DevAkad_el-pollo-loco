@@ -117,21 +117,21 @@ class Character extends MoveableObject {
         intervals.push(
             setInterval(() => {
                 // if (!this.keyboardListener.isKeyActive && !this.gotHit) {
-                let isKeyActive = false;
-                for (let key in this.keyboardListener.KEYS) {
+                // let isKeyActive = false;
+                // for (let key in this.keyboardListener.KEYS) {
 
-                    // console.log(`check keys: ${key} = ${key.status}`);
+                //     // console.log(`check keys: ${key} = ${key.status}`);
 
-                    if (this.keyboardListener.KEYS[key].status) isKeyActive = true;
-                }
-                if (!isKeyActive && !this.gotHit) {
+                //     if (this.keyboardListener.KEYS[key].status) isKeyActive = true;
+                // }
+                if (!this.keyboardListener.getKeyboardStatus() && !this.gotHit) {
 
-                    console.log(`waitAndSnooze: isKeyActive = ${isKeyActive}, gotHit = ${this.gotHit}`);
-
-                    if (Date.now() - lastActiveTimestamp <= 5000) {
+                    // console.log(`waitAndSnooze: isKeyActive = ${isKeyActive}, gotHit = ${this.gotHit}`);
+                    let now = Date.now();
+                    if (now - lastActiveTimestamp > 4000 && now - lastActiveTimestamp <= 8000) {
                         this.playAnimation(this.IMAGES_WAIT);
                     }
-                    else {
+                    else if (now - lastActiveTimestamp > 8000) {
                         this.playAnimation(this.IMAGES_SNOOZE);
                     }
                 }
