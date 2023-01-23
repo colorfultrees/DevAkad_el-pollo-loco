@@ -58,6 +58,7 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-57.png'
     ];
     keyboardListener;
+    // lastActiveTimestamp;
     offsetPosX = 0;
     playInitAnim = true;
     hasThrownBottle = false;
@@ -91,6 +92,51 @@ class Character extends MoveableObject {
         this.walk();
         this.jump();
         this.throwBottle();
+        setTimeout(() => {
+            this.waitAndSnooze();
+            lastActiveTimestamp = Date.now();
+        }, 10000);
+    }
+
+
+    /**
+     * Resets the character to its waiting position
+     */
+    reset() {
+        this.currentImage = 0;
+        this.loadImage(this.IMAGES_WAIT[0]);
+        // this.keyboardListener.isKeyActive = false;
+        lastActiveTimestamp = Date.now();
+    }
+
+
+    /**
+     * Animates the waiting and snoozing sequences
+     */
+    waitAndSnooze() {
+        intervals.push(
+            setInterval(() => {
+                // if (!this.keyboardListener.isKeyActive && !this.gotHit) {
+                let isKeyActive = false;
+                for (let key in this.keyboardListener.KEYS) {
+
+                    // console.log(`check keys: ${key} = ${key.status}`);
+
+                    if (this.keyboardListener.KEYS[key].status) isKeyActive = true;
+                }
+                if (!isKeyActive && !this.gotHit) {
+
+                    console.log(`waitAndSnooze: isKeyActive = ${isKeyActive}, gotHit = ${this.gotHit}`);
+
+                    if (Date.now() - lastActiveTimestamp <= 5000) {
+                        this.playAnimation(this.IMAGES_WAIT);
+                    }
+                    else {
+                        this.playAnimation(this.IMAGES_SNOOZE);
+                    }
+                }
+            }, 180)
+        );
     }
 
 
@@ -181,8 +227,7 @@ class Character extends MoveableObject {
     */
     stopWalking() {
         this.isWalking = false;
-        this.currentImage = 0;
-        this.loadImage(this.IMAGES_WAIT[0]);
+        this.reset();
         world.stopSound(world.AUDIO.walking);
     }
 
@@ -203,9 +248,8 @@ class Character extends MoveableObject {
                         this.playAnimation(this.IMAGES_JUMP);
                         if (!this.isAboveGround()) {
                             clearInterval(interval);
-                            this.currentImage = 0;
                             this.speedY = 0;
-                            this.loadImage(this.IMAGES_WAIT[0]);
+                            this.reset();
                         }
                     }, 90);
                     this.speedY = 50;
@@ -246,13 +290,13 @@ class Character extends MoveableObject {
                 // console.log(`Interval ID ${interval} cleared at hurt()`);
                 // TEST
 
-                this.gotHit = false;
-                this.currentImage = 0;
+                // this.gotHit = false;
+                // this.currentImage = 0;
+                // lastActiveTimestamp = Date.now();
                 // this.loadImage(this.IMAGES_WAIT[0]);
                 setTimeout(() => {
                     this.gotHit = false;
-                    this.currentImage = 0;
-                    this.loadImage(this.IMAGES_WAIT[0]);
+                    this.reset();
                 }, 200);
             }
         }, 90);
@@ -283,6 +327,7 @@ class Character extends MoveableObject {
             setInterval(() => {
                 if (this.keyboardListener.KEYS.THROW.status && !this.hasThrownBottle) {
                     this.hasThrownBottle = true;
+                    if (!this.isWalking && !this.isJumping) this.reset();
                     const startX = this.positionX + (this.width / 2);
                     const startY = this.positionY + (this.height / 3);
                     world.throwables.push(new ThrowableObject(startX, startY, this.isImageMirrored));

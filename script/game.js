@@ -3,6 +3,7 @@
 let canvas;
 let world;
 let keyboardListener;
+let lastActiveTimestamp = Date.now();
 let intervals = [];
 
 

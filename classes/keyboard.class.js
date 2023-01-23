@@ -26,6 +26,7 @@ class Keyboard {
     // UP = 'ArrowUp';
     // SPACE = 'Space';
     // keyStatus = {left: false, right: false, up: false, space: false};
+    // isKeyActive = true;
     
 
     constructor() {
@@ -98,7 +99,9 @@ class Keyboard {
 
     handleKeyDown() {
         document.addEventListener('keydown', (event) => {
-            // console.log(`KeyCode in handleKeyDown(): ${event.code}, ${typeof(event.code)}`);
+            // this.isKeyActive = true;
+
+            // console.log(`KeyCode in handleKeyDown(): ${event.code}, ${typeof(event.code)} | isKeyActive = ${this.isKeyActive}`);
 
             switch (event.code) {
                 case this.KEYS.LEFT.code:
@@ -128,6 +131,8 @@ class Keyboard {
 
     handleKeyUp() {
         document.addEventListener('keyup', (event) => {
+            lastActiveTimestamp = Date.now();
+
             // console.log(`KeyCode in handleKeyUp(): ${event.code}, ${typeof(event.code)}`);
 
             switch (event.code) {
