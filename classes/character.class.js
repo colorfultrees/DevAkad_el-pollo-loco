@@ -327,8 +327,10 @@ class Character extends MoveableObject {
     throwBottle() {
         intervals.push(
             setInterval(() => {
-                if (this.keyboardListener.KEYS.THROW.status && !this.hasThrownBottle) {
+                if (this.keyboardListener.KEYS.THROW.status && !this.hasThrownBottle && this.counterBottles > 0) {
                     this.hasThrownBottle = true;
+                    this.counterBottles--;
+                    world.statusbars.bottle.setValue(100 / world.level.maxBottles * this.counterBottles);
                     if (!this.isWalking && !this.isJumping) this.reset();
                     const startX = this.positionX + (this.width / 2);
                     const startY = this.positionY + (this.height / 3);

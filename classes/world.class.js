@@ -6,8 +6,8 @@ class World {
         jump:               new Audio('./audio/jump_1.wav'),
         hurt:               new Audio('./audio/got-hurt_1.mp3'),
         bonusHp:            new Audio('./audio/get-bonus-hp.mp3'),
-        collectCoin:        new Audio('./audio/collect-coin.mp3'),
-        collectBottle:      new Audio('./audio/collect-bottle.mp3'),
+        collectCoin:        new Audio('./audio/collect-coin_1.mp3'),
+        collectBottle:      new Audio('./audio/collect-bottle.wav'),
         gameOver:           new Audio('./audio/game-over_4.mp3'),
         win:                new Audio('./audio/win_2.mp3'),
         chickenAlarm:       new Audio('./audio/chicken-single-alarm-call.wav'),
@@ -255,10 +255,12 @@ class World {
                         if (collectable.type == 'bottle') {
                             this.character.counterBottles++;
                             this.statusbars.bottle.setValue(100 / this.level.maxBottles * this.character.counterBottles);
+                            this.playSound(this.AUDIO.collectBottle, 1, false);
                         }
                         if (collectable.type == 'coin') {
                             this.character.counterCoins++;
                             this.statusbars.coin.setValue(100 / this.level.maxCoins * this.character.counterCoins);
+                            this.playSound(this.AUDIO.collectCoin, 1, false);
                         }
                         this.level.collectables.splice(id, 1);
                     }
