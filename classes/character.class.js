@@ -62,6 +62,8 @@ class Character extends MoveableObject {
     offsetPosX = 0;
     playInitAnim = true;
     hasThrownBottle = false;
+    counterBottles = 0;
+    counterCoins = 0;
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage(this.IMAGES_WAIT[0]);

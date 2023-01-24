@@ -236,7 +236,7 @@ class World {
                                 this.deactivateEnemy(enemy);
                                 this.removeDeadEnemy();
                                 this.gainHealthPoints(this.character, 5);
-                                world.statusbars.health.setValue(this.character.healthPoints);
+                                this.statusbars.health.setValue(this.character.healthPoints);
                                 this.playSound(this.AUDIO.bonusHp, 1, false);
                             }
                             
@@ -250,6 +250,19 @@ class World {
                     this.objCollides(this.character, 8, this.statusbars.health);
                     // console.log(`Character collides with endboss!`);
                 }
+                this.level.collectables.forEach((collectable, id) => { // TODO: check if use of id is sufficient to remove the object
+                    if (this.character.isColliding(collectable)) {
+                        if (collectable.type == 'bottle') {
+                            this.character.counterBottles++;
+                            this.statusbars.bottle.setValue(100 / this.level.maxBottles * this.character.counterBottles);
+                        }
+                        if (collectable.type == 'coin') {
+                            this.character.counterCoins++;
+                            this.statusbars.coin.setValue(100 / this.level.maxCoins * this.character.counterCoins);
+                        }
+                        this.level.collectables.splice(id, 1);
+                    }
+                })
                 this.throwables.forEach((throwable) => {
                     throwable.getCollisionArea();
                     if (throwable.positionY != throwable.groundPosition && this.level.endboss.isColliding(throwable) && !this.level.endboss.gotHit) {
