@@ -1,12 +1,38 @@
+@font-face {
+    font-family: 'edmundis';
+    src: url('./fonts/edmunds/edmundis.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'edmunds';
+    src: url('./fonts/edmunds/edmunds.ttf') format('truetype');
+}
+
 body {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
+    background-image: url('./img/5_background/background_1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#diffuser {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #FFF;
+    opacity: 0.3;
 }
 
 canvas {
+    position: relative;
+    z-index: 1;
     background-color: black;
     border-radius: 40px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
