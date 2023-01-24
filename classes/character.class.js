@@ -73,7 +73,7 @@ class Character extends MoveableObject {
         this.height = this.width / this.aspectRatio;
         this.offsetPosX = positionX;
         // this.groundPosition = positionY;
-        this.speedX = 5;
+        this.speedX = 8;//5;
         this.healthPoints = 100;
         this.collisionBasis.offsetXRatio = 0.15;
         this.collisionBasis.offsetYRatio = 0.45;

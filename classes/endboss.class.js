@@ -66,7 +66,7 @@ class Endboss extends MoveableObject {
         this.loadImageCache(this.IMAGES_HURT);
         this.loadImageCache(this.IMAGES_DIE);
 
-        this.speedX = 4;
+        this.speedX = 7;//4;
 
         this.statusbar.positionX = canvas.width + 100;
         this.IMAGE_STATUS_ICON.img.src = './img/7_statusbars/3_icons/icon_health_endboss.png';
