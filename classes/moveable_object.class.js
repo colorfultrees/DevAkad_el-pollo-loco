@@ -115,7 +115,7 @@ class MoveableObject extends DrawableObject {
             if (!this.isAboveGround() || this.isSmashed) {
                 clearInterval(interval);
                 this.speedY = 0;
-                this.positionY = this.groundPosition;
+                if (!this.isSmashed) this.positionY = this.groundPosition;
                 if (this instanceof Character) {
                     setTimeout(() => {this.isJumping = false;}, 300);
                 }
