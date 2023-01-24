@@ -93,38 +93,53 @@ class Level {
     }
 
 
+    /**
+     * Create collectable Objects
+     */
     createCollectables() {
         const objects = ['bottle', 'coin'];
-        const collAmount = this.maxBottles + this.maxCoins;
+        const objRemaining = [this.maxBottles, this.maxCoins];
+        const objAmount = this.maxBottles + this.maxCoins;
         const startPos = canvas.width * 0.6;
         const endPos = (this.background.landscapeLayer[0].width * this.sceneParts) - (canvas.width * 0.7);
-        const dist = (endPos - startPos) / collAmount;
-        let bottlesRemain = this.maxBottles;
-        let coinsRemain = this.maxCoins;
+        const dist = (endPos - startPos) / objAmount;
         let currPos = startPos - dist;
 
-        for (let c = 0; c < collAmount; c++) {
-            let objId;
-            if (bottlesRemain == 0) {
-                objId = 1;
-            }
-            else if (coinsRemain == 0) {
-                objId = 0;
-            }
-            else {
-                objId = Math.round(Math.random());
-            }
-            const posX = currPos + (dist * (calcRandomNumber(80, 110) / 100));
-            const posY = (canvas.height / 2) + (canvas.height / 4 * (calcRandomNumber(-170, 30) / 100));
-            currPos = posX;
-            this.collectables.push(new ColleactableObject(posX, posY, objects[objId]))
-            if (objId == 0) {
-                bottlesRemain--;
-            }
-            else {
-                coinsRemain--;
-            }
+        for (let c = 0; c < objAmount; c++) {
+            const objId = this.setObjectType(objRemaining);
+            const coord = this.setCollectablesPosition(currPos, dist);
+            this.collectables.push(new ColleactableObject(coord.posX, coord.posY, objects[objId]))
+            objRemaining[objId]--;
+            currPos = coord.posX;
         }
+    }
+    
+    
+    /**
+     * Sets the collectable object type
+     */
+    setObjectType(objRemaining) {
+        if (objRemaining[0] == 0) {
+            return 1;
+        }
+        else if (objRemaining[1] == 0) {
+            return 0;
+        }
+        else {
+            return Math.round(Math.random());
+        }
+    }
+
+
+    /**
+     * Sets the coordinates of the next object
+     * @param {Number} currPos The position of the last object
+     * @returns Coordinates as object
+     */
+    setCollectablesPosition(currPos, dist) {
+        const posX = currPos + (dist * (calcRandomNumber(80, 110) / 100));
+        const posY = (canvas.height / 2) + (canvas.height / 4 * (calcRandomNumber(-170, 30) / 100));
+        return {posX: posX, posY: posY};
     }
 
 
