@@ -196,15 +196,17 @@ class MoveableObject extends DrawableObject {
             }
         }, 160);
 
-        if (this instanceof Character) {
-            world.playSound(world.AUDIO.gameOver, 1, false);
-            
-            console.log('GameOver Sound startet');
-        }
-        else if (this instanceof Endboss) {
-            world.playSound(world.AUDIO.win, 1, false);
+        world.gameOver(this);
 
-            console.log('GameWin Sound startet');
-        }
+        // if (this instanceof Character) {
+        //     world.playSound(world.AUDIO.gameOver, 1, false);
+            
+        //     console.log('GameOver Sound startet');
+        // }
+        // else if (this instanceof Endboss) {
+        //     world.playSound(world.AUDIO.win, 1, false);
+
+        //     console.log('GameWin Sound startet');
+        // }
     }
 }
