@@ -21,6 +21,7 @@ class World {
     canvas;
     ctx;
     cameraPos = 0;
+    delayRoosterCrow = 0;
 
     constructor(canvas) {
         this.canvas = canvas;
@@ -65,7 +66,7 @@ class World {
         // Start the loop for the rooster crow
         intervals.push(
             setInterval(() => {
-                setTimeout(() => {
+                this.delayRoosterCrow = setTimeout(() => {
                     this.playSound(this.AUDIO.rooster, 0.75, false);
                 }, calcRandomNumber(0, 15000));
             }, 20000)
@@ -403,6 +404,7 @@ class World {
      */
     clearAllIntervals() {
         intervals.forEach(interval => clearInterval(interval));
+        clearTimeout(this.delayRoosterCrow);
     }
 
 
