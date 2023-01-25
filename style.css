@@ -8,6 +8,14 @@
     src: url('./fonts/edmunds/edmunds.ttf') format('truetype');
 }
 
+/* VARIABLES */
+:root {
+    --screen-width: 900px;
+    --screen-heigt: 600px;
+    --screen-border-radius: 40px;
+}
+/* END: VARIABLES */
+
 body {
     height: 100vh;
     display: flex;
@@ -30,10 +38,63 @@ body {
     opacity: 0.3;
 }
 
-canvas {
+#content {
     position: relative;
     z-index: 1;
-    background-color: black;
-    border-radius: 40px;
+    width: var(--screen-width);
+    height: var(--screen-heigt);
+    border-radius: var(--screen-border-radius);
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.85);
+    overflow: hidden;
+}
+
+canvas {
+    /* position: relative; */
+    /* z-index: 1; */
+    width: 100%;
+    height: 100%;
+    background-color: black;
+}
+
+#startscreen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url('./img/9_intro_outro_screens/start/startscreen_1.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.btn {
+    border-radius: 10px;
+    border: 2px solid rgb(145, 94, 0);
+    background-color: rgb(255, 196, 118);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.btn:hover {
+    box-shadow: 0 0 12px 4px #000;
+}
+
+#btn-start {
+    font-family: 'edmunds';
+    font-size: 35px;
+    position: absolute;
+    width: fit-content;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 7px 45px;
+}
+
+
+/* GENERAL */
+
+.d-none {
+    display: none;
 }

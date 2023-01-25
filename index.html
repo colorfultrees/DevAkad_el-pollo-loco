@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="image/x-icon" href="./img/el-pollo-loco_logo.ico">
+    <link rel="icon" type="image/x-icon" href="./icons/el-pollo-loco_logo.ico">
     <script src="./script/aux_func.js"></script>
     <script src="./classes/keyboard.class.js"></script>
     <script src="./classes/drawable_object.class.js"></script>
@@ -25,8 +25,13 @@
     <script src="./script/game.js"></script>
     <title>El Pollo Loco</title>
 </head>
-<body onload="init()">
+<body>
     <div id="diffuser"></div>
-    <canvas width="900px" height="600px"></canvas>
+    <div id="content">
+        <div id="startscreen" class="">
+            <button id="btn-start" class="btn" onclick="init()">START</button>
+        </div>
+        <canvas width="900px" height="600px" class="d-none"></canvas>
+    </div>
 </body>
 </html>

@@ -1,6 +1,8 @@
 // const CANVAS_WIDTH = 900;
 // const CANVAS_HEIGHT = 600;
 let canvas;
+let startScreen;
+let endScreen;
 let world;
 let keyboardListener;
 let lastActiveTimestamp = Date.now();
@@ -12,6 +14,7 @@ let intervals = [];
  */
 function init() {
     canvas = document.querySelector('canvas');
+    startScreen = document.getElementById('startscreen');
     // canvas.setAttribute('width', CANVAS_WIDTH + 'px');
     // canvas.setAttribute('height', CANVAS_HEIGHT + 'px');
 
@@ -21,21 +24,29 @@ function init() {
     // document.addEventListener('keyup', keyboardListener.handleKeyUp);
     // console.log('eventListeners created.');
 
-    world = new World(canvas);
-    createLevel1();
-    world.setLevel(level1);
-    world.createCharacter();
-    world.createStatusBars();
-
+    createWorld();
+    activateCanvas();
     renderWorld();
-
-    // world.initBackgroundSound(); // ###### ACTIVATE LATER ###########
+    world.initBackgroundSound();
 
     // initHorizontalMovementIntvals_Level1();
     initCreationIntervals_Level1();
 }
 
 
+function createWorld() {
+    world = new World(canvas);
+    createLevel1();
+    world.setLevel(level1);
+    world.createCharacter();
+    world.createStatusBars();
+}
+
+
+function activateCanvas() {
+    startScreen.classList.add('d-none');
+    canvas.classList.remove('d-none');
+}
 /**
  * Creates the chickens
  */
