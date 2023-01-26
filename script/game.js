@@ -48,7 +48,7 @@ function activateCanvas() {
 
 
 function toggleScreen(screen) {
-    const screens = Array.from(document.querySelectorAll('#content > *:not([class=d-none])'));
+    const screens = Array.from(document.querySelectorAll('#content > .screen:not([class=d-none])'));
     screens.forEach(s => s.classList.add('d-none'));
     document.getElementById(screen).classList.remove('d-none');
 }

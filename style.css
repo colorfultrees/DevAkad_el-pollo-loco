@@ -100,6 +100,29 @@ canvas {
     padding: 7px 45px;
 }
 
+#control-btns {
+    z-index: 100;
+}
+
+#fct-btns {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#full-screen-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.btn-icon {
+    width: 25px;
+    margin: 5px;
+}
+
 
 /* GENERAL */
 
