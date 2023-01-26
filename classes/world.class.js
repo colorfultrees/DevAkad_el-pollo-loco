@@ -131,7 +131,7 @@ class World {
         statBar.setValue(obj.healthPoints);
 
         if (obj.healthPoints <= 0) {
-            this.clearAllIntervals();
+            this.clearMainIntervals();
             obj.isDead = true;
             this.stopMainSounds();
             obj.die();
@@ -294,7 +294,10 @@ class World {
             handleEndscreen('./img/9_intro_outro_screens/game_over/game over.png');
             // console.log('GameWin Sound startet');
         }
-        setTimeout(() => {toggleScreen('startscreen')}, 12000);
+        setTimeout(() => {
+            this.stopEnemiesAndClouds();
+            toggleScreen('startscreen');
+        }, 8000);
     }
 
 
@@ -419,11 +422,25 @@ class World {
 
 
     /**
-     * Clears all intervals
+     * Clears all main intervals (character, endboss)
      */
-    clearAllIntervals() {
+    clearMainIntervals() {
         intervals.forEach(interval => clearInterval(interval));
         clearTimeout(this.delayRoosterCrow);
+    }
+
+
+    /**
+     * Clears the movement intervals of the chickens and the clouds
+     */
+    stopEnemiesAndClouds() {
+        this.level.enemies.forEach((enemy) => {
+            clearInterval(enemy.horizMoveIntervalId);
+            clearInterval(enemy.walkIntervalId);
+        });
+        this.level.background.clouds.forEach((cloud) => {
+            clearInterval(cloud.horizMoveIntervalId);
+        });
     }
 
 

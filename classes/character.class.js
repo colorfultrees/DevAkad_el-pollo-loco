@@ -235,7 +235,7 @@ class Character extends MoveableObject {
 
 
     /**
-     * Animates the jumping sequence
+     * Controls the "jump" function
      */
     jump() {
         intervals.push(
@@ -243,23 +243,31 @@ class Character extends MoveableObject {
                 if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) || this.playInitAnim) {
                     this.isJumping = true;
                     this.currentImage = 2;
-                    let interval = setInterval(() => {
-                        
-                        // console.log(`currImg_jump: ${this.currentImage}`);
-
-                        this.playAnimation(this.IMAGES_JUMP);
-                        if (!this.isAboveGround()) {
-                            clearInterval(interval);
-                            this.speedY = 0;
-                            this.reset();
-                        }
-                    }, 90);
+                    this.animateJump();
                     this.speedY = 50;
                     setTimeout(() => {this.applyGravity()}, 100);
                     if (!this.playInitAnim) world.playSound(world.AUDIO.jump, 1, false);
                 }
             }, 50)
         );
+    }
+
+
+    /**
+     * Animates the jump sequence
+    */
+   animateJump() {
+       let interval = setInterval(() => {
+           
+           // console.log(`currImg_jump: ${this.currentImage}`);
+   
+           this.playAnimation(this.IMAGES_JUMP);
+           if (!this.isAboveGround()) {
+               clearInterval(interval);
+               this.speedY = 0;
+               this.reset();
+           }
+       }, 90);
     }
 
 
