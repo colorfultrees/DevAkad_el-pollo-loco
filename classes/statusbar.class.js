@@ -56,7 +56,7 @@ class Statusbar extends DrawableObject {
 
     setValue(percent) {
         const maxId = 5;
-        this.currentImage = Math.ceil(percent * maxId / 100);
+        this.currentImage = Math.floor(percent * maxId / 100);
         this.img = this.imageCache[this.TYPE[this.type].img[this.currentImage]];
     }
 }

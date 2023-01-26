@@ -286,15 +286,15 @@ class World {
     gameOver(obj) {
         if (obj instanceof Character) {
             world.playSound(world.AUDIO.gameOver, 1, false);
-            handleEndscreen('./img/9_intro_outro_screens/game_over/you lost.png'); // TODO: Bild defekt???
+            setTimeout(() => {handleEndscreen('./img/9_intro_outro_screens/game_over/you lost.png')}, 1000);
             // console.log('GameOver Sound startet');
         }
         else if (obj instanceof Endboss) {
             world.playSound(world.AUDIO.win, 1, false);
-            handleEndscreen('./img/9_intro_outro_screens/game_over/game over.png'); // TODO: Bild defekt???
+            handleEndscreen('./img/9_intro_outro_screens/game_over/game over.png');
             // console.log('GameWin Sound startet');
         }
-        setTimeout(() => {toggleScreen('startscreen')}, 5000);
+        setTimeout(() => {toggleScreen('startscreen')}, 12000);
     }
 
 

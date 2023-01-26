@@ -56,7 +56,7 @@ function toggleScreen(screen) {
 
 function handleEndscreen(img) {
     endScreen = document.getElementById('endscreen');
-    endScreen.style.backgroundImage = `url(${img})`;
+    endScreen.style.backgroundImage = `url('${img}')`;
     endScreen.classList.remove('d-none');
 }
 /**
