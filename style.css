@@ -89,6 +89,9 @@ canvas {
 .btn:hover {
     box-shadow: 0 0 12px 4px #000;
 }
+.btn:active {
+    background-color: rgb(252, 163, 48);
+}
 
 #btn-start {
     font-family: 'edmunds';
