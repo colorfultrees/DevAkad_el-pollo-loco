@@ -32,13 +32,13 @@
     <div id="content">
         <!-- Control Buttons -->
         <div id="fct-btns">
-            <button id="sound-fx" class="btn">
+            <button id="btn-sound-fx" class="btn">
                 <img class="btn-icon" src="./icons/sound-fx_on.png" alt="sound-fx">
             </button>
-            <button id="music" class="btn">
+            <button id="btn-music" class="btn">
                 <img class="btn-icon" src="./icons/music_on.png" alt="music">
             </button>
-            <button id="help" class="btn">
+            <button id="btn-help" class="btn">
                 <img class="btn-icon" src="./icons/help.png" alt="help">
             </button>
         </div>
@@ -46,11 +46,34 @@
             <img class="btn-icon" src="./icons/enter-fullscreen.png" alt="fullscreen">
         </button>
         <!-- END: Control Buttons -->
-        <div id="startscreen" class="content-elem screen">
+        <div id="startscreen" class="content-elem screen d-none">
             <button id="btn-start" class="btn" onclick="init()">START</button>
         </div>
         <div id="endscreen" class="content-elem screen d-none"></div>
         <canvas id="canvas" width="900px" height="600px" class="content-elem screen d-none"></canvas>
+        <div id="helpscreen" class="content-elem screen ">
+            <img id="help-bckgnd" src="./img/sombrero.png">
+            <h1>El Pollo Loco</h1>
+            <div id="help-content">
+                <div id="help-content--rules">
+                    <h2>Rules</h2>
+                    <p>Collect as many salsa bottles as possible.</p>
+                    <p>Use the bottles to defeat Se&ntilde;ora Gallina, the crazy giant chicken.</p>
+                    <p>Throw at least 5 bottles at her.</p>
+                    <p>Fight her crazy chickens by jumping on them.</p>
+                    <p>Collect the little chicks to gain new health points. So be careful, not to jump on.</p>
+                    <p>Collect some coins just for fun.</p>
+                </div>
+                <div id="help-content--divider"></div>
+                <div id="help-content--controls">
+                    <h2>Controls</h2>
+                    <p>Move right ... ... ...</p>
+                    <p>Move left ... ... ...</p>
+                    <p>Jump ... ... ...</p>
+                    <p>Throw bottle ... ... ...</p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
