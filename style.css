@@ -18,8 +18,9 @@
 
 /* VARIABLES */
 :root {
-    --screen-width: 900px;
-    --screen-heigt: 600px;
+    --screen-width: 900px; /* always update with aspect-ratio below! */
+    --screen-heigt: 600px; /* always update with aspect-ratio below! */
+    --aspect-ratio: calc(900 / 600);
     --screen-border-radius: 40px;
 }
 /* END: VARIABLES */
@@ -34,6 +35,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    overflow: hidden;
 }
 #diffuser {
     position: absolute;
@@ -49,7 +51,8 @@ body {
     position: relative;
     z-index: 1;
     width: var(--screen-width);
-    height: var(--screen-heigt);
+    max-height: var(--screen-heigt);
+    height: calc(100vw / var(--aspect-ratio));
     border-radius: var(--screen-border-radius);
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
     background-color: rgba(0, 0, 0, 0.85);
