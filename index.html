@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,25 +26,26 @@
     <script src="./script/game.js"></script>
     <title>El Pollo Loco</title>
 </head>
+
 <body>
     <div id="diffuser"></div>
     <div id="content">
-        <div id="control-btns" class="content-elem">
-            <div id="fct-btns">
-                <button id="sound-fx" class="btn">
-                    <img class="btn-icon" src="./icons/sound-fx_on.png" alt="sound-fx">
-                </button>
-                <button id="music" class="btn">
-                    <img class="btn-icon" src="./icons/music_on.png" alt="music">
-                </button>
-                <button id="help" class="btn">
-                    <img class="btn-icon" src="./icons/help.png" alt="help">
-                </button>
-            </div>
-            <button id="full-screen-btn" class="btn">
-                <img class="btn-icon" src="./icons/enter-fullscreen.png" alt="fullscreen">
+        <!-- Control Buttons -->
+        <div id="fct-btns">
+            <button id="sound-fx" class="btn">
+                <img class="btn-icon" src="./icons/sound-fx_on.png" alt="sound-fx">
+            </button>
+            <button id="music" class="btn">
+                <img class="btn-icon" src="./icons/music_on.png" alt="music">
+            </button>
+            <button id="help" class="btn">
+                <img class="btn-icon" src="./icons/help.png" alt="help">
             </button>
         </div>
+        <button id="full-screen-btn" class="btn">
+            <img class="btn-icon" src="./icons/enter-fullscreen.png" alt="fullscreen">
+        </button>
+        <!-- END: Control Buttons -->
         <div id="startscreen" class="content-elem screen">
             <button id="btn-start" class="btn" onclick="init()">START</button>
         </div>
@@ -51,4 +53,5 @@
         <canvas id="canvas" width="900px" height="600px" class="content-elem screen d-none"></canvas>
     </div>
 </body>
+
 </html>
