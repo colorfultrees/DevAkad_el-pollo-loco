@@ -297,6 +297,7 @@ class World {
         setTimeout(() => {
             this.stopEnemiesAndClouds();
             toggleScreen('startscreen');
+            isGameRunning = false;
         }, 8000);
     }
 

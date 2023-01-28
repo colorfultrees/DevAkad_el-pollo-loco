@@ -38,10 +38,10 @@
             <button id="btn-music" class="btn">
                 <img class="btn-icon" src="./icons/music_on.png" alt="music">
             </button>
-            <button id="btn-help" class="btn">
+            <button id="btn-help" class="btn" onmouseup="toggleHelp()">
                 <img class="btn-icon" src="./icons/help_closed.png" alt="help">
             </button>
-            <div id="controls-info">
+            <div id="controls-info" class="d-none">
                 <div class="controls-info--item">
                     <img class="ctrl-info-ico key-style" src="./icons/arrow_right.png" alt="arrow right">
                     <span>Move right</span>
@@ -64,12 +64,12 @@
             <img class="btn-icon" src="./icons/enter-fullscreen.png" alt="fullscreen">
         </button>
         <!-- END: Control Buttons -->
-        <div id="startscreen" class="content-elem screen d-none">
+        <div id="startscreen" class="content-elem screen">
             <button id="btn-start" class="btn" onclick="init()">START</button>
         </div>
         <div id="endscreen" class="content-elem screen d-none"></div>
         <canvas id="canvas" width="900px" height="600px" class="content-elem screen d-none"></canvas>
-        <div id="helpscreen" class="content-elem screen ">
+        <div id="helpscreen" class="content-elem screen d-none">
             <img id="help-bckgnd" src="./img/sombrero.png">
             <h1>El Pollo Loco</h1>
             <div id="help-content">

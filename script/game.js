@@ -5,6 +5,10 @@ let world;
 let keyboardListener;
 let lastActiveTimestamp = Date.now();
 let intervals = [];
+let isGameRunning = false;
+let isSoundOn = true;
+let isHelpVisible = false;
+let hideControlsInfoDelayId = 0;
 
 
 /**
@@ -28,6 +32,8 @@ function init() {
 
     // initHorizontalMovementIntvals_Level1();
     initCreationIntervals_Level1();
+
+    isGameRunning = true;
 }
 
 
@@ -58,6 +64,54 @@ function handleEndscreen(img) {
     endScreen = document.getElementById('endscreen');
     endScreen.style.backgroundImage = `url('${img}')`;
     endScreen.classList.remove('d-none');
+}
+
+
+function toggleHelp() {
+    document.activeElement.blur();
+    // document.body.focus();
+
+    console.log('active element:', document.activeElement);
+
+    if (isGameRunning) {
+        toggleControlsInfo();
+    }
+    else {
+        toggleHelpScreen();
+    }
+}
+
+
+function toggleHelpScreen() {
+    const btnHelp = document.querySelector('#btn-help > img');
+    if (isHelpVisible) {
+        toggleScreen('startscreen');
+        isHelpVisible = false;
+        btnHelp.src = './icons/help_closed.png';
+    }
+    else {
+        toggleScreen('helpscreen');
+        isHelpVisible = true;
+        btnHelp.src = './icons/help_open.png';
+    }
+}
+
+
+function toggleControlsInfo() {
+    const ctrlInfo = document.getElementById('controls-info');
+    const btnHelp = document.querySelector('#btn-help > img');
+    if (isHelpVisible) {
+        ctrlInfo.classList.add('d-none');
+        isHelpVisible = false;
+        btnHelp.src = './icons/help_closed.png';
+        clearTimeout(hideControlsInfoDelayId);
+    }
+    else {
+        ctrlInfo.classList.remove('d-none');
+        isHelpVisible = true;
+        btnHelp.src = './icons/help_open.png';
+        hideControlsInfoDelayId = setTimeout(() => {toggleControlsInfo()}, 10000);
+    }
 }
 /**
  * Creates the chickens
