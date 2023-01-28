@@ -7,6 +7,7 @@ let lastActiveTimestamp = Date.now();
 let intervals = [];
 let isGameRunning = false;
 let isSoundOn = true;
+let isMusicOn = true;
 let isHelpVisible = false;
 let hideControlsInfoDelayId = 0;
 
@@ -68,10 +69,9 @@ function handleEndscreen(img) {
 
 
 function toggleHelp() {
-    document.activeElement.blur();
-    // document.body.focus();
+    resetActiveElement();
 
-    console.log('active element:', document.activeElement);
+    // console.log('active element:', document.activeElement);
 
     if (isGameRunning) {
         toggleControlsInfo();
@@ -113,6 +113,23 @@ function toggleControlsInfo() {
         hideControlsInfoDelayId = setTimeout(() => {toggleControlsInfo()}, 10000);
     }
 }
+
+
+function toggleMusic() {
+    const btnMusic = document.querySelector('#btn-music > img');
+    resetActiveElement();
+
+    if (isMusicOn) {
+        isMusicOn = false;
+        btnMusic.src = './icons/music_off.png'
+        if (isGameRunning) world.stopSound(world.AUDIO.backgroundMusic);
+    }
+    else {
+        isMusicOn = true;
+        btnMusic.src = './icons/music_on.png';
+        if (isGameRunning) world.startBackgroundMusic();
+    }
+}
 /**
  * Creates the chickens
  */
@@ -144,4 +161,9 @@ function toggleControlsInfo() {
  */
 function renderWorld() {
     world.draw();
+}
+
+
+function resetActiveElement() {
+    document.activeElement.blur();
 }

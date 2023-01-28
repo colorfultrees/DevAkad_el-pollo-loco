@@ -61,7 +61,7 @@ class World {
 
     initBackgroundSound() {
         // Start the background music
-        this.playSound(this.AUDIO.backgroundMusic, 0.25, true)
+        if (isMusicOn) this.startBackgroundMusic();
 
         // Start the loop for the rooster crow
         intervals.push(
@@ -71,6 +71,11 @@ class World {
                 }, calcRandomNumber(0, 10000));
             }, 15000)
         );
+    }
+
+
+    startBackgroundMusic() {
+        this.playSound(this.AUDIO.backgroundMusic, 0.25, true)
     }
 
 
@@ -284,6 +289,7 @@ class World {
      * @param {Object} obj The object that died at the end
      */
     gameOver(obj) {
+        isGameRunning = false;
         if (obj instanceof Character) {
             world.playSound(world.AUDIO.gameOver, 1, false);
             setTimeout(() => {handleEndscreen('./img/9_intro_outro_screens/game_over/you lost.png')}, 1000);
@@ -297,7 +303,6 @@ class World {
         setTimeout(() => {
             this.stopEnemiesAndClouds();
             toggleScreen('startscreen');
-            isGameRunning = false;
         }, 8000);
     }
 
