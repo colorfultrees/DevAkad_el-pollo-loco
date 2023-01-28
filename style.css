@@ -22,6 +22,7 @@
     --screen-heigt: 600px; /* always update with aspect-ratio below! */
     --aspect-ratio: calc(900 / 600);
     --screen-border-radius: 40px;
+    --btn-bckgnd-color: rgb(255, 196, 118);
 }
 /* END: VARIABLES */
 
@@ -82,7 +83,7 @@ canvas {
 .btn {
     border-radius: 100px;
     border: 2px solid rgb(145, 94, 0);
-    background-color: rgb(255, 196, 118);
+    background-color: var(--btn-bckgnd-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -196,9 +197,17 @@ td:last-child {
 .ctrl-ico {
     width: 30px;
 }
+.ctrl-info-ico {
+    width: 20px;
+}
 
 .ctrl-txt {
     font-size: 20px;
+    font-weight: bold;
+    max-width: fit-content;
+}
+.ctrl-info-text {
+    font-size: 16px;
     font-weight: bold;
     max-width: fit-content;
 }
@@ -214,6 +223,26 @@ td:last-child {
     position: absolute;
     left: 30px;
     bottom: 10px;
+}
+
+#controls-info {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    display: flex;
+    gap: 10px;
+    background-color: var(--btn-bckgnd-color);
+    padding: 10px;
+    min-width: max-content;
+    border-radius: 10px;
+    box-shadow: 3px 3px 7px -3px #000;
+}
+
+.controls-info--item {
+    min-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
