@@ -8,9 +8,21 @@
     #help-bckgnd {
         width: 160px;
     }
+
+    .btn-icon {
+        width: 20px;
+    }
 }
 
 @media screen and (max-width: 750px) {
+    #btn-start {
+        font-size: 25px;
+    }
+
+    #controls-info {
+        top: 40px;
+    }
+    
     #help-bckgnd {
         display: none;
     }
@@ -24,9 +36,17 @@
     #helpscreen h2 {
         font-size: 20px;
     }
+
+    .btn-icon {
+        margin: 3px;
+    }
 }
 
 @media screen and (max-width: 680px) {
+    .controls-info--item {
+        font-size: 15px;
+    }
+
     #helpscreen {
         font-size: 15px;
     }
@@ -38,6 +58,23 @@
 }
 
 @media screen and (max-width: 600px) {
+    #controls-info {
+        top: 35px;
+        padding: 7px;
+    }
+
+    .controls-info--item {
+        font-size: 14px;
+    }
+
+    .ctrl-info-ico {
+        width: 18px;
+    }
+
+    .ctrl-info-txt {
+        font-size: 14px;
+    }
+
     #helpscreen {
         font-size: 14px;
         padding-left: 45px;
@@ -54,6 +91,19 @@
 
     #help-content--controls table {
         border-spacing: 0 10px;
+    }
+
+    #btn-start {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    #fct-btns {
+        top: 13px;
+    }
+
+    .btn-icon {
+        width: 16px;
     }
 
     .ctrl-ico {
