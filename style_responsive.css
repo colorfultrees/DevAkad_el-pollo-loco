@@ -94,16 +94,16 @@
         padding-bottom: 3px;
     }
 
-    #fct-btns {
-        top: 13px;
-    }
-
     .btn-icon {
         width: 16px;
     }
 }
 
 @media screen and (max-width: 600px), (max-height: 450px) {
+    #fct-btns {
+        top: 13px;
+    }
+    
     #help-content--controls table {
         border-spacing: 0 10px;
     }
@@ -137,6 +137,12 @@
     }
 
     #btn-fullscreen {
+        display: none;
+    }
+}
+
+@media screen and (min-height: 480px) {
+    #btns-mobile {
         display: none;
     }
 }
