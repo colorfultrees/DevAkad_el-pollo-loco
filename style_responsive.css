@@ -141,8 +141,7 @@
     }
 }
 
-/* @media screen and (min-height: 480px) { */
-@media (pointer: coarse) {
+@media screen and (min-height: 480px) {
     #btns-mobile {
         display: none;
     }
