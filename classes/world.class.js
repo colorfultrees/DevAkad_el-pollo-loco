@@ -286,25 +286,32 @@ class World {
 
     /**
      * Handles "Game Over"
-     * @param {Object} obj The object that died at the end
+     * @param {Object} obj - The object that died at the end
      */
     gameOver(obj) {
         if (isHelpVisible) toggleControlsInfo();
         isGameRunning = false;
         if (obj instanceof Character) {
-            world.playSound(world.AUDIO.gameOver, 1, false);
-            setTimeout(() => {handleEndscreen('./img/9_intro_outro_screens/game_over/you lost.png')}, 1000);
-            // console.log('GameOver Sound startet');
+            this.controlGameOverSequence('gameOver', 'you lost.png');
         }
         else if (obj instanceof Endboss) {
-            world.playSound(world.AUDIO.win, 1, false);
-            handleEndscreen('./img/9_intro_outro_screens/game_over/game over.png');
-            // console.log('GameWin Sound startet');
+            this.controlGameOverSequence('win', 'game over.png');
         }
         setTimeout(() => {
             this.stopEnemiesAndClouds();
             toggleScreen('startscreen');
         }, 8000);
+    }
+
+
+    /**
+     * Handles the sequence at the end of the game
+     * @param {String} sound - The sound to be played
+     * @param {String} screen - The endscreen to be displayed
+     */
+    controlGameOverSequence(sound, screen) {
+            world.playSound(world.AUDIO[sound], 1, false);
+            setTimeout(() => {handleEndscreen(`./img/9_intro_outro_screens/game_over/${screen}`)}, 1000);
     }
 
 
