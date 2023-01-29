@@ -72,6 +72,7 @@ canvas {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    background-color: #000;
     z-index: 5;
 }
 
@@ -283,6 +284,23 @@ td:last-child {
 #btns-mobile button img {
     width: 30px;
     filter: invert(100%);
+}
+
+#turn-device {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    color: yellow;
+    font-family: 'edmundis';
+    font-size: 50px;
+    display: none;
+    z-index: 1000;
+    /* justify-content: center; */
+    text-align: center;
+    align-items: center;
 }
 
 
