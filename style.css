@@ -247,6 +247,38 @@ td:last-child {
     align-items: center;
 }
 
+#btns-mobile {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 20px;
+    box-sizing: border-box;
+}
+
+.btns-mobile-sub {
+    display: flex;
+    gap: 25px;
+}
+
+#btns-mobile button {
+    background-color: unset;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    padding: 5px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#btns-mobile button img {
+    width: 40px;
+    filter: invert(100%);
+}
+
 
 /* GENERAL */
 .d-none {
