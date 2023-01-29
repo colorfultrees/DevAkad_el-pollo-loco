@@ -10,6 +10,7 @@ let isSoundOn = true;
 let isMusicOn = true;
 let isHelpVisible = false;
 let hideControlsInfoDelayId = 0;
+let isFullScreenMode = false;
 
 
 /**
@@ -146,6 +147,22 @@ function toggleSoundFx() {
     }
 }
 
+
+function toggleFullscreen() {
+    const btnFullScreen = document.querySelector('#btn-fullscreen > img');
+    const elem = document.getElementById('content');
+    resetActiveElement();
+    if (isFullScreenMode) {
+        isFullScreenMode = false;
+        btnFullScreen.src = 'icons/enter-fullscreen.png';
+        document.exitFullscreen();
+    }
+    else {
+        isFullScreenMode = true;
+        btnFullScreen.src = 'icons/exit-fullscreen.png';
+        elem.requestFullscreen();
+    }
+}
 
 
 
