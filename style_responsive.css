@@ -133,5 +133,10 @@
     #content {
         height: 100vh;
         border-radius: unset;
+
+    }
+
+    #btn-fullscreen {
+        display: none;
     }
 }

@@ -32,6 +32,8 @@ class Keyboard {
     constructor() {
         this.handleKeyDown();
         this.handleKeyUp();
+        this.handleTouchStart();
+        this.handleTouchEnd();
     }
 
 
@@ -168,6 +170,52 @@ class Keyboard {
 
             if (this.KEYS[key].status) return true;
         }
+    }
+
+
+    handleTouchStart() {
+        document.getElementById('mbtn-left').addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            this.KEYS.LEFT.status = true;
+        });
+
+        document.getElementById('mbtn-right').addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            this.KEYS.RIGHT.status = true;
+        });
+
+        document.getElementById('mbtn-jump').addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            this.KEYS.JUMP.status = true;
+        });
+
+        document.getElementById('mbtn-throw').addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            this.KEYS.THROW.status = true;
+        });
+    }
+
+
+    handleTouchEnd() {
+        document.getElementById('mbtn-left').addEventListener('touchend', (event) => {
+            event.preventDefault();
+            this.KEYS.LEFT.status = false;
+        });
+
+        document.getElementById('mbtn-right').addEventListener('touchend', (event) => {
+            event.preventDefault();
+            this.KEYS.RIGHT.status = false;
+        });
+
+        document.getElementById('mbtn-jump').addEventListener('touchend', (event) => {
+            event.preventDefault();
+            this.KEYS.JUMP.status = false;
+        });
+
+        document.getElementById('mbtn-throw').addEventListener('touchend', (event) => {
+            event.preventDefault();
+            this.KEYS.THROW.status = false;
+        });
     }
 
 

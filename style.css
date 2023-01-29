@@ -93,9 +93,12 @@ canvas {
     box-shadow: 0 0 0 0 #000;
     transition: box-shadow 95ms ease-out;
 }
-.btn:hover {
-    box-shadow: 0 0 12px 4px #000;
+@media (hover: hover) {
+    .btn:hover {
+        box-shadow: 0 0 12px 4px #000;
+    }
 }
+
 .btn:active {
     background-color: rgb(252, 163, 48);
 }
@@ -255,7 +258,7 @@ td:last-child {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 0 20px 20px;
+    padding: 0 20px 10px;
     box-sizing: border-box;
 }
 
@@ -269,15 +272,15 @@ td:last-child {
     border-radius: 50%;
     border: 2px solid #fff;
     padding: 5px;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #btns-mobile button img {
-    width: 40px;
+    width: 30px;
     filter: invert(100%);
 }
 
