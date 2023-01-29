@@ -310,7 +310,7 @@ class World {
      * @param {String} screen - The endscreen to be displayed
      */
     controlGameOverSequence(sound, screen) {
-            world.playSound(world.AUDIO[sound], 1, false);
+            this.playSound(this.AUDIO[sound], 1, false);
             setTimeout(() => {handleEndscreen(`./img/9_intro_outro_screens/game_over/${screen}`)}, 1000);
     }
 
@@ -394,7 +394,7 @@ class World {
 
     moveBackground(direction) {
         for (let l = 0; l < 2; l++) {
-            for (let i = 0; i < world.level.sceneParts; i++) {
+            for (let i = 0; i < this.level.sceneParts; i++) {
                 this.level.background.landscapeLayer[(l * 2) + i].positionX += this.level.parallaxLandscapeLayer[l] * direction;
             }            
         }
@@ -408,6 +408,7 @@ class World {
      * @param {Boolean} isLooping Flag to set the sound playing in a loop
      */
     playSound(sound, volume, isLooping) {
+        if (!isSoundOn && sound != this.AUDIO.backgroundMusic) return;
         sound.volume = volume;
         sound.loop = isLooping;
         sound.play();

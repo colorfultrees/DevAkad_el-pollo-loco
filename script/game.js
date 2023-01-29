@@ -130,6 +130,25 @@ function toggleMusic() {
         if (isGameRunning) world.startBackgroundMusic();
     }
 }
+
+
+function toggleSoundFx() {
+    const btnSoundFx = document.querySelector('#btn-sound-fx > img');
+    resetActiveElement();
+
+    if (isSoundOn) {
+        isSoundOn = false;
+        btnSoundFx.src = 'icons/sound-fx_off.png';
+    }
+    else {
+        isSoundOn = true;
+        btnSoundFx.src = 'icons/sound-fx_on.png';
+    }
+}
+
+
+
+
 /**
  * Creates the chickens
  */
