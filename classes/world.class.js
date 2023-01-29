@@ -289,6 +289,7 @@ class World {
      * @param {Object} obj The object that died at the end
      */
     gameOver(obj) {
+        if (isHelpVisible) toggleControlsInfo();
         isGameRunning = false;
         if (obj instanceof Character) {
             world.playSound(world.AUDIO.gameOver, 1, false);
