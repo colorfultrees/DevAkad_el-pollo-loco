@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./style_responsive.css">
     <link rel="icon" type="image/x-icon" href="./icons/el-pollo-loco_logo.ico">
-    <script src="./script/aux_func.js"></script>
     <script src="./classes/keyboard.class.js"></script>
     <script src="./classes/drawable_object.class.js"></script>
     <script src="./classes/moveable_object.class.js"></script>
@@ -28,7 +27,7 @@
     <title>El Pollo Loco</title>
 </head>
 
-<body>
+<body onload="init()">
     <div id="turn-device">Please turn your device</div>
     <div id="diffuser"></div>
     <div id="content">
@@ -42,6 +41,9 @@
             </button>
             <button id="btn-help" class="btn" onclick="toggleHelp()">
                 <img class="btn-icon" src="./icons/help_closed.png" alt="help">
+            </button>
+            <button id="btn-fullscreen" class="btn" onclick="toggleFullscreen()">
+                <img class="btn-icon" src="./icons/enter-fullscreen.png" alt="fullscreen">
             </button>
             <div id="controls-info" class="d-none">
                 <div class="controls-info--item">
@@ -62,15 +64,12 @@
                 </div>
             </div>
         </div>
-        <button id="btn-fullscreen" class="btn" onclick="toggleFullscreen()">
-            <img class="btn-icon" src="./icons/enter-fullscreen.png" alt="fullscreen">
-        </button>
         <!-- END: Control Buttons -->
         <div id="startscreen" class="content-elem screen">
-            <button id="btn-start" class="btn" onclick="init()">START</button>
+            <button id="btn-start" class="btn" onclick="startGame()">START</button>
         </div>
         <canvas id="canvas" width="900px" height="600px" class="content-elem screen d-none"></canvas>
-        <div id="btns-mobile" class="">
+        <div id="btns-mobile" class="d-none">
             <div class="btns-mobile-sub">
                 <button id="mbtn-left"><img src="./icons/arrow_left.png" alt="left"></button>
                 <button id="mbtn-right"><img src="./icons/arrow_right.png" alt="right"></button>

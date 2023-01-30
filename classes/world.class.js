@@ -297,10 +297,7 @@ class World {
         else if (obj instanceof Endboss) {
             this.controlGameOverSequence('win', 'game over.png');
         }
-        setTimeout(() => {
-            this.stopEnemiesAndClouds();
-            toggleScreen('startscreen');
-        }, 8000);
+        endGame();
     }
 
 

@@ -11,31 +11,65 @@ let isMusicOn = true;
 let isHelpVisible = false;
 let hideControlsInfoDelayId = 0;
 let isFullScreenMode = false;
+let isTouchDevice = false;
 
 
 /**
- * Initiates the game
+ * Initializing
  */
 function init() {
     canvas = document.querySelector('canvas');
-    // canvas.setAttribute('width', CANVAS_WIDTH + 'px');
-    // canvas.setAttribute('height', CANVAS_HEIGHT + 'px');
-
     keyboardListener = new Keyboard();
-    // console.log('keyboardListener initiated.');
-    // document.addEventListener('keydown', keyboardListener.handleKeyDown);
-    // document.addEventListener('keyup', keyboardListener.handleKeyUp);
-    // console.log('eventListeners created.');
+    checkForTouch();
+    setFullScreenHandlers();
+}
 
+
+/**
+ * Starts the game
+ */
+function startGame() {
     createWorld();
-    activateCanvas();
     renderWorld();
     world.initBackgroundSound();
-
-    // initHorizontalMovementIntvals_Level1();
+    activateCanvas();
     initCreationIntervals_Level1();
-
     isGameRunning = true;
+}
+
+
+/**
+ * Creates a random integer within the given range
+ * @param {Number} min - The lower limit
+ * @param {Number} max - The upper limit
+ * @returns Integer
+ */
+function calcRandomNumber (min, max) {
+	return Math.round(Math.random() * (max - min)) + min;
+}
+
+
+function checkForTouch() {
+    try {
+        document.createEvent('TouchEvent');
+        isTouchDevice = true;
+    }
+    catch { /* no change necessary */ }
+}
+
+
+function setFullScreenHandlers() {
+    document.addEventListener('fullscreenchange', exitFullscreenHandler);
+    document.addEventListener('webkitfullscreenchange', exitFullscreenHandler);
+    document.addEventListener('mozfullscreenchange', exitFullscreenHandler);
+    document.addEventListener('MSFullscreenChange', exitFullscreenHandler);
+}
+
+
+function exitFullscreenHandler() {
+    if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+        setParamOnExitFullscreen(false);
+    }
 }
 
 
@@ -52,6 +86,28 @@ function activateCanvas() {
     const startScreen = document.getElementById('startscreen');
     startScreen.classList.add('d-none');
     canvas.classList.remove('d-none');
+    toggleBtnsMobile();
+}
+
+
+/**
+ * Ends the game and deletes the world object
+ */
+function endGame() {
+    setTimeout(() => {
+        world.stopEnemiesAndClouds();
+        toggleScreen('startscreen');
+        toggleBtnsMobile();
+        setTimeout(() => {world = [];}, 500);
+    }, 8000);
+}
+
+
+function toggleBtnsMobile() {
+    if (isTouchDevice) {
+        const btnsMobile = document.getElementById('btns-mobile');
+        btnsMobile.classList.toggle('d-none');
+    }
 }
 
 
@@ -149,18 +205,27 @@ function toggleSoundFx() {
 
 
 function toggleFullscreen() {
-    const btnFullScreen = document.querySelector('#btn-fullscreen > img');
     const elem = document.getElementById('content');
     resetActiveElement();
     if (isFullScreenMode) {
-        isFullScreenMode = false;
-        btnFullScreen.src = 'icons/enter-fullscreen.png';
+        setParamOnExitFullscreen(false);
         document.exitFullscreen();
     }
     else {
-        isFullScreenMode = true;
-        btnFullScreen.src = 'icons/exit-fullscreen.png';
+        setParamOnExitFullscreen(true);
         elem.requestFullscreen();
+    }
+}
+
+
+function setParamOnExitFullscreen(statusFullscreen) {
+    const btnFullScreen = document.querySelector('#btn-fullscreen > img');
+    isFullScreenMode = statusFullscreen;
+    if (statusFullscreen) {
+        btnFullScreen.src = 'icons/exit-fullscreen.png';
+    }
+    else {
+        btnFullScreen.src = 'icons/enter-fullscreen.png';
     }
 }
 
