@@ -72,7 +72,7 @@ canvas {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    background-color: #000;
+    /* background-color: #000; */
     z-index: 5;
 }
 
@@ -168,7 +168,7 @@ canvas {
 #help-bckgnd {
     position: absolute;
     /* left: 0; */
-    right: 60px;
+    right: 15px;
     /* margin: 0 auto; */
     bottom: 20px;
     /* transform: rotate(27deg); */

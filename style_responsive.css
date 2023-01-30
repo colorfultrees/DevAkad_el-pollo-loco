@@ -23,9 +23,9 @@
         top: 40px;
     }
     
-    #help-bckgnd {
+    /* #help-bckgnd {
         display: none;
-    }
+    } */
 
     #helpscreen h1 {
         font-size: 30px;
@@ -54,6 +54,18 @@
     #helpscreen p {
         margin-block-start: 0.5em;
         margin-block-end: 0.5em;
+    }
+}
+
+@media screen and (max-width: 650px), (max-height: 480px) {
+    #help-bckgnd {
+        width: 100px;
+    }
+}
+
+@media screen and (max-height: 350px) {
+    #help-bckgnd {
+        display: none;
     }
 }
 
