@@ -22,10 +22,6 @@
     #controls-info {
         top: 40px;
     }
-    
-    /* #help-bckgnd {
-        display: none;
-    } */
 
     #helpscreen h1 {
         font-size: 30px;
@@ -152,12 +148,6 @@
         display: none;
     }
 }
-
-/* @media screen and (min-height: 480px) {
-    #btns-mobile {
-        display: none;
-    }
-} */
 
 @media screen and (orientation: portrait) and (max-width: 520px) {
     #turn-device {

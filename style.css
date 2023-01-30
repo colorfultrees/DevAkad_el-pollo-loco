@@ -72,7 +72,6 @@ canvas {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    /* background-color: #000; */
     z-index: 5;
 }
 
@@ -127,13 +126,6 @@ canvas {
     z-index: 100;
 }
 
-/* #btn-fullscreen {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    z-index: 100;
-} */
-
 .btn-icon {
     width: 25px;
     margin: 5px;
@@ -160,18 +152,10 @@ canvas {
     margin-block-end: 0;
 }
 
-/* #helpscreen p {
-    margin-block-start: 0.6em;
-    margin-block-end: 0.6em;
-} */
-
 #help-bckgnd {
     position: absolute;
-    /* left: 0; */
     right: 15px;
-    /* margin: 0 auto; */
     bottom: 20px;
-    /* transform: rotate(27deg); */
     width: 260px;
 }
 
@@ -298,7 +282,6 @@ td:last-child {
     font-size: 50px;
     display: none;
     z-index: 1000;
-    /* justify-content: center; */
     text-align: center;
     align-items: center;
 }
@@ -312,8 +295,6 @@ td:last-child {
 .content-elem {
     position: absolute;
     top: 0;
-    /* width: 100%; */
-    /* height: 100%; */
     bottom: 0;
     left: 0;
     right: 0;

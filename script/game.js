@@ -1,5 +1,3 @@
-// const CANVAS_WIDTH = 900;
-// const CANVAS_HEIGHT = 600;
 let canvas;
 let world;
 let keyboardListener;
@@ -49,6 +47,9 @@ function calcRandomNumber (min, max) {
 }
 
 
+/**
+ * Checks if the app was loaded on a mobile device
+ */
 function checkForTouch() {
     try {
         document.createEvent('TouchEvent');
@@ -58,6 +59,9 @@ function checkForTouch() {
 }
 
 
+/**
+ * Sets event listeners for monitoring fullscreen mode
+ */
 function setFullScreenHandlers() {
     document.addEventListener('fullscreenchange', exitFullscreenHandler);
     document.addEventListener('webkitfullscreenchange', exitFullscreenHandler);
@@ -66,13 +70,22 @@ function setFullScreenHandlers() {
 }
 
 
+/**
+ * Handles exiting fullscreen
+ */
 function exitFullscreenHandler() {
-    if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-        setParamOnExitFullscreen(false);
+    if (!document.fullscreenElement &&
+        !document.webkitIsFullScreen &&
+        !document.mozFullScreen &&
+        !document.msFullscreenElement) {
+            setParamOnExitFullscreen(false);
     }
 }
 
 
+/**
+ * Creates the world object
+ */
 function createWorld() {
     world = new World(canvas);
     createLevel1();
@@ -82,6 +95,9 @@ function createWorld() {
 }
 
 
+/**
+ * Displays the game board
+ */
 function activateCanvas() {
     const startScreen = document.getElementById('startscreen');
     startScreen.classList.add('d-none');
@@ -103,6 +119,9 @@ function endGame() {
 }
 
 
+/**
+ * Controls the visibility of the control buttons for mobile devices
+ */
 function toggleBtnsMobile() {
     if (isTouchDevice) {
         const btnsMobile = document.getElementById('btns-mobile');
@@ -111,6 +130,10 @@ function toggleBtnsMobile() {
 }
 
 
+/**
+ * Toggles from the current screen to the requested screen
+ * @param {String} screen - The ID of the screen to be displayed
+ */
 function toggleScreen(screen) {
     const screens = Array.from(document.querySelectorAll('#content > .screen:not([class=d-none])'));
     screens.forEach(s => s.classList.add('d-none'));
@@ -118,6 +141,10 @@ function toggleScreen(screen) {
 }
 
 
+/**
+ * Controls the endscreen
+ * @param {String} img - The URL of the endscreen image
+ */
 function handleEndscreen(img) {
     endScreen = document.getElementById('endscreen');
     endScreen.style.backgroundImage = `url('${img}')`;
@@ -125,10 +152,11 @@ function handleEndscreen(img) {
 }
 
 
+/**
+ * Toggles the help screen
+ */
 function toggleHelp() {
     resetActiveElement();
-
-    // console.log('active element:', document.activeElement);
 
     if (isGameRunning) {
         toggleControlsInfo();
@@ -139,6 +167,9 @@ function toggleHelp() {
 }
 
 
+/**
+ * Controls the visibility of the help screen when start screen is visible
+ */
 function toggleHelpScreen() {
     const btnHelp = document.querySelector('#btn-help > img');
     if (isHelpVisible) {
@@ -154,56 +185,95 @@ function toggleHelpScreen() {
 }
 
 
+/**
+ * Controls the visibility of the controls info badge during the game
+ */
 function toggleControlsInfo() {
     const ctrlInfo = document.getElementById('controls-info');
-    const btnHelp = document.querySelector('#btn-help > img');
     if (isHelpVisible) {
         ctrlInfo.classList.add('d-none');
-        isHelpVisible = false;
-        btnHelp.src = './icons/help_closed.png';
+        setHelpScreenParams(false, './icons/help_closed.png');
         clearTimeout(hideControlsInfoDelayId);
     }
     else {
         ctrlInfo.classList.remove('d-none');
-        isHelpVisible = true;
-        btnHelp.src = './icons/help_open.png';
+        setHelpScreenParams(true, './icons/help_open.png');
         hideControlsInfoDelayId = setTimeout(() => {toggleControlsInfo()}, 10000);
     }
 }
 
 
-function toggleMusic() {
-    const btnMusic = document.querySelector('#btn-music > img');
-    resetActiveElement();
+/**
+ * Sets the parameters for the control of the help screen
+ * @param {Boolean} status - The visibility status of the help screen
+ * @param {String} btnIcon - The URL of the button icon
+ */
+function setHelpScreenParams(status, btnIcon) {
+    const btnHelp = document.querySelector('#btn-help > img');
+    isHelpVisible = status;
+    btnHelp.src = btnIcon;
+}
 
+
+/**
+ * Toggles the background music
+ */
+function toggleMusic() {
+    resetActiveElement();
+    
     if (isMusicOn) {
-        isMusicOn = false;
-        btnMusic.src = './icons/music_off.png'
+        setMusicParams(false, './icons/music_off.png');
         if (isGameRunning) world.stopSound(world.AUDIO.backgroundMusic);
     }
     else {
-        isMusicOn = true;
-        btnMusic.src = './icons/music_on.png';
+        setMusicParams(true, './icons/music_on.png');
         if (isGameRunning) world.startBackgroundMusic();
     }
 }
 
 
-function toggleSoundFx() {
-    const btnSoundFx = document.querySelector('#btn-sound-fx > img');
-    resetActiveElement();
+/**
+ * Sets the parameters for the control of the background music
+ * @param {Boolean} status - The status of the background music
+ * @param {String} btnIcon - The URL of the button icon
+ */
+function setMusicParams(status, btnIcon) {
+    const btnMusic = document.querySelector('#btn-music > img');
+    isMusicOn = status;
+    btnMusic.src = btnIcon;
+}
 
+
+/**
+ * Toggles the sound effects
+ */
+function toggleSoundFx() {
+    resetActiveElement();
+    
     if (isSoundOn) {
-        isSoundOn = false;
-        btnSoundFx.src = 'icons/sound-fx_off.png';
+        setSoundFxParams(false, 'icons/sound-fx_off.png');
     }
     else {
-        isSoundOn = true;
-        btnSoundFx.src = 'icons/sound-fx_on.png';
+        setSoundFxParams(true, 'icons/sound-fx_on.png');
     }
 }
 
 
+/**
+ * Sets the parameters for the control of the sound effects
+ * @param {Boolean} status - The status of the sound effects
+ * @param {String} btnIcon - The URL of the button icon
+ */
+function setSoundFxParams(status, btnIcon) {
+    const btnSoundFx = document.querySelector('#btn-sound-fx > img');
+    isSoundOn = status;
+    btnSoundFx.src = btnIcon;
+}
+
+
+/**
+ * Toggles fullscreen
+ */
 function toggleFullscreen() {
     const elem = document.getElementById('content');
     resetActiveElement();
@@ -218,6 +288,10 @@ function toggleFullscreen() {
 }
 
 
+/**
+ * Sets the parameters for the control of the fullscreen mode
+ * @param {Boolean} statusFullscreen - The status of the fullscreen mode
+ */
 function setParamOnExitFullscreen(statusFullscreen) {
     const btnFullScreen = document.querySelector('#btn-fullscreen > img');
     isFullScreenMode = statusFullscreen;
@@ -230,41 +304,17 @@ function setParamOnExitFullscreen(statusFullscreen) {
 }
 
 
-
 /**
- * Creates the chickens
- */
-// function createChickens() {
-//     for (let e = 1; e <= 3; e++) {
-//         const chicken = new Chicken(0, 0);
-//         chicken.positionX = calcRandomNumber(150, canvas.width - 50);
-//         chicken.positionY = canvas.height - chicken.height;
-//         world.enemies.push(chicken);
-//     }
-// }
-
-
-/**
- * Create the chicks
- */
-// function createChicks() {
-//     for (let e = 1; e <= 2; e++) {
-//         const chick = new Chick(0, 0);
-//         chick.positionX = calcRandomNumber(150, canvas.width - 50);
-//         chick.positionY = canvas.height - chick.height;
-//         world.enemies.push(chick);
-//     }
-// }
-
-
-/**
- * Renders the gaming scene
+ * Renders the game scene
  */
 function renderWorld() {
     world.draw();
 }
 
 
+/**
+ * Resets the current active button
+ */
 function resetActiveElement() {
     document.activeElement.blur();
 }
