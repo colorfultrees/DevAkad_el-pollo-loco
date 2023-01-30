@@ -28,8 +28,6 @@ class Level {
         }
     }
 
-
-    
     
     /**
      * Creates the landscape
@@ -94,7 +92,7 @@ class Level {
 
 
     /**
-     * Create collectable Objects
+     * Creates the collectable Objects
      */
     createCollectables() {
         const objects = ['bottle', 'coin'];

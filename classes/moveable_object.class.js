@@ -17,27 +17,7 @@ class MoveableObject extends DrawableObject {
 
     constructor(positionX, positionY) {
         super(positionX, positionY);
-    }
-
-
-    /**
-     * Calculates the collision area of an object
-     * @param {Number} offsetXRatio Offset from x-coord. of the object
-     * @param {Number} offsetYRatio Offset from the y-coord. of the object
-     * @param {Number} heightRatio Percentage of the height of the object (0 ... 1)
-     * @param {Number} widthRatio Percentage of the width of the object (0 ... 1)
-     */
-    // getCollisionArea(offsetXRatio, offsetYRatio, widthRatio, heightRatio) {
-    //     setInterval(() => {
-    //         let mirror = 1;
-    //         if (this.isImageMirrored) mirror = -1;
-    //         this.collisionArea.x = (mirror * this.positionX) + (this.width * offsetXRatio);
-    //         this.collisionArea.y = this.positionY + (this.height * offsetYRatio);
-    //         this.collisionArea.width = this.width * widthRatio;
-    //         this.collisionArea.height = this.height * heightRatio;
-    //     }, 50);
-    // }
-    
+    }    
 
 
     /**
@@ -47,12 +27,10 @@ class MoveableObject extends DrawableObject {
      */
     isColliding(obj) {
         const thisX = this.getCollisionX(this);
-        // console.log(`thisX: ${thisX}`);
         const thisY = this.collisionArea.y;
         const thisWidth = this.collisionArea.width;
         const thisHeight = this.collisionArea.height;
         const objX = this.getCollisionX(obj);
-        // console.log(`objX: ${objX}`);
         const objY = obj.collisionArea.y;
         const objHeight = obj.collisionArea.height;
         const objWidth = obj.collisionArea.width;
@@ -60,11 +38,6 @@ class MoveableObject extends DrawableObject {
                 thisX <= objX + objWidth &&
                 thisY + thisHeight >= objY &&
                 thisY <= objY + objHeight;
-
-        // return this.positionX + this.width >= obj.positionX &&
-        //        this.positionX <= obj.positionX + obj.width &&
-        //        this.positionY + this.height >= obj.positionY &&
-        //        this.positionY <= obj.positionY + obj.height;
     }
 
 
@@ -88,36 +61,34 @@ class MoveableObject extends DrawableObject {
      * @param {Array} images The URLs of the animation sequence
      */
     playAnimation(images) {
-        this.currentImage = this.currentImage % images.length
-
-        // if (this instanceof Character) {
-        //     console.log(`playAnimation_imgUrl: ${images[this.currentImage]}`);
-        // }
-        
-
+        this.currentImage = this.currentImage % images.length;
         this.img = this.imageCache[images[this.currentImage]];
         this.currentImage++;
     }
 
 
+    /**
+     * Checks whether the object is above its ground position
+     * @returns Boolean
+     */
     isAboveGround() {
         return this.positionY - this.speedY < this.groundPosition;
     }
 
 
+    /**
+     * Applys gravity to the object
+     */
     applyGravity() {
-        // let step = 0; // TEST
         let interval = setInterval(() => {
             this.positionY -= this.speedY;
             this.speedY -= this.acceleration;
-            // step++; // TEST
-            // console.log(`Jumping step ${step}`); // TEST
             if (!this.isAboveGround() || this.isSmashed) {
                 clearInterval(interval);
                 this.speedY = 0;
                 if (!this.isSmashed) this.positionY = this.groundPosition;
                 if (this instanceof Character) {
-                    setTimeout(() => {this.isJumping = false;}, 300);
+                    setTimeout(() => {this.isJumping = false;}, 200);
                 }
             }
         }, 1000 / 25);
@@ -178,8 +149,6 @@ class MoveableObject extends DrawableObject {
             clearInterval(this.horizMoveIntervalId);
             clearInterval(this.walkIntervalId);
             objCategory.splice(objId, 1);
-
-            // console.log(`Object: ${this.constructor.name} | Intervals cleared: hor - ${this.horizMoveIntervalId} / walk - ${this.walkIntervalId} | objCategory[${objId}] removed.`);
         }
     }
 
@@ -197,16 +166,5 @@ class MoveableObject extends DrawableObject {
         }, 160);
 
         world.gameOver(this);
-
-        // if (this instanceof Character) {
-        //     world.playSound(world.AUDIO.gameOver, 1, false);
-            
-        //     console.log('GameOver Sound startet');
-        // }
-        // else if (this instanceof Endboss) {
-        //     world.playSound(world.AUDIO.win, 1, false);
-
-        //     console.log('GameWin Sound startet');
-        // }
     }
 }

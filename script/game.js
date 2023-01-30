@@ -84,6 +84,16 @@ function exitFullscreenHandler() {
 
 
 /**
+ * Sets an interval and stores it in an array
+ * @param {Function} fn - The interval's callback function
+ * @param {Number} time - The interval time in milliseconds
+ */
+function setStopableInterval(fn, time) {
+    intervals.push(setInterval(fn, time));
+}
+
+
+/**
  * Creates the world object
  */
 function createWorld() {

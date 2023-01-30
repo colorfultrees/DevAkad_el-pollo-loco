@@ -240,7 +240,7 @@ class Character extends MoveableObject {
     jump() {
         intervals.push(
             setInterval(() => {
-                if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) || this.playInitAnim) {
+                if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) && !this.isJumping || this.playInitAnim) {
                     this.isJumping = true;
                     this.currentImage = 2;
                     this.animateJump();

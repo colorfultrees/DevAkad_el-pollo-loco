@@ -13,13 +13,12 @@ class World {
         chickenAlarm:       new Audio('./audio/chicken-single-alarm-call.wav'),
         bottleSmash:        new Audio('./audio/bottle-smash_2.mp3')
     }
-    character;
-    level;
-    // statusbars = [];
-    statusbars = {};
-    throwables = [];
     canvas;
     ctx;
+    level;
+    character;
+    statusbars = {};
+    throwables = [];
     cameraPos = 0;
     delayRoosterCrow = 0;
 
@@ -27,6 +26,7 @@ class World {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.checkCollision();
+        // setStopableInterval(this.checkCollision, 100);
     }
 
 
@@ -36,29 +36,28 @@ class World {
     createCharacter() {
         const startPosX = 100;
         this.character = new Character(startPosX, 0, keyboardListener);
-        
-        
-        // this.character.positionY = -150;
-        // this.character.groundPosition = canvas.height - this.character.height;
         this.character.positionY = canvas.height - this.character.height - 40;
         this.character.groundPosition = this.character.positionY;
         this.character.applyGravity();
-        // this.currentImage = 4;
         setTimeout(() => {
             this.character.playInitAnim = false;
             this.character.loadImage(this.character.IMAGES_WAIT[0]);
         }, 100);
-        
-
-        // world.setCameraPos(-startPosX);
     }
 
 
+    /**
+     * Sets the level
+     * @param {Object} level - The level object
+     */
     setLevel(level) {
         this.level = level;
     }
 
 
+    /**
+     * Initiates the background sounds
+     */
     initBackgroundSound() {
         // Start the background music
         if (isMusicOn) this.startBackgroundMusic();
@@ -74,15 +73,18 @@ class World {
     }
 
 
+    /**
+     * Starts the background music
+     */
     startBackgroundMusic() {
         this.playSound(this.AUDIO.backgroundMusic, 0.25, true)
     }
 
 
+    /**
+     * Creates the statusbars for the character
+     */
     createStatusBars() {
-        // this.statusbars.push(new Statusbar('health'));
-        // this.statusbars.push(new Statusbar('bottle'));
-        // this.statusbars.push(new Statusbar('coin'));
         this.statusbars['health'] = new Statusbar('health', 100);
         this.statusbars['bottle'] = new Statusbar('bottle', 0);
         this.statusbars['coin'] = new Statusbar('coin', 0);
@@ -101,8 +103,6 @@ class World {
         else {
             obj.healthPoints = 0;
         }
-
-        // console.log(`${obj.constructor.name} HP = ${obj.healthPoints}`);
     }
 
 
@@ -120,8 +120,6 @@ class World {
         else {
             obj.healthPoints = 100;
         }
-
-        // console.log(`${obj.constructor.name} HP = ${obj.healthPoints}`);
     }
 
 
@@ -149,52 +147,6 @@ class World {
 
 
     /**
-     * Manages the collision of the character with an enemy
-     * @param {Number} hp The amount of health points the character loses upon collision
-     */
-    // characterCollides(hp) {
-    //     this.looseHealthPoints(this.character, hp);
-    //     this.statusbars.health.setValue(this.character.healthPoints);
-
-    //     if (this.character.healthPoints <= 0) {
-    //         this.clearAllIntervals();
-    //         this.character.isDead = true;
-    //         this.stopMainSounds();
-    //         this.character.die();
-    //     }
-    //     else {
-    //         this.character.gotHit = true;
-    //         this.character.hurt();
-    //     }
-    // }
-
-
-    /**
-     * Manages the hit of the endboss by a bottle
-     */
-    // endbossHit() {
-    //     this.looseHealthPoints(this.level.endboss, 20);
-    //     this.level.endboss.statusbar.setValue(this.level.endboss.healthPoints);
-
-    //     if (this.level.endboss.healthPoints <= 0) {
-    //         this.clearAllIntervals();
-    //         this.level.endboss.isDead = true;
-    //         this.stopMainSounds();
-    //         this.level.endboss.die();
-
-    //         console.log(`Endboss died (HP ${this.level.endboss.healthPoints}!`);
-    //     }
-    //     else {
-    //         this.level.endboss.gotHit = true;
-    //         this.level.endboss.hurt();
-            
-    //         console.log(`Endboss hit by bottle (HP ${this.level.endboss.healthPoints}!`);
-    //     }
-
-    // }
-
-
-    /**
      * Deactivates an enemy object
      * @param {Object} enemy The enemy object to be deactivated
      */
@@ -205,11 +157,12 @@ class World {
     }
 
 
+    /**
+     * Deletes an enemy from the array
+     */
     removeDeadEnemy() {
         const objId = this.level.enemies.findIndex(obj => obj.isDead);
         this.level.enemies.splice(objId, 1);
-
-        // console.log(`ID ${objId} removed from [enemies]`);
     }
 
 
@@ -218,24 +171,18 @@ class World {
             setInterval(() => {
                 this.character.getCollisionArea();
                 this.level.enemies.forEach((enemy) => {
-                    // console.log(`Collision check: ${enemy.constructor.name}`);
                     enemy.getCollisionArea();
                     if (this.character.isColliding(enemy)) {
                         if (this.character.isJumping && this.character.speedY <= 0 && !enemy.isDead) {
                             this.deactivateEnemy(enemy);
-
-                            // console.log(`${enemy.constructor.name} ID ${this.level.enemies.findIndex(obj => obj.isDead)} died`);
-
                             enemy.img = enemy.imageCache[enemy.IMAGES_DIE[0]];
                             this.playSound(this.AUDIO.chickenAlarm, 0.5, false);
                             setTimeout(() => {
                                 this.removeDeadEnemy();
                             }, 1500);
-                            // console.log(`Character jumps into ${enemy.constructor.name}`);
                         }
                         else if (!enemy.isDead && !this.character.isAboveGround() && !this.character.gotHit) {
                             if (enemy instanceof Chicken) {
-                                // this.characterCollides(5);
                                 this.objCollides(this.character, 5, this.statusbars.health);
                             }
                             else if (enemy instanceof Chick && !this.character.isJumping) {
@@ -245,18 +192,14 @@ class World {
                                 this.statusbars.health.setValue(this.character.healthPoints);
                                 this.playSound(this.AUDIO.bonusHp, 1, false);
                             }
-                            
-                            // console.log(`Character walks into ${enemy.constructor.name}`);
                         }
                     }
-                })
+                });
                 this.level.endboss.getCollisionArea();
                 if (this.character.isColliding(this.level.endboss)) {
-                    // this.characterCollides(8);
                     this.objCollides(this.character, 8, this.statusbars.health);
-                    // console.log(`Character collides with endboss!`);
                 }
-                this.level.collectables.forEach((collectable, id) => { // TODO: check if use of id is sufficient to remove the object
+                this.level.collectables.forEach((collectable, id) => {
                     if (this.character.isColliding(collectable)) {
                         if (collectable.type == 'bottle') {
                             this.character.counterBottles++;
@@ -270,12 +213,11 @@ class World {
                         }
                         this.level.collectables.splice(id, 1);
                     }
-                })
+                });
                 this.throwables.forEach((throwable) => {
                     throwable.getCollisionArea();
                     if (throwable.positionY != throwable.groundPosition && this.level.endboss.isColliding(throwable) && !this.level.endboss.gotHit) {
                         throwable.smash();
-                        // this.endbossHit();
                         this.objCollides(this.level.endboss, 20, this.level.endboss.statusbar);
                     }
                 });

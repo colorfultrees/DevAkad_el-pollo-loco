@@ -47,13 +47,15 @@ class Statusbar extends DrawableObject {
         this.height = this.width / this.aspectRatio;
         this.positionX = this.TYPE[type].posX;
         this.positionY = this.TYPE[type].posY;
-        // this.currentImage = 5;
-        // this.loadImage(this.TYPE[type].img[this.currentImage]);
         this.loadImageCache(this.TYPE[type].img);
         this.setValue(percent);
     }
 
 
+    /**
+     * Sets the value of the statusbar
+     * @param {Number} percent - The new value of the statusbar
+     */
     setValue(percent) {
         const maxId = 5;
         this.currentImage = Math.floor(percent * maxId / 100);
