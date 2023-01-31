@@ -63,13 +63,14 @@ class World {
         if (isMusicOn) this.startBackgroundMusic();
 
         // Start the loop for the rooster crow
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 this.delayRoosterCrow = setTimeout(() => {
                     this.playSound(this.AUDIO.rooster, 0.75, false);
                 }, calcRandomNumber(0, 10000));
             }, 15000)
-        );
+        // );
     }
 
 
@@ -285,14 +286,15 @@ class World {
      * Checks for collisions
      */
     checkCollision() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 this.checkCollisionWithEnemies();
                 this.checkCollisionWithEndboss();
                 this.checkForCollectables();
                 this.checkBottleHitsEndboss();
             }, 100)
-        );
+        // );
     }
 
 

@@ -144,9 +144,9 @@
 
     }
 
-    #btn-fullscreen {
+    /* #btn-fullscreen {
         display: none;
-    }
+    } */
 }
 
 @media screen and (orientation: portrait) and (max-width: 520px) {

@@ -9,26 +9,29 @@ class Chick extends MoveableObject {
     ]
 
     constructor(positionX, positionY) {
-        super(positionX, positionY); //.loadImage(this.IMAGES_WALK[0]);
+        super(positionX, positionY);
 
+        this.setBasicParams();
+        // this.aspectRatio = 1.1238;
+        // this.width = 70;
+        // this.height = this.width / this.aspectRatio;
+        // this.speedX = 6;
+        // this.healthPoints = 1;
+        this.setCollisionBasis(0, 0, 1, 1);
+        this.loadImagesToCache(this.IMAGES_WALK, this.IMAGES_DIE);
+        this.setHorizMoveIntval(100, 300);
+        this.walk(calcRandomNumber(90, 150), this.IMAGES_WALK);
+    }
+
+
+    /**
+     * Sets the basic parameters
+     */
+    setBasicParams() {
         this.aspectRatio = 1.1238;
         this.width = 70;
         this.height = this.width / this.aspectRatio;
-        this.speedX = 6;//2.5;
+        this.speedX = 6;
         this.healthPoints = 1;
-        this.setCollisionBasis(0, 0, 1, 1);
-        // this.collisionBasis.offsetXRatio = 0;
-        // this.collisionBasis.offsetYRatio = 0;
-        // this.collisionBasis.widthRatio = 1;
-        // this.collisionBasis.heightRatio = 1;
-        // this.getCollisionArea(0, 0, 1, 1);
-        this.loadImagesToCache(this.IMAGES_WALK, this.IMAGES_DIE);
-        // this.loadImageCache(this.IMAGES_WALK);
-        // this.loadImageCache(this.IMAGES_DIE);
-
-        this.setHorizMoveIntval(100, 300);
-        // this.initHorizontalMovement(world.enemies, -1);
-
-        this.walk(calcRandomNumber(90, 150), this.IMAGES_WALK);
     }
 }

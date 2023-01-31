@@ -91,7 +91,7 @@ class MoveableObject extends DrawableObject {
                     setTimeout(() => {this.isJumping = false;}, 200);
                 }
             }
-        }, 1000 / 25);
+        }, 40);
     }
 
 

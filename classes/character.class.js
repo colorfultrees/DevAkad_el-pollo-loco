@@ -118,8 +118,9 @@ class Character extends MoveableObject {
      * Animates the waiting and snoozing sequences
      */
     waitAndSnooze() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 if (!this.keyboardListener.getKeyboardStatus() && !this.gotHit) {
                     let now = Date.now();
                     if (now - lastActiveTimestamp > 4000 && now - lastActiveTimestamp <= 8000) {
@@ -130,7 +131,7 @@ class Character extends MoveableObject {
                     }
                 }
             }, 180)
-        );
+        // );
     }
 
 
@@ -138,8 +139,9 @@ class Character extends MoveableObject {
      * Sets the interval for the horizontal movement
      */
     setHorizMoveIntval() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 const maxCameraPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - canvas.width + this.offsetPosX;
                 const maxPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - this.offsetPosX - this.width;
                 if (this.keyboardListener.KEYS.RIGHT.status) {
@@ -149,7 +151,7 @@ class Character extends MoveableObject {
                     this.controlLeftMovement(maxCameraPosX);
                 }
             }, 55)
-        );
+        // );
     }
     
     
@@ -191,8 +193,9 @@ class Character extends MoveableObject {
      * @param {Number} frequency The frequency of the animated images
      */
     walk() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 if ((this.keyboardListener.KEYS.RIGHT.status ||
                     this.keyboardListener.KEYS.LEFT.status) &&
                     !this.isAboveGround() && !this.gotHit) {
@@ -204,7 +207,7 @@ class Character extends MoveableObject {
                     this.stopWalking();
                 }
             }, 115)
-        );
+        // );
     }
     
     
@@ -222,8 +225,9 @@ class Character extends MoveableObject {
      * Controls the "jump" function
      */
     jump() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 if ((this.keyboardListener.KEYS.JUMP.status && !this.isAboveGround()) && !this.isJumping || this.playInitAnim) {
                     this.isJumping = true;
                     this.currentImage = 2;
@@ -233,7 +237,7 @@ class Character extends MoveableObject {
                     if (!this.playInitAnim) world.playSound(world.AUDIO.jump, 1, false);
                 }
             }, 50)
-        );
+        // );
     }
 
 
@@ -275,15 +279,16 @@ class Character extends MoveableObject {
      * Initiates the throw of a bottle
      */
     throwBottle() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 if (this.keyboardListener.KEYS.THROW.status && !this.hasThrownBottle && this.counterBottles > 0) {
                     this.updateBottleParams();
                     if (!this.isWalking && !this.isJumping) this.reset();
                     this.handleBottleThrowing();
                 }
             }, 50)
-        );
+        // );
     }
 
 
@@ -304,6 +309,6 @@ class Character extends MoveableObject {
         const startX = this.positionX + (this.width / 2);
         const startY = this.positionY + (this.height / 3);
         world.throwables.push(new ThrowableObject(startX, startY, this.isImageMirrored));
-        setTimeout(() => {this.hasThrownBottle = false;}, 300);
+        setTimeout(() => {this.hasThrownBottle = false;}, 500);
     }
 }

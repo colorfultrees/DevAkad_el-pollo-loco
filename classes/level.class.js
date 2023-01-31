@@ -147,11 +147,12 @@ class Level {
      * @param {Number} time The interval time
      */
     setIntervalClouds(startPos, time) {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 this.createClouds(startPos, 5);
             }, time)
-        );
+        // );
     }
     
 
@@ -164,10 +165,11 @@ class Level {
      * @param {Number} time The interval time
      */
     setIntervalEnemies(EnemyClass, count, startPos, endPos, time) {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 this.createEnemies(EnemyClass, count, startPos, endPos);
             }, time)
-        );
+        // );
     }
 }

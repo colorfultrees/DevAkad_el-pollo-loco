@@ -53,6 +53,7 @@ class Endboss extends MoveableObject {
         this.setCollisionBasis(0.12, 0.25, 0.85, 0.6);
         this.loadImagesToCache(this.IMAGES_WALK, this.IMAGES_ALERT, this.IMAGES_ATTACK, this.IMAGES_HURT, this.IMAGES_DIE);
         this.setStatusbarParams();
+        // setStopableInterval(this.controlStatusbarPos, 1000);
         this.controlStatusbarPos();
         this.moveAlerted();
         this.playAttackSequ();
@@ -89,8 +90,9 @@ class Endboss extends MoveableObject {
      * Controls the position of the endboss' statusbar
      */
     controlStatusbarPos() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 if (this.positionX - world.character.positionX < canvas.width - world.character.offsetPosX) {
                     this.statusbar.positionX = canvas.width - this.statusbar.width - 40;
                     this.IMAGE_STATUS_ICON.positionX = this.statusbar.positionX - 15;
@@ -100,7 +102,7 @@ class Endboss extends MoveableObject {
                     this.IMAGE_STATUS_ICON.positionX = this.statusbar.positionX;
                 }
             }, 1000)
-        )
+        // );
     }
 
 
@@ -108,8 +110,9 @@ class Endboss extends MoveableObject {
      * Animates the alerted state
      */
     moveAlerted() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 if (!this.isAnimPaused && this.status == 'alert') {
                     if (this.currentImage > 0 && this.currentImage % this.IMAGES_ALERT.length == 0) {
                         this.isAnimPaused = true;
@@ -123,7 +126,7 @@ class Endboss extends MoveableObject {
                     }
                 }
             }, 150)
-        );
+        // );
     }
 
 
@@ -133,8 +136,9 @@ class Endboss extends MoveableObject {
     playAttackSequ() {
         let sequCount = 0;
         this.currentImage = 0;
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
+            setStopableInterval(() => {
                 if (!this.gotHit) {
                     if (this.status == 'attack') {
                         this.attack();
@@ -144,7 +148,7 @@ class Endboss extends MoveableObject {
                     }
                 }
             }, 150)
-        )
+        // );
     }
 
 

@@ -28,7 +28,7 @@ class DrawableObject {
 
 
     /**
-     * Loads animation images into the given cache
+     * Loads animation images from an array into the object's image cache
      * @param {Array} urlList The list of image URLs to be loaded
      * @param {Object} imageCache The cache for animation images
      */
@@ -40,6 +40,10 @@ class DrawableObject {
     }
 
 
+    /**
+     * Loads all animation images into the object's image cache
+     * @param  {...Array} imageArrays List of arrays containing the animation images
+     */
     loadImagesToCache(...imageArrays) {
         imageArrays.forEach(array => this.loadImageCache(array));
     }
