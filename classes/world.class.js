@@ -25,8 +25,8 @@ class World {
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.checkCollision();
-        // setStopableInterval(this.checkCollision, 100);
+        // this.checkCollision();
+        setStopableInterval(this.checkCollision, 100);
     }
 
 
@@ -167,8 +167,8 @@ class World {
 
 
     checkCollision() {
-        intervals.push(
-            setInterval(() => {
+        // intervals.push(
+            // setInterval(() => {
                 this.character.getCollisionArea();
                 this.level.enemies.forEach((enemy) => {
                     enemy.getCollisionArea();
@@ -221,8 +221,8 @@ class World {
                         this.objCollides(this.level.endboss, 20, this.level.endboss.statusbar);
                     }
                 });
-            }, 100)
-        );
+            // }, 100)
+        // );
     }
 
 
