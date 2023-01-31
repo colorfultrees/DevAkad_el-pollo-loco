@@ -44,30 +44,37 @@ class Endboss extends MoveableObject {
     };
     statusbar = new Statusbar('health', 100);
     moveAlertedIntvalId = 0;
-    isAnimPaused = false; // Flag to create a pause between animations
+    isAnimPaused = false;
     status = 'alert';
 
     constructor(positionX, positionY) {
         super(positionX, positionY).loadImage(this.IMAGES_WALK[0]);
+        this.setBasicParams();
+        this.setCollisionBasis(0.12, 0.25, 0.85, 0.6);
+        this.loadImagesToCache(this.IMAGES_WALK, this.IMAGES_ALERT, this.IMAGES_ATTACK, this.IMAGES_HURT, this.IMAGES_DIE);
+        this.setStatusbarParams();
+        this.controlStatusbarPos();
+        this.moveAlerted();
+        this.playAttackSequ();
+    }
 
+
+    /**
+     * Sets the basic parameters of the endboss
+     */
+    setBasicParams() {
         this.aspectRatio = 1045/1217;
         this.width = 400;
         this.height = this.width / this.aspectRatio;
         this.healthPoints = 100;
-        this.collisionBasis.offsetXRatio = 0.12;
-        this.collisionBasis.offsetYRatio = 0.25;
-        this.collisionBasis.widthRatio = 0.85;
-        this.collisionBasis.heightRatio = 0.6;
-        // this.getCollisionArea(0, 0, 1, 1);
+        this.speedX = 7;
+    }
 
-        this.loadImageCache(this.IMAGES_WALK);
-        this.loadImageCache(this.IMAGES_ALERT);
-        this.loadImageCache(this.IMAGES_ATTACK);
-        this.loadImageCache(this.IMAGES_HURT);
-        this.loadImageCache(this.IMAGES_DIE);
 
-        this.speedX = 7;//4;
-
+    /**
+     * Sets the parameters for the statusbar
+     */
+    setStatusbarParams() {
         this.statusbar.positionX = canvas.width + 100;
         this.statusbar.positionY = 70;
         this.IMAGE_STATUS_ICON.img.src = './img/7_statusbars/3_icons/icon_health_endboss.png';
@@ -75,15 +82,6 @@ class Endboss extends MoveableObject {
         this.IMAGE_STATUS_ICON.positionY = this.statusbar.positionY;
         this.IMAGE_STATUS_ICON.width = 65;
         this.IMAGE_STATUS_ICON.height = 65;
-        this.controlStatusbarPos();
-
-        this.moveAlerted();
-        this.attack();
-
-        // TEST
-        // this.status = 'attack';
-        // this.attack();
-        // TEST
     }
 
 
@@ -132,38 +130,51 @@ class Endboss extends MoveableObject {
     /**
      * Animates the attack sequence (alternates between walking and attacking)
      */
-    attack() {
+    playAttackSequ() {
         let sequCount = 0;
         this.currentImage = 0;
         intervals.push(
             setInterval(() => {
                 if (!this.gotHit) {
                     if (this.status == 'attack') {
-                        this.playAnimation(this.IMAGES_ATTACK);
-    
-                        // console.log(`endboss ATTACK currImg = ${this.currentImage}`);
-    
-                        if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                            this.currentImage = 0;
-                            this.status = 'walk';
-                        }
+                        this.attack();
                     }
                     else if (this.status == 'walk') {
-                        this.move(-1);
-                        this.playAnimation(this.IMAGES_WALK);
-                        sequCount++;
-    
-                        // console.log(`endboss WALK currImg = ${this.currentImage}`);
-    
-                        if (sequCount >= this.IMAGES_WALK.length * 3) {
-                            this.currentImage = 0;
-                            sequCount = 0;
-                            this.status = 'attack';
-                        }
+                        sequCount = this.walk(sequCount);
                     }
                 }
             }, 150)
         )
+    }
+
+
+    /**
+     * Handles the attacking status
+     */
+    attack() {
+        this.playAnimation(this.IMAGES_ATTACK);
+        if (this.currentImage >= this.IMAGES_ATTACK.length) {
+            this.currentImage = 0;
+            this.status = 'walk';
+        }
+    }
+
+
+    /**
+     * Handles the walking status
+     * @param {Number} sequCount - The current number of the walking sequnces
+     * @returns Number
+     */
+    walk(sequCount) {
+        this.move(-1);
+        this.playAnimation(this.IMAGES_WALK);
+        sequCount++;
+        if (sequCount >= this.IMAGES_WALK.length * 5) {
+            this.currentImage = 0;
+            sequCount = 0;
+            this.status = 'attack';
+        }
+        return sequCount;
     }
 
 
@@ -180,27 +191,9 @@ class Endboss extends MoveableObject {
                     this.gotHit = false;
                     this.status = 'attack';
                     this.currentImage = 0;
-                    // this.loadImage(this.IMAGES_WAIT[0]);
                 }, 200);
             }
         }, 150);
         world.playSound(world.AUDIO.chickenAlarm, 1, false);
-
-        console.log('Endboss Alarm Sound startet');
     }
-
-
-    /**
-     * Animates the dying sequence
-     */
-    // die() {
-    //     this.currentImage = 0;
-    //     let interval = setInterval(() => {
-    //         this.playAnimation(this.IMAGES_DIE);
-    //         if (this.currentImage >= this.IMAGES_DIE.length) {
-    //             clearInterval(interval);
-    //         }
-    //     }, 160);
-    //     world.playSound(world.AUDIO.win, 1, false);
-    // }
 }

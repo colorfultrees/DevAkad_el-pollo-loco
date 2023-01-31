@@ -58,7 +58,6 @@ class Character extends MoveableObject {
         './img/2_character_pepe/5_dead/D-57.png'
     ];
     keyboardListener;
-    // lastActiveTimestamp;
     offsetPosX = 0;
     playInitAnim = true;
     hasThrownBottle = false;
@@ -67,29 +66,33 @@ class Character extends MoveableObject {
 
     constructor(positionX, positionY, keyboardListener) {
         super(positionX, positionY).loadImage(this.IMAGES_WAIT[0]);
-
-        this.aspectRatio = 0.5083;
-        this.width = 220;
-        this.height = this.width / this.aspectRatio;
-        this.offsetPosX = positionX;
-        // this.groundPosition = positionY;
-        this.speedX = 8;//5;
-        this.healthPoints = 100;
-        this.collisionBasis.offsetXRatio = 0.15;
-        this.collisionBasis.offsetYRatio = 0.45;
-        this.collisionBasis.widthRatio = 0.55;
-        this.collisionBasis.heightRatio = 0.55;
-        // this.getCollisionArea(0.15, 0.45, 0.55, 0.5);
-
-        this.loadImageCache(this.IMAGES_WAIT);
-        this.loadImageCache(this.IMAGES_SNOOZE);
-        this.loadImageCache(this.IMAGES_WALK);
-        this.loadImageCache(this.IMAGES_JUMP);
-        this.loadImageCache(this.IMAGES_HURT);
-        this.loadImageCache(this.IMAGES_DIE);
+        this.setBasicParams(positionX);
+        this.setCollisionBasis(0.15, 0.45, 0.55, 0.55);
+        this.loadImagesToCache(this.IMAGES_WAIT, this.IMAGES_SNOOZE, this.IMAGES_WALK, this.IMAGES_JUMP, this.IMAGES_HURT, this.IMAGES_DIE);
 
         this.keyboardListener = keyboardListener;
 
+        this.initMovementIntvals();
+    }
+
+
+    /**
+     * Sets the basic parameters
+     */
+    setBasicParams(posX) {
+        this.aspectRatio = 0.5083;
+        this.width = 220;
+        this.height = this.width / this.aspectRatio;
+        this.offsetPosX = posX;
+        this.speedX = 8;
+        this.healthPoints = 100;
+    }
+
+
+    /**
+     * Initiates the movement intervals
+     */
+    initMovementIntvals() {
         this.setHorizMoveIntval();
         this.walk();
         this.jump();
@@ -107,7 +110,6 @@ class Character extends MoveableObject {
     reset() {
         this.currentImage = 0;
         this.loadImage(this.IMAGES_WAIT[0]);
-        // this.keyboardListener.isKeyActive = false;
         lastActiveTimestamp = Date.now();
     }
 
@@ -118,17 +120,7 @@ class Character extends MoveableObject {
     waitAndSnooze() {
         intervals.push(
             setInterval(() => {
-                // if (!this.keyboardListener.isKeyActive && !this.gotHit) {
-                // let isKeyActive = false;
-                // for (let key in this.keyboardListener.KEYS) {
-
-                //     // console.log(`check keys: ${key} = ${key.status}`);
-
-                //     if (this.keyboardListener.KEYS[key].status) isKeyActive = true;
-                // }
                 if (!this.keyboardListener.getKeyboardStatus() && !this.gotHit) {
-
-                    // console.log(`waitAndSnooze: isKeyActive = ${isKeyActive}, gotHit = ${this.gotHit}`);
                     let now = Date.now();
                     if (now - lastActiveTimestamp > 4000 && now - lastActiveTimestamp <= 8000) {
                         this.playAnimation(this.IMAGES_WAIT);
@@ -152,15 +144,10 @@ class Character extends MoveableObject {
                 const maxPosX = (world.level.background.landscapeLayer[0].width * world.level.sceneParts) - this.offsetPosX - this.width;
                 if (this.keyboardListener.KEYS.RIGHT.status) {
                     this.controlRightMovement(maxCameraPosX, maxPosX);
-                    // if (!this.isJumping) world.playSound(this.AUDIO.walking, 1, false);
                 }
                 else if (this.keyboardListener.KEYS.LEFT.status) {
                     this.controlLeftMovement(maxCameraPosX);
-                    // if (!this.isJumping) world.playSound(this.AUDIO.walking, 1, false);
                 }
-                // else {
-                //     world.stopSound(this.AUDIO.walking);
-                // }
             }, 55)
         );
     }
@@ -209,9 +196,6 @@ class Character extends MoveableObject {
                 if ((this.keyboardListener.KEYS.RIGHT.status ||
                     this.keyboardListener.KEYS.LEFT.status) &&
                     !this.isAboveGround() && !this.gotHit) {
-
-                        // console.log(`currImg_walk: ${this.currentImage}`);
-
                         this.isWalking = true;
                         this.playAnimation(this.IMAGES_WALK);
                         world.playSound(world.AUDIO.walking, 1, false);
@@ -258,9 +242,6 @@ class Character extends MoveableObject {
     */
    animateJump() {
        let interval = setInterval(() => {
-           
-           // console.log(`currImg_jump: ${this.currentImage}`);
-   
            this.playAnimation(this.IMAGES_JUMP);
            if (!this.isAboveGround()) {
                clearInterval(interval);
@@ -275,35 +256,11 @@ class Character extends MoveableObject {
      * Animates the hurting sequence
      */
     hurt() {
-
-        // TEST
-        // let start = false;
-        // TEST
-
         this.currentImage = 0;
         let interval = setInterval(() => {
-
-            // TEST
-            // if (!start) {
-            //     console.log(`Interval ID ${interval} started at hurt()`);
-            //     start = true;
-            // }
-
-            // console.log(`currImg_hurt: ${this.currentImage}`);
-            // TEST
-
             this.playAnimation(this.IMAGES_HURT);
             if (this.currentImage >= this.IMAGES_HURT.length || this.isAboveGround()) {
                 clearInterval(interval);
-
-                // TEST
-                // console.log(`Interval ID ${interval} cleared at hurt()`);
-                // TEST
-
-                // this.gotHit = false;
-                // this.currentImage = 0;
-                // lastActiveTimestamp = Date.now();
-                // this.loadImage(this.IMAGES_WAIT[0]);
                 setTimeout(() => {
                     this.gotHit = false;
                     this.reset();
@@ -315,37 +272,38 @@ class Character extends MoveableObject {
 
 
     /**
-     * Animates the dying sequence
-     */
-    // die() {
-    //     this.currentImage = 0;
-    //     let interval = setInterval(() => {
-    //         this.playAnimation(this.IMAGES_DIE);
-    //         if (this.currentImage >= this.IMAGES_DIE.length) {
-    //             clearInterval(interval);
-    //         }
-    //     }, 160);
-    //     world.playSound(world.AUDIO.gameOver, 1, false);
-    // }
-
-
-    /**
      * Initiates the throw of a bottle
      */
     throwBottle() {
         intervals.push(
             setInterval(() => {
                 if (this.keyboardListener.KEYS.THROW.status && !this.hasThrownBottle && this.counterBottles > 0) {
-                    this.hasThrownBottle = true;
-                    this.counterBottles--;
-                    world.statusbars.bottle.setValue(100 / world.level.maxBottles * this.counterBottles);
+                    this.updateBottleParams();
                     if (!this.isWalking && !this.isJumping) this.reset();
-                    const startX = this.positionX + (this.width / 2);
-                    const startY = this.positionY + (this.height / 3);
-                    world.throwables.push(new ThrowableObject(startX, startY, this.isImageMirrored));
-                    setTimeout(() => {this.hasThrownBottle = false;}, 300);
+                    this.handleBottleThrowing();
                 }
             }, 50)
         );
+    }
+
+
+    /**
+     * Manages the bottles
+     */
+    updateBottleParams() {
+        this.hasThrownBottle = true;
+        this.counterBottles--;
+        world.statusbars.bottle.setValue(100 / world.level.maxBottles * this.counterBottles);
+    }
+
+
+    /**
+     * Handles the throwing of a bottle
+     */
+    handleBottleThrowing() {
+        const startX = this.positionX + (this.width / 2);
+        const startY = this.positionY + (this.height / 3);
+        world.throwables.push(new ThrowableObject(startX, startY, this.isImageMirrored));
+        setTimeout(() => {this.hasThrownBottle = false;}, 300);
     }
 }

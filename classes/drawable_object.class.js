@@ -40,6 +40,22 @@ class DrawableObject {
     }
 
 
+    loadImagesToCache(...imageArrays) {
+        imageArrays.forEach(array => this.loadImageCache(array));
+    }
+
+
+    /**
+     * Sets the basic parameters for the calculation of the collision area
+     */
+    setCollisionBasis(offsetXRatio, offsetYRatio, widthRatio, heightRatio) {
+        this.collisionBasis.offsetXRatio = offsetXRatio;
+        this.collisionBasis.offsetYRatio = offsetYRatio;
+        this.collisionBasis.widthRatio = widthRatio;
+        this.collisionBasis.heightRatio = heightRatio;
+    }
+
+
     /**
      * Calculates the collision area of an object
      */

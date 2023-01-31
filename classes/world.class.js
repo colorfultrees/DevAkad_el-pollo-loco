@@ -25,8 +25,8 @@ class World {
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        // this.checkCollision();
-        setStopableInterval(this.checkCollision, 100);
+        this.checkCollision();
+        // setStopableInterval(this.checkCollision, 100);
     }
 
 
@@ -93,8 +93,8 @@ class World {
 
     /**
      * Reduces health points of an object
-     * @param {Object} obj The object whose health points should be reduced
-     * @param {Number} hp The amount of health points the object loses
+     * @param {Object} obj - The object whose health points should be reduced
+     * @param {Number} hp - The amount of health points the object loses
      */
     looseHealthPoints(obj, hp) {
         if (obj.healthPoints - hp >= 0) {
@@ -108,8 +108,8 @@ class World {
 
     /**
      * Increases health points of an object
-     * @param {Object} obj The object whose health points should be increased
-     * @param {Number} hp The amount of health points the object gains
+     * @param {Object} obj - The object whose health points should be increased
+     * @param {Number} hp - The amount of health points the object gains
      */
     gainHealthPoints(obj, hp) {
         if (obj.isDead) return;
@@ -125,9 +125,9 @@ class World {
 
     /**
      * Manages the collision of an object
-     * @param {Object} obj The object to be analysed
-     * @param {Number} hp The amount of health points the object loses upon collision
-     * @param {Object} statBar The statusbar of the object's health points
+     * @param {Object} obj - The object to be analysed
+     * @param {Number} hp - The amount of health points the object loses upon collision
+     * @param {Object} statBar - The statusbar of the object's health points
      */
     objCollides(obj, hp, statBar) {
         this.looseHealthPoints(obj, hp);
@@ -148,7 +148,7 @@ class World {
 
     /**
      * Deactivates an enemy object
-     * @param {Object} enemy The enemy object to be deactivated
+     * @param {Object} enemy - The enemy object to be deactivated
      */
     deactivateEnemy(enemy) {
         clearInterval(enemy.horizMoveIntervalId);
@@ -166,63 +166,133 @@ class World {
     }
 
 
-    checkCollision() {
-        // intervals.push(
-            // setInterval(() => {
-                this.character.getCollisionArea();
-                this.level.enemies.forEach((enemy) => {
-                    enemy.getCollisionArea();
-                    if (this.character.isColliding(enemy)) {
-                        if (this.character.isJumping && this.character.speedY <= 0 && !enemy.isDead) {
-                            this.deactivateEnemy(enemy);
-                            enemy.img = enemy.imageCache[enemy.IMAGES_DIE[0]];
-                            this.playSound(this.AUDIO.chickenAlarm, 0.5, false);
-                            setTimeout(() => {
-                                this.removeDeadEnemy();
-                            }, 1500);
-                        }
-                        else if (!enemy.isDead && !this.character.isAboveGround() && !this.character.gotHit) {
-                            if (enemy instanceof Chicken) {
-                                this.objCollides(this.character, 5, this.statusbars.health);
-                            }
-                            else if (enemy instanceof Chick && !this.character.isJumping) {
-                                this.deactivateEnemy(enemy);
-                                this.removeDeadEnemy();
-                                this.gainHealthPoints(this.character, 5);
-                                this.statusbars.health.setValue(this.character.healthPoints);
-                                this.playSound(this.AUDIO.bonusHp, 1, false);
-                            }
-                        }
-                    }
-                });
-                this.level.endboss.getCollisionArea();
-                if (this.character.isColliding(this.level.endboss)) {
-                    this.objCollides(this.character, 8, this.statusbars.health);
+    /**
+     * Checks whether the character collides with an enemy or jumps on it
+     */
+    checkCollisionWithEnemies() {
+        this.character.getCollisionArea();
+        this.level.enemies.forEach((enemy) => {
+            enemy.getCollisionArea();
+            if (this.character.isColliding(enemy)) {
+                if (this.character.isJumping && this.character.speedY <= 0 && !enemy.isDead) {
+                    this.checkJumpOnEnemy(enemy);
                 }
-                this.level.collectables.forEach((collectable, id) => {
-                    if (this.character.isColliding(collectable)) {
-                        if (collectable.type == 'bottle') {
-                            this.character.counterBottles++;
-                            this.statusbars.bottle.setValue(100 / this.level.maxBottles * this.character.counterBottles);
-                            this.playSound(this.AUDIO.collectBottle, 1, false);
-                        }
-                        if (collectable.type == 'coin') {
-                            this.character.counterCoins++;
-                            this.statusbars.coin.setValue(100 / this.level.maxCoins * this.character.counterCoins);
-                            this.playSound(this.AUDIO.collectCoin, 1, false);
-                        }
-                        this.level.collectables.splice(id, 1);
-                    }
-                });
-                this.throwables.forEach((throwable) => {
-                    throwable.getCollisionArea();
-                    if (throwable.positionY != throwable.groundPosition && this.level.endboss.isColliding(throwable) && !this.level.endboss.gotHit) {
-                        throwable.smash();
-                        this.objCollides(this.level.endboss, 20, this.level.endboss.statusbar);
-                    }
-                });
-            // }, 100)
-        // );
+                else if (!enemy.isDead && !this.character.isAboveGround() && !this.character.gotHit) {
+                    this.checkCollisionWithEnemy(enemy);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Checks whether the character jumps on an enemy
+     * @param {Object} enemy - The enemy object
+     */
+    checkJumpOnEnemy(enemy) {
+        this.deactivateEnemy(enemy);
+        enemy.img = enemy.imageCache[enemy.IMAGES_DIE[0]];
+        this.playSound(this.AUDIO.chickenAlarm, 0.5, false);
+        setTimeout(() => {
+            this.removeDeadEnemy();
+        }, 1500);
+    }
+
+
+    /**
+     * Checks whether the character collides with an enemy
+     * @param {Object} enemy - The enemy object
+     */
+    checkCollisionWithEnemy(enemy) {
+        if (enemy instanceof Chicken) {
+            this.objCollides(this.character, 5, this.statusbars.health);
+        }
+        else if (enemy instanceof Chick && !this.character.isJumping) {
+            this.deactivateEnemy(enemy);
+            this.removeDeadEnemy();
+            this.gainHealthPoints(this.character, 5);
+            this.statusbars.health.setValue(this.character.healthPoints);
+            this.playSound(this.AUDIO.bonusHp, 1, false);
+        }
+    }
+
+
+    /**
+     * Checks whether the character collides with the endboss
+     */
+    checkCollisionWithEndboss() {
+        this.level.endboss.getCollisionArea();
+        if (this.character.isColliding(this.level.endboss)) {
+            this.objCollides(this.character, 8, this.statusbars.health);
+        }
+    }
+
+
+    /**
+     * Checks whether the endboss got hit by a bottle
+     */
+    checkBottleHitsEndboss() {
+        this.level.endboss.getCollisionArea();
+        this.throwables.forEach((throwable) => {
+            throwable.getCollisionArea();
+            if (throwable.positionY != throwable.groundPosition && this.level.endboss.isColliding(throwable) && !this.level.endboss.gotHit) {
+                throwable.smash();
+                this.objCollides(this.level.endboss, 20, this.level.endboss.statusbar);
+            }
+        });
+    }
+
+
+    /**
+     * Checks whether the character touches a collectable object
+     */
+    checkForCollectables() {
+        this.level.collectables.forEach((collectable, id) => {
+            if (this.character.isColliding(collectable)) {
+                if (collectable.type == 'bottle') {
+                    this.collectBottles();
+                }
+                if (collectable.type == 'coin') {
+                    this.collectCoins();
+                }
+                this.level.collectables.splice(id, 1);
+            }
+        });
+    }
+
+
+    /**
+     * Handles the collection of a bottle
+     */
+    collectBottles() {
+        this.character.counterBottles++;
+        this.statusbars.bottle.setValue(100 / this.level.maxBottles * this.character.counterBottles);
+        this.playSound(this.AUDIO.collectBottle, 1, false);
+    }
+
+
+    /**
+     * Handles the collection of a coin
+     */
+    collectCoins() {
+        this.character.counterCoins++;
+        this.statusbars.coin.setValue(100 / this.level.maxCoins * this.character.counterCoins);
+        this.playSound(this.AUDIO.collectCoin, 1, false);
+    }
+
+
+    /**
+     * Checks for collisions
+     */
+    checkCollision() {
+        intervals.push(
+            setInterval(() => {
+                this.checkCollisionWithEnemies();
+                this.checkCollisionWithEndboss();
+                this.checkForCollectables();
+                this.checkBottleHitsEndboss();
+            }, 100)
+        );
     }
 
 
@@ -254,6 +324,9 @@ class World {
     }
 
 
+    /**
+     * Draws the current game scene
+     */
     draw() {
         // Move the context relative to the character's position
         this.ctx.translate(this.cameraPos, 0);
@@ -295,14 +368,22 @@ class World {
     }
 
 
+    /**
+     * Handles the drawing of a single object
+     * @param {Object} obj - The object to be drawn
+     */
     drawSingleObjectToCanvas(obj) {
         this.mirrorImage(obj);
         this.ctx.drawImage(obj.img, obj.positionX, obj.positionY, obj.width, obj.height);
-        // this.drawRect(obj);
+        // this.drawRect(obj); // KEEP FOR LATER TESTING PURPOSES
         this.resetMirroring(obj);
     }
 
 
+    /**
+     * Mirrors an object
+     * @param {Object} obj - The object to be mirrored if requested
+     */
     mirrorImage(obj) {
         if (obj.isImageMirrored) {
             this.ctx.save();
@@ -313,6 +394,10 @@ class World {
     }
 
 
+    /**
+     * Unmirrors an object
+     * @param {Object} obj - The object to be unmirrored if necessary
+     */
     resetMirroring(obj) {
         if (obj.isImageMirrored) {
             obj.positionX = obj.positionX * -1;
@@ -321,16 +406,28 @@ class World {
     }
 
 
+    /**
+     * Handles the drawing of multiple objects stored in an array
+     * @param {Array} array The array containing the objects to be drawn
+     */
     drawMultipleObjectsToCanvas(array) {
         array.forEach(object => this.drawSingleObjectToCanvas(object));
     }
 
 
+    /**
+     * Sets the camera position
+     * @param {Number} pos - The new camera position
+     */
     setCameraPos(pos) {
         this.cameraPos = pos;
     }
 
 
+    /**
+     * Handles the parallectic movement of the background layers
+     * @param {Number} direction - The movement direction (-1: left, 1: right)
+     */
     moveBackground(direction) {
         for (let l = 0; l < 2; l++) {
             for (let i = 0; i < this.level.sceneParts; i++) {
@@ -342,9 +439,9 @@ class World {
 
     /**
      * Starts playing a sound
-     * @param {Object} sound The Audio object to be played
-     * @param {Number} volume The value of the audio's volume
-     * @param {Boolean} isLooping Flag to set the sound playing in a loop
+     * @param {Object} sound - The audio object to be played
+     * @param {Number} volume - The value of the audio's volume
+     * @param {Boolean} isLooping - Flag to set the sound playing in a loop
      */
     playSound(sound, volume, isLooping) {
         if (!isSoundOn && sound != this.AUDIO.backgroundMusic) return;
@@ -398,7 +495,7 @@ class World {
     }
 
 
-    // ++++++++ TEST ++++++++++++++
+    // ++++++++ KEEP FOR LATER TESTING PURPOSES ++++++++++++++
     // drawRect(obj) {
     //     if (obj instanceof Character || obj instanceof Chicken || obj instanceof Chick | obj instanceof Endboss) {
     //         this.ctx.beginPath();
@@ -407,5 +504,5 @@ class World {
     //         this.ctx.stroke();
     //     }
     // }
-    // ++++++++ TEST ++++++++++++++
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }
