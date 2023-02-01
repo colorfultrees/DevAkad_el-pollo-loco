@@ -12,16 +12,9 @@ class Chicken extends MoveableObject {
         super(positionX, positionY);
 
         this.setBasicParams();
-        // this.aspectRatio = 1.0206;
-        // this.width = 110;
-        // this.height = this.width / this.aspectRatio;
-        // this.speedX = 5;
-        // this.healthPoints = 1;
         this.setCollisionBasis(0, 0, 1, 1);
         this.loadImagesToCache(this.IMAGES_WALK, this.IMAGES_DIE);
-
         this.setHorizMoveIntval(100, 300);
-
         this.walk(calcRandomNumber(100, 170), this.IMAGES_WALK);
     }
 

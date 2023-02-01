@@ -26,7 +26,6 @@ class World {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.checkCollision();
-        // setStopableInterval(this.checkCollision, 100);
     }
 
 
@@ -63,14 +62,11 @@ class World {
         if (isMusicOn) this.startBackgroundMusic();
 
         // Start the loop for the rooster crow
-        // intervals.push(
-            // setInterval(() => {
-            setStopableInterval(() => {
-                this.delayRoosterCrow = setTimeout(() => {
-                    this.playSound(this.AUDIO.rooster, 0.75, false);
-                }, calcRandomNumber(0, 10000));
-            }, 15000)
-        // );
+        setStopableInterval(() => {
+            this.delayRoosterCrow = setTimeout(() => {
+                this.playSound(this.AUDIO.rooster, 0.75, false);
+            }, calcRandomNumber(0, 10000));
+        }, 15000);
     }
 
 
@@ -286,15 +282,12 @@ class World {
      * Checks for collisions
      */
     checkCollision() {
-        // intervals.push(
-            // setInterval(() => {
-            setStopableInterval(() => {
-                this.checkCollisionWithEnemies();
-                this.checkCollisionWithEndboss();
-                this.checkForCollectables();
-                this.checkBottleHitsEndboss();
-            }, 100)
-        // );
+        setStopableInterval(() => {
+            this.checkCollisionWithEnemies();
+            this.checkCollisionWithEndboss();
+            this.checkForCollectables();
+            this.checkBottleHitsEndboss();
+        }, 100);
     }
 
 
@@ -321,8 +314,8 @@ class World {
      * @param {String} screen - The endscreen to be displayed
      */
     controlGameOverSequence(sound, screen) {
-            this.playSound(this.AUDIO[sound], 1, false);
-            setTimeout(() => {handleEndscreen(`./img/9_intro_outro_screens/game_over/${screen}`)}, 1000);
+        this.playSound(this.AUDIO[sound], 1, false);
+        setTimeout(() => {handleEndscreen(`./img/9_intro_outro_screens/game_over/${screen}`)}, 1000);
     }
 
 

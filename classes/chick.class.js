@@ -10,13 +10,7 @@ class Chick extends MoveableObject {
 
     constructor(positionX, positionY) {
         super(positionX, positionY);
-
         this.setBasicParams();
-        // this.aspectRatio = 1.1238;
-        // this.width = 70;
-        // this.height = this.width / this.aspectRatio;
-        // this.speedX = 6;
-        // this.healthPoints = 1;
         this.setCollisionBasis(0, 0, 1, 1);
         this.loadImagesToCache(this.IMAGES_WALK, this.IMAGES_DIE);
         this.setHorizMoveIntval(100, 300);

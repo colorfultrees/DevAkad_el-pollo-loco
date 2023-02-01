@@ -31,7 +31,6 @@ function startGame() {
     renderWorld();
     world.initBackgroundSound();
     activateCanvas();
-    // startMovementIntervals();
     initCreationIntervals_Level1();
     isGameRunning = true;
 }
@@ -104,11 +103,6 @@ function createWorld() {
     world.createCharacter();
     world.createStatusBars();
 }
-
-
-// function startMovementIntervals() {
-//     setStopableInterval(world.checkCollision, 100);
-// }
 
 
 /**
