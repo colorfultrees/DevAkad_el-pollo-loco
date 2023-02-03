@@ -473,6 +473,7 @@ class World {
     clearMainIntervals() {
         intervals.forEach(interval => clearInterval(interval));
         clearTimeout(this.delayRoosterCrow);
+        intervals = [];
     }
 
 

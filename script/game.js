@@ -18,7 +18,7 @@ let isTouchDevice = false;
 function init() {
     canvas = document.querySelector('canvas');
     keyboardListener = new Keyboard();
-    checkForTouch();
+    checkForTouchDevice();
     setFullScreenHandlers();
 }
 
@@ -48,9 +48,9 @@ function calcRandomNumber (min, max) {
 
 
 /**
- * Checks if the app was loaded on a mobile device
+ * Checks if the app was loaded on a touch device
  */
-function checkForTouch() {
+function checkForTouchDevice() {
     try {
         document.createEvent('TouchEvent');
         isTouchDevice = true;
