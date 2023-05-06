@@ -261,10 +261,10 @@ function toggleSoundFx() {
     resetActiveElement();
     
     if (isSoundOn) {
-        setSoundFxParams(false, 'icons/sound-fx_off.png');
+        setSoundFxParams(false, './icons/sound-fx_off.png');
     }
     else {
-        setSoundFxParams(true, 'icons/sound-fx_on.png');
+        setSoundFxParams(true, './icons/sound-fx_on.png');
     }
 }
 
@@ -306,10 +306,10 @@ function setParamOnExitFullscreen(statusFullscreen) {
     const btnFullScreen = document.querySelector('#btn-fullscreen > img');
     isFullScreenMode = statusFullscreen;
     if (statusFullscreen) {
-        btnFullScreen.src = 'icons/exit-fullscreen.png';
+        btnFullScreen.src = './icons/exit-fullscreen.png';
     }
     else {
-        btnFullScreen.src = 'icons/enter-fullscreen.png';
+        btnFullScreen.src = './icons/enter-fullscreen.png';
     }
 }
 
