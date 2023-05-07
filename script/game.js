@@ -185,12 +185,12 @@ function toggleHelpScreen() {
     if (isHelpVisible) {
         toggleScreen('startscreen');
         isHelpVisible = false;
-        btnHelp.src = './icons/help_closed.png';
+        btnHelp.src = './symbols/help_closed.png';
     }
     else {
         toggleScreen('helpscreen');
         isHelpVisible = true;
-        btnHelp.src = './icons/help_open.png';
+        btnHelp.src = './symbols/help_open.png';
     }
 }
 
@@ -202,12 +202,12 @@ function toggleControlsInfo() {
     const ctrlInfo = document.getElementById('controls-info');
     if (isHelpVisible) {
         ctrlInfo.classList.add('d-none');
-        setHelpScreenParams(false, './icons/help_closed.png');
+        setHelpScreenParams(false, './symbols/help_closed.png');
         clearTimeout(hideControlsInfoDelayId);
     }
     else {
         ctrlInfo.classList.remove('d-none');
-        setHelpScreenParams(true, './icons/help_open.png');
+        setHelpScreenParams(true, './symbols/help_open.png');
         hideControlsInfoDelayId = setTimeout(() => {toggleControlsInfo()}, 10000);
     }
 }
@@ -232,11 +232,11 @@ function toggleMusic() {
     resetActiveElement();
     
     if (isMusicOn) {
-        setMusicParams(false, './icons/music_off.png');
+        setMusicParams(false, './symbols/music_off.png');
         if (isGameRunning) world.stopSound(world.AUDIO.backgroundMusic);
     }
     else {
-        setMusicParams(true, './icons/music_on.png');
+        setMusicParams(true, './symbols/music_on.png');
         if (isGameRunning) world.startBackgroundMusic();
     }
 }
@@ -261,10 +261,10 @@ function toggleSoundFx() {
     resetActiveElement();
     
     if (isSoundOn) {
-        setSoundFxParams(false, './icons/sound-fx_off.png');
+        setSoundFxParams(false, './symbols/sound-fx_off.png');
     }
     else {
-        setSoundFxParams(true, './icons/sound-fx_on.png');
+        setSoundFxParams(true, './symbols/sound-fx_on.png');
     }
 }
 
@@ -306,10 +306,10 @@ function setParamOnExitFullscreen(statusFullscreen) {
     const btnFullScreen = document.querySelector('#btn-fullscreen > img');
     isFullScreenMode = statusFullscreen;
     if (statusFullscreen) {
-        btnFullScreen.src = './icons/exit-fullscreen.png';
+        btnFullScreen.src = './symbols/exit-fullscreen.png';
     }
     else {
-        btnFullScreen.src = './icons/enter-fullscreen.png';
+        btnFullScreen.src = './symbols/enter-fullscreen.png';
     }
 }
 
