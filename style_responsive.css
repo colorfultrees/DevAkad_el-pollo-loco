@@ -36,6 +36,14 @@
     .btn-icon {
         margin: 3px;
     }
+
+    #btn-close-help {
+        top: 25px;
+    }
+    
+    #btn-close-help img {
+        width: 28px;
+    }
 }
 
 @media screen and (max-width: 680px) {

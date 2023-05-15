@@ -177,6 +177,18 @@ canvas {
     border-spacing: 0 15px;
 }
 
+#btn-close-help {
+    position: absolute;
+    top: 30px;
+    left: 25px;
+    opacity: 0.75;
+    cursor: pointer;
+}
+
+#btn-close-help img {
+    width: 35px;
+}
+
 #col1 {
     width: 10em;
 }
