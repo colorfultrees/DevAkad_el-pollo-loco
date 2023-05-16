@@ -82,7 +82,7 @@ class Character extends MoveableObject {
         this.width = 220;
         this.height = this.width / this.aspectRatio;
         this.offsetPosX = posX;
-        this.speedX = 8;
+        this.speedX = 12;
         this.healthPoints = 100;
     }
 
@@ -196,7 +196,7 @@ class Character extends MoveableObject {
             else if (this.isWalking) {
                 this.stopWalking();
             }
-        }, 115);
+        }, 100);
     }
     
     

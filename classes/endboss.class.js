@@ -67,7 +67,7 @@ class Endboss extends MoveableObject {
         this.width = 400;
         this.height = this.width / this.aspectRatio;
         this.healthPoints = 100;
-        this.speedX = 7;
+        this.speedX = 20;
     }
 
 
@@ -138,7 +138,7 @@ class Endboss extends MoveableObject {
                     sequCount = this.walk(sequCount);
                 }
             }
-        }, 150);
+        }, 130);
     }
 
 

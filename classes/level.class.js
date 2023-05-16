@@ -24,7 +24,7 @@ class Level {
         let x = 0;
         for (let i = 0; i < this.sceneParts; i++) {
             this.background.sky.push(new Background(x, 0, imageUrl));
-            x += this.background.sky[0].width - 1;
+            x += (this.background.sky[0].width - 2);
         }
     }
 
@@ -42,7 +42,7 @@ class Level {
             x = 0;
             for (let i = 0; i < this.sceneParts; i++) {
                 this.background.landscapeLayer.push(new Background(x, 0, layer[l]));
-                x += this.background.landscapeLayer[0].width - 1;
+                x += (this.background.landscapeLayer[0].width - 1);
             }
         }
     }
